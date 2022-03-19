@@ -1,0 +1,112 @@
+.custom-input-control{
+    height: 32px!important;
+}
+.dataTables_info, .dataTables_paginate {
+    display: none;
+}
+
+.filter-pagination {
+    color: #B0B7C3;
+    font-size: 12px;
+}
+
+.filter-pagination select {
+
+
+ }
+ .pagination .next.active {
+    background: #377DFF;
+    color: white;
+ }
+ .filter-pagination {
+    color: #B0B7C3;
+    font-size: 12px;
+ }
+ .filter-pagination select{
+
+    width: 75px;
+    display: inline;
+    background: #F3F3F3;
+    border: none!important;
+    margin: 0px 8px;
+    color: #4E5D78;
+
+}
+.pagination .prev,.pagination .next{
+
+    background: #F3F3F3;
+    border-radius: 10px;
+    padding: 3px 16px!important;
+    font-size: 27px!important;
+    line-height: 27px!important;
+
+}
+
+.modal {
+    overflow: auto;
+}
+
+.del-img{
+    top: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, .5);
+    cursor: pointer;
+}
+
+
+
+
+
+body {
+    overflow-x: hidden;
+    font-family: 'Open Sans', sans-serif;
+    background-color: #f1f1f1;
+    color: #333
+}
+
+.nav-pills .nav-link.active, .nav-pills .nav-link.active:focus, .nav-pills .nav-link.active:hover {
+    background-color: #2cc4cb !important;  /*  Màu nav */
+    color: #fff
+}
+
+.table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th {
+    border-top: 1px solid #e8e8e8
+}
+
+.table thead th {
+    border-bottom: 1px solid #ddd !important;
+    border-top: 0;
+    font-weight: 700
+}
+
+.table.no-border > tbody > tr > td, .table.no-border > thead > tr > th {
+    border: 0 none !important
+}
+
+.table-bordered {
+    border: 1px solid #e8e8e8
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(0, 0, 0, .04)
+}
+
+.table-hover tbody tr:hover {
+    background-color: rgba(0, 0, 0, .05)
+}
+
+.table tr.success > td {
+    background-color: #e0f7ea !important
+}
+
+.table tr.info > td {
+    background-color: #def4fb !important
+}
+
+.table tr.warning > td {
+    background-color: #fdf0db !important
+}
+
+.table tr.danger > td {
+    background-color: #fbe4e2 !important
+}
