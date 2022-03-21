@@ -124,9 +124,11 @@
             $('#note').summernote('code', '');
             $('#note_en').summernote('code', '');
         });
-        window.livewire.on('setEditor', (note, note_en) => {
+        window.livewire.on('setEditor', (note, note_en,content,content_en) => {
             $('#note_edit').summernote('code', note);
             $('#note_en_edit').summernote('code', note_en);
+            $('#content_edit').summernote('code', content);
+            $('#content_en_edit').summernote('code', content_en);
         });
         $('#btn-save').click(function() {
             window.livewire.emit('set-note-create', $('#note').summernote('code'), $('#note_en').summernote('code'));
