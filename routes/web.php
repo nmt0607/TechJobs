@@ -46,3 +46,4 @@ Route::group(['middleware' => ['auth']], function () {
 });
 
 Route::get("/test", "App\Http\Controllers\Admin\Test\TestController@index")->name("admin.test.index");
+Route::get("/customer", "App\Http\Controllers\Admin\Test\CustomerController@index")->name("admin.customer.index");
