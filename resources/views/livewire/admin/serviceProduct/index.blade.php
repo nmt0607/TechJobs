@@ -44,12 +44,20 @@
                             </div>
                         </a>
                     </div>
+                    <div style="margin-right:7px;float: left;text-align: center;">
+                        <button class ='btn btn-danger' data-toggle="modal" data-target="#modal-delete-all" {{(count($products))?'':'disabled'}}>
+                            <!-- <div class="btn btn-danger"> -->
+                                <i class="fa fa-trash"></i> Xóa tất cả
+                            <!-- </div> -->
+                        </button>
+                    </div>
                 </div>
             </div>
-            <div wire:loading class="loader"></div>
+            <!-- <div wire:loading class="loader"></div> -->
             <table class="table table-bordered table-hover dataTable dtr-inline" role="grid" aria-describedby="example2_info">
                 <thead>
                     <tr role='row'>
+                        <th></th>
                         <th>STT</th>
                         <th class="{{$key_name=="name"?($sortingName=="desc"?"sorting_desc":"sorting_asc"):"sorting"}}" wire:click="sorting('name')">Tên sản phẩm</th>
                         <th class="{{$key_name=="rate"?($sortingName=="desc"?"sorting_desc":"sorting_asc"):"sorting"}}" wire:click="sorting('rate')">Đánh giá</th>
@@ -63,6 +71,7 @@
                 <tbody>
                     @foreach($data as $key => $row)
                         <tr>
+                            <td><input type="checkbox" wire:model="products" value="{{$row->id}}"></td>
                             <td>{{($data->currentPage() - 1) * $data->perPage() + $loop->iteration}}</td>
                             <td><a href="javascript: return false;" data-toggle="modal" data-target="#modelCreateEdit" wire:click='show({{$row}})'>{!!boldTextSearchV2($row->name,$searchName)!!}</a></td>
                             <td>{{$row->rate?$row->rate:0}}</td>
@@ -189,6 +198,29 @@
         </div>
     </div>
     @include('livewire.common._modalDelete')
+    @include('livewire.common.modal._modalDeleteAll')
+
+    <div class="modal fade" id="modal-form-delete-all-film" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title" id="exampleModalLabel">Xác nhận xóa tất cả phim</h2>
+                    </div>
+                    <div class="modal-body">
+                        Bạn có muốn xóa tất cả phim được chọn không?
+                    </div>
+                    <div class="modal-footer" style="text-align: center;">
+                        <div style="float: left;">
+                            <p class="text-danger" id='modal-p-delete-all-film' style="display: inline-block;"></p>
+                        </div>
+                        <div style="float: right;">
+                            <button type="button" class="btn" data-dismiss="modal">Đóng</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal" wire:click='deleteAll()'>Xóa bỏ</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     {{--end modal--}}
 
 </div>
