@@ -152,7 +152,7 @@ class MasterDataList extends BaseLive
         $this->number_value = $master->number_value;
         $this->image = $master->image;
         $this->resetValidation();
-        $this->emit('setEditor', $master->note, $master->note_en);
+        $this->emit('setEditor', $master->note, $master->note_en, $master->v_content, $master->v_content_en);
     }
     public function update(){
         $this->validateFormData();
