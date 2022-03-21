@@ -33,7 +33,7 @@ class GeneratorModuleCommand extends Command
     
     protected $modeLang = 'en'; // vn or en
 
-    protected $baseNamespaceController = 'app\Http\Controllers\Admin\Test';
+    protected $baseNamespaceController = 'App\Http\Controllers\Admin\Test';
 
     protected $countColumnInputViewLivewire = '2'; // 2
 
@@ -283,7 +283,7 @@ function generateRouter(){
         $pathStorage = storage_path('');
         $pathStorage = str_replace('/storage','',$pathStorage);
         $pathStorage = str_replace('storage','',$pathStorage);
-        $destinationPath=$pathStorage."/app/Http/Livewire/Admin/".ucfirst($this->arguments()['name']). "/";
+        $destinationPath=$pathStorage."/App/Http/Livewire/Admin/".ucfirst($this->arguments()['name']). "/";
         if (!is_dir($destinationPath)) {  mkdir($destinationPath,0777,true);  }
 
         $content = file_get_contents($this->getStub($this->baseControlleLivewire));
