@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Admin\Test;
+namespace app\Http\Livewire\Admin\Test;
 
 use Livewire\Component;
 use App\Http\Livewire\Base\BaseLive;
