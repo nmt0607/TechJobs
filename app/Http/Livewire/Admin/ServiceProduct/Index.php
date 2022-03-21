@@ -25,14 +25,18 @@ class Index extends BaseLive {
     public $rate = null;
     public $description = null;
 
+    public $products = [];
 
     protected $rules = [
         'name' => 'required',
         'status' => 'required',
+        'rate' => 'numeric|between:0,5.00',
     ];
     protected $messages = [
         'name.required' => 'Tên sản phẩm bắt buộc',
         'status.required' => 'Trạng thái bắt buộc',
+        'rate.numeric' => 'Thang điểm phải là số từ 0 đến 5',
+        'rate.between' => 'Thang điểm phải là số từ 0 đến 5',
     ];
 
 
@@ -43,13 +47,7 @@ class Index extends BaseLive {
         $this->perPage = 50;
     }
     public function render(){
-        $query = ServiceProduct::query();
-        if($this->search) {
-        }
-
-        if($this->searchName) {
-            $query->where("name", "like", "%".$this->searchName."%");
-        }
+        $query = $this->getQuery();
         $manager = User::query()->pluck('name','id')->toArray();
         $category = Category::query()->pluck('name','id')->toArray();
         $data = $query->orderBy($this->key_name,$this->sortingName)->paginate($this->perPage);
@@ -58,6 +56,14 @@ class Index extends BaseLive {
             'manager' => $manager,
             'category' => $category,
         ]);
+    }
+
+    public function getQuery(){
+        $query = ServiceProduct::query();
+        if($this->searchName) {
+            $query->where("name", "like", "%".$this->searchName."%");
+        }
+        return $query;
     }
 
     public function updatedSearch(){
@@ -152,6 +158,15 @@ class Index extends BaseLive {
         $this->dispatchBrowserEvent('show-toast', ["type" => "success", "message" => 'Xóa thành công']);
     }
 
+    public function deleteAll(){
+        $query = $this->getQuery();
+        $productIds = $query->whereIn('service_product.id',$this->products)->pluck('id')->toArray();
+        $query = ServiceProduct::whereIn('service_product.id',$productIds)->delete();
+        $countDelete = count($productIds);
+        $this->products = array_diff($this->products, $productIds);
+        $this->dispatchBrowserEvent('show-toast', ["type" => "success", "message" => 'Xóa thành công '.$countDelete.' bản ghi.']);
+
+    }
     public function resetSearch(){
         $this->search = "";
         $this->searchName = "";
