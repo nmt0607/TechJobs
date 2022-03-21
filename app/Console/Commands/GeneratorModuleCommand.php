@@ -31,7 +31,7 @@ class GeneratorModuleCommand extends Command
     protected $baseViewLiveWire = 'baseViewLiveWire';
     protected $baseExport = 'baseExport';
     
-    protected $modeLang = 'en'; // vn or en
+    protected $modeLang = 'vi'; // vi or en
 
     protected $baseNamespaceController = 'App\Http\Controllers\Admin\Test';
 
