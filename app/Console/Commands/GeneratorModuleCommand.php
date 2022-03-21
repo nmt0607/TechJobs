@@ -33,7 +33,7 @@ class GeneratorModuleCommand extends Command
     
     protected $modeLang = 'en'; // vn or en
 
-    protected $baseNamespaceController = 'App\Http\Controllers\Admin\Test';
+    protected $baseNamespaceController = 'app\Http\Controllers\Admin\Test';
 
     protected $countColumnInputViewLivewire = '2'; // 2
 
@@ -116,7 +116,7 @@ class GeneratorModuleCommand extends Command
         $pathStorage = storage_path('');
         $pathStorage = str_replace('/storage','',$pathStorage);
         $pathStorage = str_replace('storage','',$pathStorage);
-        $destinationPath=$pathStorage."/App/Models/";
+        $destinationPath=$pathStorage."/app/Models/";
 
         if (!is_dir($destinationPath)) {  mkdir($destinationPath,0777,true);  }
         $oldContent = file_get_contents($destinationPath.$file);
@@ -295,7 +295,7 @@ function generateRouter(){
 
     public function buildContentControllerLivewire($content){
         $array = [
-            '{{ namespace }}' => $this->getDefaultNamespace('App'),
+            '{{ namespace }}' => $this->getDefaultNamespace('app'),
             '{{ useclasses }}' => $this->usedClasses(),
             '{{ properties }}' => $this->buildProperties(),
             '{{ rules }}' => $this->getRules(),
