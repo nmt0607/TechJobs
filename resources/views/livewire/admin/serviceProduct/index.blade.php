@@ -53,7 +53,7 @@
                     </div>
                 </div>
             </div>
-            <!-- <div wire:loading class="loader"></div> -->
+            <div wire:loading class="loader"></div>
             <table class="table table-bordered table-hover dataTable dtr-inline" role="grid" aria-describedby="example2_info">
                 <thead>
                     <tr role='row'>
