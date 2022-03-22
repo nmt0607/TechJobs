@@ -695,14 +695,11 @@ function generateRouter(){
         foreach($columns as $key => $column){
             if ($column != 'created_at' && $column != 'updated_at') {
                 $columnTable = $this->getColumnLiveWire($column);
-                if(!$i){
-                    $str .= PHP_EOL.$this->getNTab($NTab);
-                } 
                 if(in_array($column,$columnsSorting)){
-                    $str .= '<th class="{{$key_name=="'.$column.'"?($sortingName=="desc"?"sorting_desc":"sorting_asc"):"sorting"}}" wire:click="'.'sorting('."'".$column."'".')">'.$columnTable.'</th>';
+                    $str .= '<th class="{{$key_name=="'.$column.'"?($sortingName=="desc"?"sorting_desc":"sorting_asc"):"sorting"}}" wire:click="'.'sorting('."'".$column."'".')">'.$columnTable.'</th>'.PHP_EOL.$this->getNTab($NTab);
                 }
                 else {
-                    $str .= '<th>'.$columnTable.'</th>';
+                    $str .= '<th>'.$columnTable.'</th>'.PHP_EOL.$this->getNTab($NTab);
                 }
                 $i++;
             }

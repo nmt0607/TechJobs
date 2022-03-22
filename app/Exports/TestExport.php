@@ -66,11 +66,11 @@ class TestExport implements FromCollection,WithHeadings,WithMapping,WithEvents,W
     public function headings(): array {
         return [
             "STT",
-            "Name",
-            "Contract Number",
-            "Actor Name",
-            "Director",
-            "Status",
+            "Tên sản phẩm",
+            "Số hợp đồng",
+            "Đạo diễn",
+            "Giám đốc",
+            "Trạng thái",
         ];
     }
     public function map($data): array {

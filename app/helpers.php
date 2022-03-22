@@ -187,16 +187,25 @@ function boldTextSearchV2($text, $searchTerm){
     }
     $newText = strtolower(removeStringUtf8($text));
     $newSearchTerm = strtolower(removeStringUtf8($searchTerm));
+    // dd($newText, $newSearchTerm);
     $lengText = strlen($newText);
     $lengSearchTerm = strlen($newSearchTerm);
     $index = 0;
+    $stt = 0;
+    // dd($text, $searchTerm);
     for($i = 0; $i <= $lengText - $lengSearchTerm; $i++){
         if($newSearchTerm==substr($newText,$i,$lengSearchTerm)){
             $text = mb_substr($text,0,$i+$index).'<b>'.mb_substr($text,$i+$index,$lengSearchTerm).'</b>'.mb_substr($text,$i + $index + $lengSearchTerm ,$lengText-$i-$lengSearchTerm);
-            $index+=5;
+            $index+=7;
+            // if($stt){
+            //     dd($index);
+            // }
+            // $stt++;
         }
     }
+    // dd($text);
     return $text;
+
 
 }
 function getLeaveDate($end_date, $start_date){
@@ -500,5 +509,20 @@ function checkUrlStorage($url){
        return true;
     } 
     return false;
+}
+
+function convertTimeJsonToText($json){
+    $array = json_decode($json);
+    $str = '';
+    if($array->day){
+        $str = $str.$array->day. ' ngày ';
+    }
+    if($array->hour){
+        $str = $str.$array->hour. 'h';
+    }
+    if($array->minute){
+        $str = $str.$array->minute. 'p';
+    }
+    return $str;
 }
 

@@ -61,6 +61,22 @@
               </li>
             </ul>
           </li>
+          <li class="nav-item {{setOpen('sla')}}">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-user"></i>
+              <p>Quản lý SLA</p>
+              <i class="fas fa-angle-left right"></i>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ route('sla.priority') }}" class="nav-link {{setActive2('sla/priority')}}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Mức độ ưu tiên</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
           <li class="nav-item active">
             <a href="{{route('files.index')}}" class="nav-link {{setActive2('files')}}">
               <i class="nav-icon fas fa-file"></i>

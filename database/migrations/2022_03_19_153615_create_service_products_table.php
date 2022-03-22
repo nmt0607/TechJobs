@@ -21,6 +21,7 @@ class CreateServiceProductsTable extends Migration
             $table->double('rate',19,2)->nullable()->comment('Đánh giá');
             $table->string('description')->nullable()->comment('Mô tả sản phẩm');
             $table->bigInteger('user_id')->nullable()->comment('Người quản lý');
+            $table->bigInteger('sla_id')->nullable()->comment('Mức độ ưu tiên');
             $table->timestamps();
         });
     }

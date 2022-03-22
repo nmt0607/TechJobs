@@ -37,6 +37,9 @@ Route::group(['middleware' => ['auth']], function () {
         Route::patch('/updateRole', 'App\Http\Controllers\Test\User\UserController@updateRole')->name('user.update_role');
         Route::get('/', 'App\Http\Controllers\Admin\Test\UserController@index')->name('user.index');
     });
+    Route::prefix('sla')->group(function (){
+        Route::get("/priority", "App\Http\Controllers\Admin\Test\SlaController@priority")->name("sla.priority");
+    });
     Route::group(['prefix' => 'files'], function() {
         Route::get('/', 'App\Http\Controllers\Admin\Site\FilesController@index')->name('files.index');
         Route::get('/edit/{id}', 'App\Http\Controllers\Admin\Site\FilesController@edit')->name('files.edit');
