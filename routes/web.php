@@ -30,12 +30,12 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/', 'App\Http\Controllers\Admin\Config\MasterController@index')->name('admin.config.master');
     });
     Route::prefix('user')->group(function (){
-        Route::get('/create', 'App\Http\Controllers\Admin\User\UserController@create')->name('user.create.index');
-        Route::post('/store', 'App\Http\Controllers\Admin\User\UserController@store')->name('user.store');
-        Route::get('/{id}/edit', 'App\Http\Controllers\Admin\User\UserController@edit')->name('user.edit.index');
-        Route::patch('/{id}', 'App\Http\Controllers\Admin\User\UserController@update')->name('user.update');
-        Route::patch('/updateRole', 'App\Http\Controllers\Admin\User\UserController@updateRole')->name('user.update_role');
-        Route::get('/', 'App\Http\Controllers\Admin\User\UserController@index')->name('user.index');
+        Route::get('/create', 'App\Http\Controllers\Admin\Test\UserController@create')->name('user.create.index');
+        Route::post('/store', 'App\Http\Controllers\Admin\Test\UserController@store')->name('user.store');
+        Route::get('/{id}/edit', 'App\Http\Controllers\Admin\Test\UserController@edit')->name('user.edit.index');
+        Route::patch('/{id}', 'App\Http\Controllers\Admin\Test\UserController@update')->name('user.update');
+        Route::patch('/updateRole', 'App\Http\Controllers\Test\User\UserController@updateRole')->name('user.update_role');
+        Route::get('/', 'App\Http\Controllers\Admin\Test\UserController@index')->name('user.index');
     });
     Route::group(['prefix' => 'files'], function() {
         Route::get('/', 'App\Http\Controllers\Admin\Site\FilesController@index')->name('files.index');

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -19,80 +20,91 @@ class User extends Authenticatable
      *
      * @var array
      */
+    use HasFactory;
+    protected $table = 'users';
     protected $fillable = [
         'name',
+        'account',
+        'phone',
         'email',
-        'password',
-        'username',
-        'gw_user_id',
-        'gw_pass',
-        'lang',
-        'group_id',
-        'user_info_id'
+        'date',
+        'sex',
+        'department'
     ];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
+   //query search
+   protected $searchableByOrWhere = [
+];
+public function getSearchableByOrWhere(){
+    return $this->searchableByOrWhere;
+}    
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
 
-    public function roles()
-    {
-        return $this->morphToMany(Role::class, 'model', 'model_has_roles');
-    }
+protected $searchableByWhere = [
+    'name',
+    'account',
+    'phone',
+    'email',
+    'sex'
+];    
+public function getSearchableByWhere(){
+    return $this->searchableByWhere;
+} 
 
-    public function info()
-    {
-        return $this->belongsTo(UserInf::class, 'user_info_id');
-    }
+// column table
+protected $columnTable = [
+    'name',
+    'account',
+    'phone',
+    'email',
+    'date',
+    'sex',
+    'department'
+];    
+public function getColumnTable(){
+    return $this->columnTable;
+} 
+//column sorting
+protected $columnSortingTable = [
+    'name',
+    'account',
+    'phone',
+    'email',
+    'date',
+    'sex',
+    'department'
+];    
+public function getColumnSortingTable(){
+    return $this->columnSortingTable;
+} 
 
-    public function notificationConfig()
-    {
-        return $this->hasMany(SystemConfig::class, 'admin_id')->where('type', ESystemConfigType::NOTIFICATION)->first();
-    }
 
-    public function group()
-    {
-        return $this->belongsTo(GroupUser::class, 'group_id');
-    }
+//export
+protected $columnExport = [
+    'name',
+    'account',
+    'phone',
+    'email',
+    'date',
+    'sex',
+    'department'
+];  
+public function  getColumnExport() {
+    return $this->columnExport;
+}
 
-    private static $searchable = [
-        'name'
-    ];
-    public static function getListSearchAble()
-    {
-        return self::$searchable;
-    }
-
-    /**
-     * @return \App\Models\User[]
-     */
-    public function getDepartmentLeaders()
-    {
-        $department = $this->info->department ?? null;
-        if (empty($department)) {
-            return null;
-        }
-        $positionIds = MasterData::query()->where('type', 1)->whereIn('order_number', [1, 2])->get('id')->pluck('id')->all();
-        return $department->userInfos()->with('account')->whereIn('position_id', $positionIds)->get()->pluck('account');
-    }
-
-    protected static function boot()
-    {
-        parent::boot();
-    }
+// translate
+protected $translate = [
+    'name'=>'Họ và tên',
+    'account'=>'Tài khoản',
+    'phone'=>'SĐT',
+    'email'=>'Email',
+    'date'=>'Ngày sinh',
+    'sex'=>'Giới tính',
+    'department'=>'Đơn vị'
+];
+public function getTranslate(){
+    return $this->translate;
+}
+  
 }
