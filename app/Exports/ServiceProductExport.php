@@ -3,6 +3,8 @@
 namespace App\Exports;
 
 use App\Models\ServiceProduct;
+use App\Models\User;
+use App\Models\Category;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
@@ -11,7 +13,9 @@ use Maatwebsite\Excel\Events\AfterSheet;
 use Maatwebsite\Excel\Concerns\RegistersEventListeners;
 use Maatwebsite\Excel\Concerns\WithCustomStartCell;
 use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
-class ServiceProductExport implements FromCollection,WithHeadings,WithMapping,WithEvents,WithCustomStartCell
+use Maatwebsite\Excel\Concerns\WithDrawings;
+use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
+class ServiceProductExport implements FromCollection,WithHeadings,WithMapping,WithEvents,WithCustomStartCell,WithDrawings
 {
     /**
     * @return \Illuminate\Support\Collection
@@ -23,8 +27,10 @@ class ServiceProductExport implements FromCollection,WithHeadings,WithMapping,Wi
     protected $name;
 
     public $stt = 0;
+    public $manager = [];
+    public $category = [];
     protected $countRow = 0;
-
+    protected $height = 30;
     public function __construct($key_name, $sortingName, $search, $searchName){
         $this->key_name = trim($key_name);
         $this->sortingName = trim($sortingName);
@@ -37,37 +43,41 @@ class ServiceProductExport implements FromCollection,WithHeadings,WithMapping,Wi
         ini_set('memory_limit', '-1');
         set_time_limit(0);
 
-        $query = ServiceProduct::query();
-        if($this->search) {
-        }
-
-        if($this->searchName) {
-            $query->where("name", "like", "%".$this->searchName."%");
-        }
+        $query = $this->getQuery();
+        $this->manager = User::query()->pluck('name','id')->toArray();
+        $this->category = Category::query()->pluck('name','id')->toArray();
 
         $query = $query->orderBy($this->key_name,$this->sortingName)->get();
         $this->countRow = count($query);
         return $query;
     }
 
+    public function getQuery(){
+        $query = ServiceProduct::query();
+        if($this->searchName) {
+            $query->where("name", "like", "%".$this->searchName."%");
+        }
+        return $query;
+    }
+
     public function headings(): array {
         return [
             "STT",
-            "Name",
-            "Status",
-            "Category Id",
-            "User Id",
-            "Rate",
-            "Description",
+            "Tên sản phẩm",
+            "Trạng thái",
+            "Danh mục",
+            "Người quản lý",
+            "Thang điểm",
+            "Mô tả",
         ];
     }
     public function map($data): array {
         return [
             ++$this->stt,
             $data->name,
-            $data->status,
-            $data->category_id,
-            $data->user_id,
+            $data->status==1?'Đang hoạt động':'Không hoạt động',
+            $this->category[$data->category_id]??'',
+            $this->manager[$data->user_id]??'',
             $data->rate,
             $data->description,
         ];
@@ -114,13 +124,15 @@ class ServiceProductExport implements FromCollection,WithHeadings,WithMapping,Wi
                 // style end
                 $event->sheet->getDelegate()
                     ->setMergeCells([
-                        "A1:F1",
-                        "A2:F2",
+                        "A1:F2",
+                        "G1:G2",
                     ]);
+                $event->sheet->getDelegate()->getRowDimension('1')->setRowHeight($this->height);
+                $event->sheet->getDelegate()->getRowDimension('2')->setRowHeight($this->height);
                 $event->sheet->getDelegate()->setCellValue("A1", "Table ServiceProduct data");
-                $event->sheet->getDelegate()->setCellValue("A2", "Chào các bạn");
+                // $event->sheet->getDelegate()->setCellValue("A2", "Chào các bạn");
 
-                $event->sheet->getStyle("A3:I3")->getAlignment()->setWrapText(true);
+                $event->sheet->getStyle("A3:G3")->getAlignment()->setWrapText(true);
                 $active_sheet = $event->sheet->getDelegate();
                 $active_sheet->getParent()->getDefaultStyle()->applyFromArray($default_font_style);
                 $active_sheet->getParent()->getDefaultStyle()->getAlignment()->applyFromArray(
@@ -128,20 +140,20 @@ class ServiceProductExport implements FromCollection,WithHeadings,WithMapping,Wi
                 );
 
                 $arrayAlphabet = [
-                    "B", "C", "D", "E", "F", "G", "H", "I", 
+                    "B", "C", "D", "E", "F", "G", 
                 ];
                 foreach ($arrayAlphabet as $alphabet) {
                     $event->sheet->getColumnDimension($alphabet)->setWidth(30);
                 }
                 $event->sheet->getColumnDimension("A")->setWidth(5);
                 // title
-                $cellRange = "A3:I3";
+                $cellRange = "A3:G3";
                 $active_sheet->getStyle($cellRange)->applyFromArray($default_font_style_title);
                 $active_sheet->getStyle($cellRange)->getAlignment()->applyFromArray(
                     array("horizontal" => "center", "vertical"=>"center")
                 );
 
-                if($this->countRow) $active_sheet->getStyle("A4:I".($this->countRow+3))->applyFromArray($default_font_style2);
+                if($this->countRow) $active_sheet->getStyle("A4:G".($this->countRow+3))->applyFromArray($default_font_style2);
 
                 //style array text
                 $active_sheet->getStyle("A1:F1")->getAlignment()->applyFromArray(
@@ -152,12 +164,31 @@ class ServiceProductExport implements FromCollection,WithHeadings,WithMapping,Wi
                     array("horizontal" => "center", "vertical"=>"center")
                 );
                 $active_sheet->getStyle("A2:F2")->applyFromArray($default_font_style_title2);
+                $active_sheet->getStyle('G1')->getAlignment()->applyFromArray(
+                    array("horizontal" => "center", "vertical"=>"center")
+                );
 
+                $active_sheet->getStyle('G1:G2')->getAlignment()->applyFromArray(
+                    array("valignment" => "center")
+                );
+                $event->sheet->getDelegate()->getStyle('G1:G2')->getAlignment()->setVertical('Center');
             },
         ];
     }
     public function startCell(): string
     {
         return "A3";
+    }
+
+    // insert image
+    public function drawings()
+    {
+        $drawing = new Drawing();
+        $drawing->setName('Logo');
+        $drawing->setDescription('This is my logo');
+        $drawing->setPath(public_path('/images/logo.png'));
+        $drawing->setHeight(4*$this->height);
+        $drawing->setCoordinates('G1');
+        return $drawing;
     }
 }

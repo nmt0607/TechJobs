@@ -68,10 +68,20 @@ class ServiceProduct extends Model
         'user_id',
         'rate',
         'description',
-        'created_at',
-        'updated_at',
     ];  
     public function  getColumnExport() {
         return $this->columnExport;
+    }
+    // translate
+    protected $translate = [
+        'name' => 'Tên sản phẩm',
+        'status' => 'Trạng thái',
+        'category_id' => 'Danh mục',
+        'user_id' => 'Người quản lý',
+        'rate'=> 'Thang điểm',
+        'description'=> 'Mô tả',
+    ];
+    public function getTranslate(){
+        return $this->translate;
     }
 }
