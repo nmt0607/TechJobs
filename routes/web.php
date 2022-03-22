@@ -47,6 +47,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/', [App\Http\Controllers\Admin\Site\HomeController::class, 'index'])->name('home');
     Route::get("/serviceProduct", "App\Http\Controllers\Admin\Test\ServiceProductController@index")->name("admin.serviceProduct.index");
     Route::get("/role", "App\Http\Controllers\Admin\Test\RoleController@index")->name("admin.role.index");
+    Route::get("/unit", "App\Http\Controllers\Admin\Test\UnitController@index")->name("admin.unit.index");
 });
 
 Route::get("/test", "App\Http\Controllers\Admin\Test\TestController@index")->name("admin.test.index");
