@@ -22,7 +22,7 @@
             <div class="form-group row">
                 <label for="Search" class="col-1 col-form-label">Họ tên</label>
                 <div class="col-4">
-                    <input wire:model.debounce.1000ms="search" placeholder="Họ và tên" type="text" class="form-control">
+                    <input wire:model.debounce.1000ms="searchName" placeholder="Họ và tên" type="text" class="form-control">
                 </div>
             </div>
             <div class="form-group row">

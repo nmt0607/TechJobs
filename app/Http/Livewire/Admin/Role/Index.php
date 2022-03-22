@@ -123,7 +123,7 @@ class Index extends BaseLive {
         $this->mode = 'update';
         $this->editId = $row['id'];
         $this->name = $row["name"];
-        $this->description = $row["description"];
+        $this->description = $row["description"] ??'';
         foreach ($this->userList as $user) {
             if ($user->hasRole($row['id'])) {
                 $this->listSelected[$user->id] = true;

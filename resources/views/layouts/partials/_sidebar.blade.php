@@ -48,12 +48,6 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="{{ route('user.create.index') }}" class="nav-link {{setActive2('user/create')}}">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Thêm người dùng</p>
-                </a>
-              </li>
-              <li class="nav-item">
                 <a href="{{route('user.index')}}" class="nav-link {{setActive2('user')}}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Danh sách người dùng</p>
