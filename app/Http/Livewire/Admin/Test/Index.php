@@ -31,11 +31,11 @@ class Index extends BaseLive {
     ];
 
     protected $messages = [
-        'name.required' => 'The Name is required',
-        'contract_number.required' => 'The Contract Number is required',
-        'actor_name.required' => 'The Actor Name is required',
-        'director.required' => 'The Director is required',
-        'status.required' => 'The Status is required',
+        'name.required' => 'Tên sản phẩm bắt buộc',
+        'contract_number.required' => 'Số hợp đồng bắt buộc',
+        'actor_name.required' => 'Đạo diễn bắt buộc',
+        'director.required' => 'Giám đốc bắt buộc',
+        'status.required' => 'Trạng thái bắt buộc',
     ];
 
 

@@ -24,19 +24,19 @@
                 <div class="col-4">
                     <input wire:model.debounce.1000ms="search" placeholder="Search"type="text" class="form-control">
                 </div>
-                <label for="actor_name" class="offset-1 col-1 col-form-label">Actor Name</label>
+                <label for="actor_name" class="offset-1 col-1 col-form-label">Đạo diễn</label>
                 <div class="col-4">
-                    <input wire:model.debounce.1000ms="searchActorName" placeholder="Actor Name"type="text" class="form-control">
+                    <input wire:model.debounce.1000ms="searchActorName" placeholder="Đạo diễn"type="text" class="form-control">
                 </div>
             </div>
 <div class="form-group row">
-                <label for="director" class="col-1 col-form-label">Director</label>
+                <label for="director" class="col-1 col-form-label">Giám đốc</label>
                 <div class="col-4">
-                    <input wire:model.debounce.1000ms="searchDirector" placeholder="Director"type="text" class="form-control">
+                    <input wire:model.debounce.1000ms="searchDirector" placeholder="Giám đốc"type="text" class="form-control">
                 </div>
-                <label for="status" class="offset-1 col-1 col-form-label">Status</label>
+                <label for="status" class="offset-1 col-1 col-form-label">Trạng thái</label>
                 <div class="col-4">
-                    <input wire:model.debounce.1000ms="searchStatus" placeholder="Status"type="text" class="form-control">
+                    <input wire:model.debounce.1000ms="searchStatus" placeholder="Trạng thái"type="text" class="form-control">
                 </div>
             </div>
 
@@ -66,8 +66,12 @@
                 <thead>
                     <tr role='row'>
                         <th>STT</th>
+                        <th class="{{$key_name=="name"?($sortingName=="desc"?"sorting_desc":"sorting_asc"):"sorting"}}" wire:click="sorting('name')">Tên sản phẩm</th>
+                        <th class="{{$key_name=="contract_number"?($sortingName=="desc"?"sorting_desc":"sorting_asc"):"sorting"}}" wire:click="sorting('contract_number')">Số hợp đồng</th>
+                        <th class="{{$key_name=="actor_name"?($sortingName=="desc"?"sorting_desc":"sorting_asc"):"sorting"}}" wire:click="sorting('actor_name')">Đạo diễn</th>
+                        <th class="{{$key_name=="director"?($sortingName=="desc"?"sorting_desc":"sorting_asc"):"sorting"}}" wire:click="sorting('director')">Giám đốc</th>
+                        <th>Trạng thái</th>
                         
-                        <th class="{{$key_name=="name"?($sortingName=="desc"?"sorting_desc":"sorting_asc"):"sorting"}}" wire:click="sorting('name')">Name</th><th class="{{$key_name=="contract_number"?($sortingName=="desc"?"sorting_desc":"sorting_asc"):"sorting"}}" wire:click="sorting('contract_number')">Contract Number</th><th class="{{$key_name=="actor_name"?($sortingName=="desc"?"sorting_desc":"sorting_asc"):"sorting"}}" wire:click="sorting('actor_name')">Actor Name</th><th class="{{$key_name=="director"?($sortingName=="desc"?"sorting_desc":"sorting_asc"):"sorting"}}" wire:click="sorting('director')">Director</th><th>Status</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -108,8 +112,8 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label> Name(<span style="color:red">*</span>)</label>
-                        <input type="text"  class="form-control" placeholder="Name" wire:model.defer="name">
+                        <label> Tên sản phẩm(<span style="color:red">*</span>)</label>
+                        <input type="text"  class="form-control" placeholder="Tên sản phẩm" wire:model.defer="name">
                         @error("name")
                             @include("layouts.partials.text._error")
                         @enderror
@@ -117,8 +121,8 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label> Contract Number(<span style="color:red">*</span>)</label>
-                        <input type="text"  class="form-control" placeholder="Contract Number" wire:model.defer="contract_number">
+                        <label> Số hợp đồng(<span style="color:red">*</span>)</label>
+                        <input type="text"  class="form-control" placeholder="Số hợp đồng" wire:model.defer="contract_number">
                         @error("contract_number")
                             @include("layouts.partials.text._error")
                         @enderror
@@ -126,8 +130,8 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label> Actor Name(<span style="color:red">*</span>)</label>
-                        <input type="text"  class="form-control" placeholder="Actor Name" wire:model.defer="actor_name">
+                        <label> Đạo diễn(<span style="color:red">*</span>)</label>
+                        <input type="text"  class="form-control" placeholder="Đạo diễn" wire:model.defer="actor_name">
                         @error("actor_name")
                             @include("layouts.partials.text._error")
                         @enderror
@@ -135,8 +139,8 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label> Director(<span style="color:red">*</span>)</label>
-                        <input type="text"  class="form-control" placeholder="Director" wire:model.defer="director">
+                        <label> Giám đốc(<span style="color:red">*</span>)</label>
+                        <input type="text"  class="form-control" placeholder="Giám đốc" wire:model.defer="director">
                         @error("director")
                             @include("layouts.partials.text._error")
                         @enderror
@@ -144,8 +148,8 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label> Status(<span style="color:red">*</span>)</label>
-                        <input type="text"  class="form-control" placeholder="Status" wire:model.defer="status">
+                        <label> Trạng thái(<span style="color:red">*</span>)</label>
+                        <input type="text"  class="form-control" placeholder="Trạng thái" wire:model.defer="status">
                         @error("status")
                             @include("layouts.partials.text._error")
                         @enderror
