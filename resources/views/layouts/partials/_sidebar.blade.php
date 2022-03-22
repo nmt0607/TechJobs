@@ -73,6 +73,12 @@
               <p>Sản phẩm dịch vụ</p>
             </a>
           </li>
+            <li class="nav-item active">
+                <a href="{{route('admin.delegate.index')}}" class="nav-link {{setActive2('delegate')}}">
+                    <i class="nav-icon fas fa-user-alt"></i>
+                    <p>Người đại diện</p>
+                </a>
+            </li>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
