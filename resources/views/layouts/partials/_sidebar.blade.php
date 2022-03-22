@@ -40,7 +40,7 @@
               </li>
             </ul>
           </li>
-          <li class="nav-item {{setOpen('user')}}">
+          <li class="nav-item {{setOpen('user')}} {{setOpen('role')}}">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-user"></i>
               <p>Người dùng</p>
@@ -57,6 +57,12 @@
                 <a href="{{route('user.index')}}" class="nav-link {{setActive2('user')}}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Danh sách người dùng</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route('admin.role.index')}}" class="nav-link {{setActive2('role')}}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Danh sách nhóm người dùng</p>
                 </a>
               </li>
             </ul>

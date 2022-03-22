@@ -32,6 +32,7 @@ class CreatePermissionTables extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('guard_name');
+            $table->longText('description')->nullable()->comment('Mô tả');
             $table->timestamps();
         });
 
