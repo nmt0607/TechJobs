@@ -108,13 +108,20 @@ class Index extends BaseLive {
         $this->emit('closeModalCreateEdit');
     }
 
+    public function show($row){
+        $this->mode = 'show';
+        $this->editId = $row['id'];
+        $this->name = $row["name"];
+        $this->phone = $row["phone"];
+        $this->email = $row["email"];
+    }
+
     public function edit($row){
         $this->mode = 'update';
         $this->editId = $row['id'];
         $this->name = $row["name"];
         $this->phone = $row["phone"];
         $this->email = $row["email"];
-
     }
 
     public function standardData(){
