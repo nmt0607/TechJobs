@@ -10,7 +10,9 @@ use \Webklex\PHPIMAP\Support\FolderCollection;
 use Carbon\Carbon;
 class MailController extends Controller{
 
+
     public function index(Request $request){
+        set_time_limit(0);
         // dd(Carbon::now('+6:53')->format('Y-m-d H:i:s'));
         $client = Client::account('default');
         //Connect to the IMAP Server
