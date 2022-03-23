@@ -20,7 +20,6 @@ class CreateDelegatesTable extends Migration
             $table->string('phone', 20)->nullable()->comment('sdt');
             $table->string('email',255)->nullable()->comment('email');
             $table->string('position',255)->nullable()->comment('chức danh');
-            $table->bigInteger('customer_id')->nullable()->comment('khách hàng');
             $table->text('note')->nullable()->comment('ghi chú');
             $table->timestamps();
             $table->softDeletes();

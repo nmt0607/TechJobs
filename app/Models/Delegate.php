@@ -120,5 +120,11 @@ class Delegate extends Model
         return $this->translate;
     }
 
+    public function customers(){
+        return $this->hasMany(Customer::class, 'delegate_id');
+    }
 
+    public function getCustomerName(){
+        return implode(',', array_column($this->customers->toArray() , 'name'));
+    }
 }
