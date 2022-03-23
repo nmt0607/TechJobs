@@ -11,6 +11,7 @@
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.3",
+        "html2text/html2text": "^4.3",
         "kdion4891/laravel-livewire-tables": "^1.6",
         "laravel/framework": "^8.12",
         "laravel/tinker": "^2.5",
@@ -21,7 +22,8 @@
         "nicolaslopezj/searchable": "^1.13",
         "owen-it/laravel-auditing": "^12.0",
         "phpoffice/phpspreadsheet": "^1.17",
-        "spatie/laravel-permission": "^4.0"
+        "spatie/laravel-permission": "^4.0",
+        "webklex/laravel-imap": "^2.4"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
