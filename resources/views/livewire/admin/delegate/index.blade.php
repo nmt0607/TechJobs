@@ -44,19 +44,19 @@
                     <input wire:model.debounce.1000ms="searchEmail" placeholder="Nhập Email" type="text"
                            class="form-control">
                 </div>
-                <label for="position" class="offset-1 col-1 col-form-label">Chức danh</label>
-                <div class="col-4">
-                    <input wire:model.debounce.1000ms="searchPosition" placeholder="Nhập chức danh" type="text"
-                           class="form-control">
-                </div>
+{{--                <label for="position" class="offset-1 col-1 col-form-label">Chức danh</label>--}}
+{{--                <div class="col-4">--}}
+{{--                    <input wire:model.debounce.1000ms="searchPosition" placeholder="Nhập chức danh" type="text"--}}
+{{--                           class="form-control">--}}
+{{--                </div>--}}
             </div>
-            <div class="form-group row">
-                <label for="customer_id" class="col-1 col-form-label">Khách hàng</label>
-                <div class="col-4">
-                    <input wire:model.debounce.1000ms="searchCustomerId" placeholder="Customer" type="text"
-                           class="form-control">
-                </div>
-            </div>
+{{--            <div class="form-group row">--}}
+{{--                <label for="customer_id" class="col-1 col-form-label">Khách hàng</label>--}}
+{{--                <div class="col-4">--}}
+{{--                    <input wire:model.debounce.1000ms="searchCustomerId" placeholder="Customer" type="text"--}}
+{{--                           class="form-control">--}}
+{{--                </div>--}}
+{{--            </div>--}}
 
 
             <div class="filter d-flex align-items-center justify-content-between mb-2">
@@ -115,7 +115,7 @@
                         <td>{!!boldTextSearchV2($row->phone,$searchPhone)!!}</td>
                         <td>{!!boldTextSearchV2($row->email,$searchEmail)!!}</td>
                         <td>{!!boldTextSearchV2($row->position,$searchPosition)!!}</td>
-                        <td>{!!boldTextSearchV2($row->customer_id,$searchCustomerId)!!}</td>
+                        <td><span data-toggle="tooltip" data-placement="top" title="{{$row->getCustomerName()}}">{{$row->getCustomerName()}}</span></td>
                         <td>
                             <button type="button" data-toggle="modal" data-target="#modelCreateEdit" class="btn par6"
                                     title="update" wire:click='edit({{$row}})'>
@@ -195,8 +195,16 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label> Khách hàng(<span style="color:red">*</span>)</label>
-                        <input type="text" class="form-control" placeholder="Nhập khách hàng"
-                               wire:model.defer="customer_id">
+                        <select type="text" class="form-control select2-box" place
+                               wire:model.defer="customer_id" multiple="multiple">
+                            <option value="" hidden>Chọn khách hàng</option>
+                            @if(!$customer->count())
+                                <option value="" disabled>Không có bản ghi hiển thị</option>
+                            @endif
+                            @foreach($customer as $key => $cust)
+                                <option value="{{$key}}">{{$cust}}</option>
+                            @endforeach
+                        </select>
                         @error("customer_id")
                         @include("layouts.partials.text._error")
                         @enderror
@@ -204,11 +212,9 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label> Ghi chú(<span style="color:red">*</span>)</label>
+                        <label> Ghi chú</label>
                         <input type="text" class="form-control" placeholder="Ghi chú" wire:model.defer="note">
-                        @error("note")
-                        @include("layouts.partials.text._error")
-                        @enderror
+
                     </div>
                 </div>
 
@@ -249,6 +255,10 @@
     $("document").ready(() => {
         window.livewire.on('closeModalCreateEdit', () => {
             $('#modelCreateEdit').modal('hide');
+        });
+        $('.select2-box').on('change', function (e) {
+            var data = $('.select2-box').select2("val");
+            @this.set('customer_id', data);
         });
     });
 </script>

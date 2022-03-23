@@ -18,6 +18,7 @@ class CreateCustomersTable extends Migration
             $table->string('name',1000)->nullable()->comment('Ten khach hang');
             $table->string('phone',1000)->nullable()->comment('So dien thoai');
             $table->string('email',1000)->nullable()->comment('Email');
+            $table->bigInteger('delegate_id')->nullable()->comment('Người đại diện');
             $table->timestamps();
         });
     }

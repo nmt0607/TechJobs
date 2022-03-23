@@ -2,6 +2,7 @@
 
 namespace app\Http\Livewire\Admin\Delegate;
 
+use App\Models\Customer;
 use Livewire\Component;
 use App\Http\Livewire\Base\BaseLive;
 use App\Models\Delegate;
@@ -26,22 +27,20 @@ class Index extends BaseLive {
 
     protected $rules = [
         'name' => 'required',
-        'code' => 'required',
-        'phone' => 'required',
-        'email' => 'required',
+        'phone' => 'required|numeric',
+        'email' => 'required|email',
         'position' => 'required',
         'customer_id' => 'required',
-        'note' => 'required',
     ];
 
     protected $messages = [
-        'name.required' => 'The Name is required',
-        'code.required' => 'The Code is required',
-        'phone.required' => 'The Phone is required',
-        'email.required' => 'The Email is required',
-        'position.required' => 'The Position is required',
-        'customer_id.required' => 'The Customer Id is required',
-        'note.required' => 'The Note is required',
+        'name.required' => 'Tên bắt buộc',
+        'phone.required' => 'Số điện thoại bắt buộc',
+        'email.required' => 'Email bắt buộc',
+        'email.email' => 'Email không đúng định dạng',
+        'position.required' => 'Chức danh bắt buộc',
+        'customer_id.required' => 'Khách hàng bắt buộc',
+        'phone.numeric' => 'Số điện thoại không đúng định dạng',
     ];
 
 
@@ -85,10 +84,13 @@ class Index extends BaseLive {
         if($this->searchNote) {
             $query->where("note", "like", "%".$this->searchNote."%");
         }
-
+        $query->with('customers');
         $data = $query->orderBy($this->key_name,$this->sortingName)->paginate($this->perPage);
+        $customer=$this->getListCustomer();
+        $this->emit('setSelect2Input');
         return view('livewire.admin.delegate.index', [
             'data'=> $data,
+            'customer'=> $customer,
         ]);
     }
 
@@ -102,7 +104,7 @@ class Index extends BaseLive {
         $this->phone = "";
         $this->email = "";
         $this->position = "";
-        $this->customer_id = "";
+        $this->customer_id = [];
         $this->note = "";
         $this->resetValidation();
     }
@@ -115,28 +117,31 @@ class Index extends BaseLive {
         $this->standardData();
         $this->validate();
         if($this->mode=='create'){
-            Delegate::create([
+            $new=Delegate::create([
                 "name" => $this->name,
                 "code" => $this->code,
                 "phone" => $this->phone,
                 "email" => $this->email,
                 "position" => $this->position,
-                "customer_id" => $this->customer_id,
                 "note" => $this->note,
             ]);
 
+            Customer::whereIn('id',$this->customer_id)->update([
+                'delegate_id'=>$new->id,
+            ]);
         }
         else {
-            Delegate::where("id",$this->editId)->update([
+            $update=Delegate::where("id",$this->editId)->update([
                 "name" => $this->name,
                 "code" => $this->code,
                 "phone" => $this->phone,
                 "email" => $this->email,
                 "position" => $this->position,
-                "customer_id" => $this->customer_id,
                 "note" => $this->note,
             ]);
-
+            Customer::whereIn('id',$this->customer_id)->update([
+                'delegate_id'=>$this->editId,
+            ]);
         }
         $this->resetValidate();
         if($this->mode=='create'){
@@ -156,7 +161,7 @@ class Index extends BaseLive {
         $this->phone = $row["phone"];
         $this->email = $row["email"];
         $this->position = $row["position"];
-        $this->customer_id = $row["customer_id"];
+        $this->customer_id=array_column($row['customers'] , 'id');
         $this->note = $row["note"];
 
     }
@@ -167,7 +172,6 @@ class Index extends BaseLive {
         $this->phone = trim($this->phone);
         $this->email = trim($this->email);
         $this->position = trim($this->position);
-        $this->customer_id = trim($this->customer_id);
         $this->note = trim($this->note);
 
     }
@@ -180,11 +184,9 @@ class Index extends BaseLive {
     public function resetSearch(){
         $this->search = "";
         $this->searchName = "";
-        $this->searchCode = "";
         $this->searchPhone = "";
         $this->searchEmail = "";
         $this->searchPosition = "";
-        $this->searchCustomerId = "";
         $this->searchNote = "";
         $this->reset('key_name');
         $this->reset('sortingName');
@@ -206,5 +208,7 @@ class Index extends BaseLive {
     public function getSortName(){
         return $this->sortingName == "desc" ? "asc" : "desc";
     }
-    
+    public function getListCustomer(){
+        return Customer::pluck('name', 'id');
+    }
 }
