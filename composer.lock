@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5a5f6d6cffd11b5714ebf8222f47f3fa",
+    "content-hash": "f0fc9b4d49d4e7bca9fb057500124f2b",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1071,64 +1071,45 @@
             "time": "2021-10-06T17:43:30+00:00"
         },
         {
-            "name": "imritesh/livecrud",
-            "version": "v2.3.1",
+            "name": "html2text/html2text",
+            "version": "4.3.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/riteshsingh1/livewire-crud.git",
-                "reference": "c6d455425189b38b01af5993eb3eee3231278548"
+                "url": "https://github.com/mtibben/html2text.git",
+                "reference": "61ad68e934066a6f8df29a3d23a6460536d0855c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/riteshsingh1/livewire-crud/zipball/c6d455425189b38b01af5993eb3eee3231278548",
-                "reference": "c6d455425189b38b01af5993eb3eee3231278548",
+                "url": "https://api.github.com/repos/mtibben/html2text/zipball/61ad68e934066a6f8df29a3d23a6460536d0855c",
+                "reference": "61ad68e934066a6f8df29a3d23a6460536d0855c",
                 "shasum": ""
             },
-            "require": {
-                "illuminate/support": "~7|~8"
-            },
             "require-dev": {
-                "orchestra/testbench": "~5|~6",
-                "phpunit/phpunit": "~9.0"
+                "phpunit/phpunit": "~4"
+            },
+            "suggest": {
+                "ext-mbstring": "For best performance",
+                "symfony/polyfill-mbstring": "If you can't install ext-mbstring"
             },
             "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Imritesh\\LiveCrud\\LiveCrudServiceProvider"
-                    ],
-                    "aliases": {
-                        "LiveCrud": "Imritesh\\LiveCrud\\Facades\\LiveCrud"
-                    }
-                }
-            },
             "autoload": {
                 "psr-4": {
-                    "Imritesh\\LiveCrud\\": "src/"
+                    "Html2Text\\": [
+                        "src/",
+                        "test/"
+                    ]
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "MIT"
+                "GPL-2.0-or-later"
             ],
-            "authors": [
-                {
-                    "name": "Ritesh Singh",
-                    "email": "hello@imritesh.com",
-                    "homepage": "https://imritesh.com"
-                }
-            ],
-            "description": "Generate Basic Crud Operations With Livewire and Tailwind Css For Laravel",
-            "homepage": "https://github.com/riteshsingh1/livewire-crud",
-            "keywords": [
-                "LiveCrud",
-                "laravel"
-            ],
+            "description": "Converts HTML to formatted plain text",
             "support": {
-                "issues": "https://github.com/riteshsingh1/livewire-crud/issues",
-                "source": "https://github.com/riteshsingh1/livewire-crud/tree/v2.3.1"
+                "issues": "https://github.com/mtibben/html2text/issues",
+                "source": "https://github.com/mtibben/html2text/tree/4.3.1"
             },
-            "time": "2021-08-05T15:43:01+00:00"
+            "time": "2020-04-16T23:44:31+00:00"
         },
         {
             "name": "kdion4891/laravel-livewire-tables",
@@ -6437,6 +6418,141 @@
             "time": "2020-11-12T00:07:28+00:00"
         },
         {
+            "name": "webklex/laravel-imap",
+            "version": "2.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Webklex/laravel-imap.git",
+                "reference": "97c480cc2dd6b76859c5e21ccb4fa6659b7ad6de"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Webklex/laravel-imap/zipball/97c480cc2dd6b76859c5e21ccb4fa6659b7ad6de",
+                "reference": "97c480cc2dd6b76859c5e21ccb4fa6659b7ad6de",
+                "shasum": ""
+            },
+            "require": {
+                "ext-fileinfo": "*",
+                "ext-iconv": "*",
+                "ext-mbstring": "*",
+                "laravel/framework": ">=5.0.0",
+                "php": ">=5.5.9",
+                "webklex/php-imap": "^2.4"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                },
+                "laravel": {
+                    "providers": [
+                        "Webklex\\IMAP\\Providers\\LaravelServiceProvider"
+                    ],
+                    "aliases": {
+                        "Client": "Webklex\\IMAP\\Facades\\Client"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Webklex\\IMAP\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Malte Goldenbaum",
+                    "email": "github@webklex.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Laravel IMAP client",
+            "homepage": "https://github.com/webklex/laravel-imap",
+            "keywords": [
+                "idle",
+                "imap",
+                "laravel",
+                "laravel-imap",
+                "mail",
+                "oauth",
+                "pop3",
+                "webklex"
+            ],
+            "support": {
+                "issues": "https://github.com/Webklex/laravel-imap/issues",
+                "source": "https://github.com/Webklex/laravel-imap/tree/2.4.0"
+            },
+            "time": "2021-01-09T19:46:21+00:00"
+        },
+        {
+            "name": "webklex/php-imap",
+            "version": "2.7.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Webklex/php-imap.git",
+                "reference": "e22be3ed3760a939cd68b2907969c4b2478e8588"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Webklex/php-imap/zipball/e22be3ed3760a939cd68b2907969c4b2478e8588",
+                "reference": "e22be3ed3760a939cd68b2907969c4b2478e8588",
+                "shasum": ""
+            },
+            "require": {
+                "ext-fileinfo": "*",
+                "ext-iconv": "*",
+                "ext-json": "*",
+                "ext-mbstring": "*",
+                "ext-openssl": "*",
+                "illuminate/pagination": ">=5.0.0",
+                "nesbot/carbon": ">=1.0",
+                "php": ">=5.5.9",
+                "symfony/http-foundation": ">=2.8.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Webklex\\PHPIMAP\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Malte Goldenbaum",
+                    "email": "github@webklex.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "PHP IMAP client",
+            "homepage": "https://github.com/webklex/php-imap",
+            "keywords": [
+                "imap",
+                "mail",
+                "php-imap",
+                "pop3",
+                "webklex"
+            ],
+            "support": {
+                "issues": "https://github.com/Webklex/php-imap/issues",
+                "source": "https://github.com/Webklex/php-imap/tree/2.7.2"
+            },
+            "time": "2021-09-27T04:16:22+00:00"
+        },
+        {
             "name": "webmozart/assert",
             "version": "1.10.0",
             "source": {
@@ -9467,5 +9583,5 @@
         "ext-json": "*"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.0.0"
+    "plugin-api-version": "2.1.0"
 }
