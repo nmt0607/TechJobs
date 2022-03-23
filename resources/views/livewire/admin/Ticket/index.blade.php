@@ -20,21 +20,16 @@
     <div class="card">
         <div class="card-body p-2">
             <div class="form-group row">
-                <label for="Search" class="col-1 col-form-label">Search</label>
+                <label for="title" class="col-1 col-form-label">Tiêu đề</label>
                 <div class="col-4">
-                    <input wire:model.debounce.1000ms="search" placeholder="Search"type="text" class="form-control">
+                    <input wire:model.debounce.1000ms="searchTitle" placeholder="Tiêu đề"type="text" class="form-control">
                 </div>
                 <label for="require_code" class="offset-1 col-1 col-form-label">Mã yêu cầu</label>
                 <div class="col-4">
                     <input wire:model.debounce.1000ms="searchRequireCode" placeholder="Mã yêu cầu"type="text" class="form-control">
                 </div>
             </div>
-            <div class="form-group row">
-                <label for="title" class="col-1 col-form-label">Tiêu đề</label>
-                <div class="col-4">
-                    <input wire:model.debounce.1000ms="searchTitle" placeholder="Tiêu đề"type="text" class="form-control">
-                </div>
-            </div>
+
 
 
             <div class="filter d-flex align-items-center justify-content-between mb-2">
@@ -69,7 +64,7 @@
                         <th class="{{$key_name=="product_id"?($sortingName=="desc"?"sorting_desc":"sorting_asc"):"sorting"}}" wire:click="sorting('product_id')">Product Id</th>
                         <th class="{{$key_name=="status_type"?($sortingName=="desc"?"sorting_desc":"sorting_asc"):"sorting"}}" wire:click="sorting('status_type')">Trạng thái</th>
                         <th class="{{$key_name=="priority_type"?($sortingName=="desc"?"sorting_desc":"sorting_asc"):"sorting"}}" wire:click="sorting('priority_type')">Độ ưu tiên</th>
-                        <th class="{{$key_name=="sla_id"?($sortingName=="desc"?"sorting_desc":"sorting_asc"):"sorting"}}" wire:click="sorting('sla_id')"></th>
+                        <th class="{{$key_name=="sla_id"?($sortingName=="desc"?"sorting_desc":"sorting_asc"):"sorting"}}" wire:click="sorting('sla_id')">Sla Id</th>
                         <th class="{{$key_name=="delegate_id"?($sortingName=="desc"?"sorting_desc":"sorting_asc"):"sorting"}}" wire:click="sorting('delegate_id')">Delegate Id</th>
                         <th class="{{$key_name=="type"?($sortingName=="desc"?"sorting_desc":"sorting_asc"):"sorting"}}" wire:click="sorting('type')">Type</th>
                         <th class="{{$key_name=="user_category_id"?($sortingName=="desc"?"sorting_desc":"sorting_asc"):"sorting"}}" wire:click="sorting('user_category_id')">User Category Id</th>
@@ -104,6 +99,9 @@
                                 <button type="button" data-toggle="modal" data-target="#modelCreateEdit"  class="btn par6" title="update" wire:click='edit({{$row}})'>
                                     <img src="/images/pent2.svg" alt="pent">
                                 </button>
+                                <button type="button" data-toggle="modal" data-target="#modelCreateEdit"  class="btn par6" title="detail" wire:click='detail({{$row}})'>
+                                    <img src="/images/eye.svg" alt="pent">
+                                </button>
                                 @include('livewire.common.buttons._delete')
                             </td>
                         </tr>
@@ -121,7 +119,7 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">{{$this->mode=='create'?"Thêm mới":"Chỉnh sửa"}}</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">{{$this->mode=='create'?"Thêm mới":($this->mode =='detail'?"Chi tiết":"Chỉnh sửa")}}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close" wire:click="resetValidate()">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -129,7 +127,7 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label> Mã yêu cầu(<span style="color:red">*</span>)</label>
-                        <input type="text"  class="form-control" placeholder="Mã yêu cầu" wire:model.defer="require_code">
+                        <input @if($mode == 'detail') disabled @endif type="text"  class="form-control" placeholder="Mã yêu cầu" wire:model.defer="require_code">
                         @error("require_code")
                             @include("layouts.partials.text._error")
                         @enderror
@@ -138,7 +136,7 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label> Tiêu đề(<span style="color:red">*</span>)</label>
-                        <input type="text"  class="form-control" placeholder="Tiêu đề" wire:model.defer="title">
+                        <input @if($mode == 'detail') disabled  @endif type="text"  class="form-control" placeholder="Tiêu đề" wire:model.defer="title">
                         @error("title")
                             @include("layouts.partials.text._error")
                         @enderror
@@ -147,7 +145,7 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label> Require Id(<span style="color:red">*</span>)</label>
-                        <input type="text"  class="form-control" placeholder="Require Id" wire:model.defer="require_id">
+                        <input @if($mode == 'detail') disabled  @endif type="text"  class="form-control" placeholder="Require Id" wire:model.defer="require_id">
                         @error("require_id")
                             @include("layouts.partials.text._error")
                         @enderror
@@ -156,7 +154,7 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label> Customer Id(<span style="color:red">*</span>)</label>
-                        <input type="text"  class="form-control" placeholder="Customer Id" wire:model.defer="customer_id">
+                        <input @if($mode == 'detail') disabled  @endif type="text"  class="form-control" placeholder="Customer Id" wire:model.defer="customer_id">
                         @error("customer_id")
                             @include("layouts.partials.text._error")
                         @enderror
@@ -165,7 +163,7 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label> Product Id(<span style="color:red">*</span>)</label>
-                        <input type="text"  class="form-control" placeholder="Product Id" wire:model.defer="product_id">
+                        <input @if($mode == 'detail') disabled  @endif type="text"  class="form-control" placeholder="Product Id" wire:model.defer="product_id">
                         @error("product_id")
                             @include("layouts.partials.text._error")
                         @enderror
@@ -174,7 +172,7 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label> Trạng thái(<span style="color:red">*</span>)</label>
-                        <input type="text"  class="form-control" placeholder="Trạng thái" wire:model.defer="status_type">
+                        <input @if($mode == 'detail') disabled  @endif type="text"  class="form-control" placeholder="Trạng thái" wire:model.defer="status_type">
                         @error("status_type")
                             @include("layouts.partials.text._error")
                         @enderror
@@ -183,7 +181,7 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label> Độ ưu tiên(<span style="color:red">*</span>)</label>
-                        <input type="text"  class="form-control" placeholder="Độ ưu tiên" wire:model.defer="priority_type">
+                        <input @if($mode == 'detail') disabled  @endif type="text"  class="form-control" placeholder="Độ ưu tiên" wire:model.defer="priority_type">
                         @error("priority_type")
                             @include("layouts.partials.text._error")
                         @enderror
@@ -191,8 +189,8 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label> (<span style="color:red">*</span>)</label>
-                        <input type="text"  class="form-control" placeholder="" wire:model.defer="sla_id">
+                        <label> Sla Id (<span style="color:red">*</span>)</label>
+                        <input @if($mode == 'detail') disabled  @endif type="text"  class="form-control" placeholder="" wire:model.defer="sla_id">
                         @error("sla_id")
                             @include("layouts.partials.text._error")
                         @enderror
@@ -201,7 +199,7 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label> Delegate Id(<span style="color:red">*</span>)</label>
-                        <input type="text"  class="form-control" placeholder="Delegate Id" wire:model.defer="delegate_id">
+                        <input @if($mode == 'detail') disabled  @endif type="text"  class="form-control" placeholder="Delegate Id" wire:model.defer="delegate_id">
                         @error("delegate_id")
                             @include("layouts.partials.text._error")
                         @enderror
@@ -210,7 +208,7 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label> Type(<span style="color:red">*</span>)</label>
-                        <input type="text"  class="form-control" placeholder="Type" wire:model.defer="type">
+                        <input @if($mode == 'detail') disabled  @endif type="text"  class="form-control" placeholder="Type" wire:model.defer="type">
                         @error("type")
                             @include("layouts.partials.text._error")
                         @enderror
@@ -219,7 +217,7 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label> User Category Id(<span style="color:red">*</span>)</label>
-                        <input type="text"  class="form-control" placeholder="User Category Id" wire:model.defer="user_category_id">
+                        <input @if($mode == 'detail') disabled  @endif type="text"  class="form-control" placeholder="User Category Id" wire:model.defer="user_category_id">
                         @error("user_category_id")
                             @include("layouts.partials.text._error")
                         @enderror
@@ -228,7 +226,7 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label> User Id(<span style="color:red">*</span>)</label>
-                        <input type="text"  class="form-control" placeholder="User Id" wire:model.defer="user_id">
+                        <input @if($mode == 'detail') disabled  @endif type="text"  class="form-control" placeholder="User Id" wire:model.defer="user_id">
                         @error("user_id")
                             @include("layouts.partials.text._error")
                         @enderror
@@ -237,7 +235,7 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label> Giải pháp(<span style="color:red">*</span>)</label>
-                        <input type="text"  class="form-control" placeholder="Giải pháp" wire:model.defer="solution">
+                        <input @if($mode == 'detail') disabled  @endif type="text"  class="form-control" placeholder="Giải pháp" wire:model.defer="solution">
                         @error("solution")
                             @include("layouts.partials.text._error")
                         @enderror
@@ -246,7 +244,7 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label> Đánh giá(<span style="color:red">*</span>)</label>
-                        <input type="text"  class="form-control" placeholder="Đánh giá" wire:model.defer="rate">
+                        <input @if($mode == 'detail') disabled  @endif type="text"  class="form-control" placeholder="Đánh giá" wire:model.defer="rate">
                         @error("rate")
                             @include("layouts.partials.text._error")
                         @enderror
@@ -255,7 +253,7 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label> Phản hồi(<span style="color:red">*</span>)</label>
-                        <input type="text"  class="form-control" placeholder="Phản hồi" wire:model.defer="feedback">
+                        <input @if($mode == 'detail') disabled  @endif type="text"  class="form-control" placeholder="Phản hồi" wire:model.defer="feedback">
                         @error("feedback")
                             @include("layouts.partials.text._error")
                         @enderror
@@ -264,7 +262,7 @@
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" wire:click="resetValidate()">Đóng</button>
-                    <button type="button" class="btn btn-primary" wire:click='saveData'>Lưu</button>
+                    <button type="button" @if($mode == 'detail') disabled  @endif  class="btn btn-primary" wire:click='saveData'>Lưu</button>
                 </div>
             </div>
         </div>

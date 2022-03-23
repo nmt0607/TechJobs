@@ -245,5 +245,24 @@ class Index extends BaseLive {
     public function getSortName(){
         return $this->sortingName == "desc" ? "asc" : "desc";
     }
+    public function detail($row){
+        $this->mode = 'detail';
+        $this->editId = $row['id'];
+        $this->require_code = $row["require_code"];
+        $this->title = $row["title"];
+        $this->require_id = $row["require_id"];
+        $this->customer_id = $row["customer_id"];
+        $this->product_id = $row["product_id"];
+        $this->status_type = $row["status_type"];
+        $this->priority_type = $row["priority_type"];
+        $this->sla_id = $row["sla_id"];
+        $this->delegate_id = $row["delegate_id"];
+        $this->type = $row["type"];
+        $this->user_category_id = $row["user_category_id"];
+        $this->user_id = $row["user_id"];
+        $this->solution = $row["solution"];
+        $this->rate = $row["rate"];
+        $this->feedback = $row["feedback"];
+    }
     
 }

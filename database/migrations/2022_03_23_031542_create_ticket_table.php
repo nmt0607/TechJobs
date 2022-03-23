@@ -15,7 +15,7 @@ class CreateTicketTable extends Migration
     {
         Schema::create('ticket', function (Blueprint $table) {
             $table->id();
-            $table->string('require)code')->nullable()->comment('Mã yêu cầu');
+            $table->string('require_code')->nullable()->comment('Mã yêu cầu');
             $table->string('title')->nullable()->comment('Tiêu đề');
             $table->bigInteger('require_id')->nullable()->comment('Map với requirement');
             $table->bigInteger('customer_id')->nullable()->comment('Map với customer');
