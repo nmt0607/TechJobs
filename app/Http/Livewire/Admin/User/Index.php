@@ -194,5 +194,16 @@ class Index extends BaseLive {
     public function getSortName(){
         return $this->sortingName == "desc" ? "asc" : "desc";
     }
+    public function detail ($row){
+        $this->mode = 'detail';
+        $this->editId = $row['id'];
+        $this->name = $row["name"];
+        $this->account = $row["account"];
+        $this->phone = $row["phone"];
+        $this->email = $row["email"];
+        $this->date = $row["date"];
+        $this->sex = $row["sex"];
+        $this->department = $row["department"];
+    }
     
 }

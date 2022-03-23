@@ -102,6 +102,9 @@
                                 <button type="button" data-toggle="modal" data-target="#modelCreateEdit" class="btn par6" title="update" wire:click='edit({{ $row }})'>
                                     <img src="/images/pent2.svg" alt="pent">
                                 </button>
+                                <button type="button" data-toggle="modal" data-target="#modelDetail" class="btn par6" title="detail" wire:click='detail({{ $row }})'>
+                                    <img src="/images/eye.svg" alt="pent">
+                                </button>
                                 @include('livewire.common.buttons._delete')
                             </td>
                         </tr>
@@ -127,7 +130,7 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label> Họ và tên(<span style="color:red">*</span>)</label>
-                        <input type="text" class="form-control" placeholder="Họ và tên" wire:model.defer="name">
+                        <input  type="text" class="form-control" placeholder="Họ và tên" wire:model.defer="name">
                         @error('name')
                             @include('layouts.partials.text._error')
                         @enderror
@@ -199,6 +202,91 @@
             </div>
         </div>
     </div>
+{{-- Modal Detail --}}
+<div wire:ignore.self class="modal fade" id="modelDetail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Chi tiết</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" wire:click="resetValidate()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label> Họ và tên(<span style="color:red">*</span>)</label>
+                    <input disabled  type="text" class="form-control" placeholder="Họ và tên" wire:model.defer="name">
+                    @error('name')
+                        @include('layouts.partials.text._error')
+                    @enderror
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label> Tài khoản(<span style="color:red">*</span>)</label>
+                    <input disabled type="text" class="form-control" placeholder="Tài khoản" wire:model.defer="account">
+                    @error('account')
+                        @include('layouts.partials.text._error')
+                    @enderror
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label> SĐT(<span style="color:red">*</span>)</label>
+                    <input disabled type="text" class="form-control" placeholder="SĐT" wire:model.defer="phone">
+                    @error('phone')
+                        @include('layouts.partials.text._error')
+                    @enderror
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label> Email(<span style="color:red">*</span>)</label>
+                    <input disabled type="text" class="form-control" placeholder="Email" wire:model.defer="email">
+                    @error('email')
+                        @include('layouts.partials.text._error')
+                    @enderror
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label> Ngày sinh(<span style="color:red">*</span>)</label>
+                    <input disabled type="date" class="form-control" placeholder="Ngày sinh" wire:model.defer="date">
+                    @error('date')
+                        @include('layouts.partials.text._error')
+                    @enderror
+                </div>
+            </div>
+            <div class="modal-body">
+                <div >
+                    <label> Giới tính(<span style="color:red">*</span>)</label><br>
+                    <select disabled name="" id="" wire:model.defer="sex" class="form-control">
+                        <option value="">Chọn giới tính</option>
+                        <option value="0">Nam</option>
+                        <option value="1">Nữ</option>
+                    </select>
+                    @error('sex')
+                        @include('layouts.partials.text._error')
+                    @enderror
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label> Đơn vị(<span style="color:red">*</span>)</label>
+                    <input disabled type="text" class="form-control" placeholder="Đơn vị" wire:model.defer="department">
+                    @error('department')
+                        @include('layouts.partials.text._error')
+                    @enderror
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" wire:click="resetValidate()">Đóng</button>
+                <button disabled type="button" class="btn btn-primary" wire:click='saveData'>Lưu</button>
+            </div>
+        </div>
+    </div>
+</div>
     <div wire:ignore.self class="modal fade" id="modelExport" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
