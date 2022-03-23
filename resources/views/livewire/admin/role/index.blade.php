@@ -130,6 +130,7 @@
                     </div>
                     <div class="form-group">
                         <button type="button" class="btn btn-secondary"
+                            data-toggle="modal" data-target="#modelPermissions"
                         >Thêm phân quyền</button>
                     </div>
                 </div>
@@ -159,7 +160,7 @@
     </div>
     @include('livewire.common._modalDelete')
     <div wire:ignore.self class="modal fade" id="modelUsers" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Thêm người dùng</h5>
@@ -185,7 +186,7 @@
                         <tbody>
                             @forelse($userList as $key => $row)
                                 <tr>
-                                    <td><input type="checkbox" name="checkName" wire:model="listSelected.{{$row->id}}"></td>
+                                    <td><input type="checkbox" name="checkName" wire:model="listUsers.{{$row->id}}"></td>
                                     <td>{{ $key+1 }}</td>
                                     <td>{{ $row->name }}</td>
                                     <td>{{ $row->account }}</td>
@@ -208,7 +209,7 @@
         </div>
     </div>
     <div wire:ignore.self class="modal fade" id="modelShow" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Thông tin chi tiết</h5>
@@ -231,7 +232,6 @@
                         <table class="table table-bordered table-hover dataTable dtr-inline">
                             <thead class="">
                                 <tr>
-                                    <th></th>
                                     <th>STT</th>
                                     <th>Họ và tên</th>
                                     <th>Tài khoản</th>
@@ -246,13 +246,19 @@
                                 @forelse($userAssign as $key => $row)
                                     <tr>
                                         <td>{{ $key+1 }}</td>
-                                        <td>{{ $row->name }}</td>
-                                        <td>{{ $row->account }}</td>
-                                        <td>{{ $row->phone }}</td>
-                                        <td>{{ $row->email }}</td>
-                                        <td>{{ $row->date }}</td>
-                                        <td>{{ $row->department }}</td>
-                                        <td></td>
+                                        <td>{{ $row['name'] }}</td>
+                                        <td>{{ $row['account'] }}</td>
+                                        <td>{{ $row['phone'] }}</td>
+                                        <td>{{ $row['email'] }}</td>
+                                        <td>{{ $row['date'] }}</td>
+                                        <td>{{ $row['department'] }}</td>
+                                        <td>
+                                            <button type="button" class="btn-sm border-0 bg-transparent"
+                                                data-toggle="modal" 
+                                                title="{{__('common.button.delete')}}" wire:click="unAssignUser({{$key}})">
+                                                <img src="/images/trash.svg" alt="trash">
+                                            </button>
+                                        </td>
                                     </tr>
                                 @empty
                                     <td colspan='12' class='text-center'>Không tìm thấy dữ liệu</td>
@@ -268,6 +274,46 @@
             </div>
         </div>
     </div>
+    <div wire:ignore.self class="modal fade" id="modelPermissions" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Thêm phân quyền</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="closeModalShow" wire:click="resetValidate()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <table class="table table-bordered table-hover dataTable dtr-inline">
+                            <thead class="">
+                                <tr>
+                                    <th></th>
+                                    <th>STT</th>
+                                    <th>Tên</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse($permissionList as $key => $row)
+                                    <tr>
+                                        <td><input type="checkbox" name="checkName" wire:model="listPermissions.{{$row->id}}"></td>
+                                        <td>{{ $key+1 }}</td>
+                                        <td>{{ $row['name'] }}</td>
+                                    </tr>
+                                @empty
+                                    <td colspan='12' class='text-center'>Không tìm thấy dữ liệu</td>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" wire:click="saveListPermission">Lưu</button>
+                </div>
+            </div>
+        </div>
+    </div>
     {{--end modal--}}
 
 </div>
@@ -279,6 +325,9 @@
         });
         window.livewire.on('closeModalUsers', () => {
             $('#modelUsers').modal('hide');
+        });
+        window.livewire.on('closeModalPermissions', () => {
+            $('#modelPermissions').modal('hide');
         });
         $('#modelCreateEdit').on('hidden.bs.modal', function(){
             $('#closeModal').click();

@@ -8,6 +8,7 @@ use Spatie\Permission\Models\Role;
 use Excel;
 use App\Exports\RoleExport;
 use App\Models\User;
+use Spatie\Permission\Models\Permission;
 
 class Index extends BaseLive {
 
@@ -18,9 +19,9 @@ class Index extends BaseLive {
     public $name;
     public $guard_name;
     public $description;
-    public $userList = [];
-    public $listSelected = [];
-    public $userAssign = [];
+    public $userList = [], $permissionList = [];
+    public $listUsers = [], $listPermissions = [];
+    public $userAssign = [], $permissionAssign = [];
 
 
     protected $rules = [
@@ -40,6 +41,7 @@ class Index extends BaseLive {
     public function mount(){
         $this->perPage = 50;
         $this->userList = User::all();
+        $this->permissionList = Permission::all();
     }
 
     public function render(){
@@ -70,7 +72,7 @@ class Index extends BaseLive {
     public function resetValidate(){
         $this->name = "";
         $this->description = "";
-        $this->listSelected = [];
+        $this->listUsers = [];
         $this->userAssign = [];
         $this->resetValidation();
     }
@@ -97,15 +99,23 @@ class Index extends BaseLive {
             ]);
             $role = Role::findorfail($this->editId);
         }
-        if ($this->listSelected) {
-            foreach ($this->listSelected as $user_id => $value) {
+        if ($this->listUsers) {
+            foreach ($this->listUsers as $user_id => $value) {
                 $user = User::findorfail($user_id);
                 if ($value == true) {
-                    if (!$user->hasRole($role)) {
-                        $user->assignRole($role);
-                    }
+                    $user->assignRole($role);
                 } else {
                     $user->removeRole($role);
+                }
+            }
+        }
+        if ($this->listPermissions) {
+            foreach ($this->listPermissions as $key => $value) {
+                $permission = Permission::findorfail($key);
+                if ($value == true) {
+                    $role->givePermissionTo($permission);
+                } else {
+                    $role->revokePermissionTo($permission);
                 }
             }
         }
@@ -126,8 +136,14 @@ class Index extends BaseLive {
         $this->description = $row["description"] ??'';
         foreach ($this->userList as $user) {
             if ($user->hasRole($row['id'])) {
-                $this->listSelected[$user->id] = true;
+                $this->listUsers[$user->id] = true;
                 $this->userAssign[] = $user;
+            }
+        }
+        foreach ($this->permissionList as $permission) {
+            if ($permission->hasRole($row['id'])) {
+                $this->listPermissions[$permission->id] = true;
+                $this->permissionAssign[] = $permission;
             }
         }
     }
@@ -170,13 +186,16 @@ class Index extends BaseLive {
 
     public function saveListUser() {
         $this->emit('closeModalUsers');
-        // dd ($this->listSelected);
     }
 
-    public function unAssignUser($id) {
-        $user = User::findorfail($id);
-        $role = Role::findorfail($this->editId);
-        $user->removeRole($role);
+    public function saveListPermission() {
+        $this->emit('closeModalPermissions');
+    }
+
+    public function unAssignUser($key) {
+        $id = $this->userAssign[$key]['id'];
+        User::findorfail($id)->removeRole($this->editId);
+        unset($this->userAssign[$key]);
     }
     
 }
