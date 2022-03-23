@@ -1,11 +1,10 @@
 /node_modules
 /public/hot
-/storage/app/*
+/public/storage
 /storage/framework/cache/*
 /storage/framework/laravel-excel/*
 /storage/framework/sessions/*
 /storage/framework/views/*
-/storage/*.key
 /storage/logs/*
 /config/oracle.php
 /storage/framework/views/
