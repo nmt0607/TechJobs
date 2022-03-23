@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('title')
-    <title>Delegate</title>
+    <title>Người đại diện</title>
 @endsection
 @section('css')
     <link href="{{ asset('css/datatables.min.css') }}" rel="stylesheet" />

@@ -60,14 +60,9 @@ class Index extends BaseLive {
 
     public function render(){
         $query = Delegate::query();
-        if($this->search) {
-        }
 
         if($this->searchName) {
             $query->where("name", "like", "%".$this->searchName."%");
-        }
-        if($this->searchCode) {
-            $query->where("code", "like", "%".$this->searchCode."%");
         }
         if($this->searchPhone) {
             $query->where("phone", "like", "%".$this->searchPhone."%");
@@ -75,15 +70,7 @@ class Index extends BaseLive {
         if($this->searchEmail) {
             $query->where("email", "like", "%".$this->searchEmail."%");
         }
-        if($this->searchPosition) {
-            $query->where("position", "like", "%".$this->searchPosition."%");
-        }
-        if($this->searchCustomerId) {
-            $query->where("customer_id", "like", "%".$this->searchCustomerId."%");
-        }
-        if($this->searchNote) {
-            $query->where("note", "like", "%".$this->searchNote."%");
-        }
+
         $query->with('customers');
         $data = $query->orderBy($this->key_name,$this->sortingName)->paginate($this->perPage);
         $customer=$this->getListCustomer();
@@ -210,5 +197,8 @@ class Index extends BaseLive {
     }
     public function getListCustomer(){
         return Customer::pluck('name', 'id');
+    }
+    public function detail($row){
+
     }
 }
