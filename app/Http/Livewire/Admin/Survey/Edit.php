@@ -8,7 +8,7 @@ use App\Models\Survey;
 use Excel;
 use App\Exports\SurveyExport;
 use App\Enums\ESurveyType;
-class Index extends BaseLive {
+class Edit extends BaseLive {
 
     public $mode = 'create';
     public $editId;
@@ -18,6 +18,7 @@ class Index extends BaseLive {
     public $name;
     public $content;
     public $type;
+    public $surveyId;
 
 
     protected $rules = [
@@ -51,8 +52,9 @@ class Index extends BaseLive {
         if($this->searchType) {
             $query->where("type", "like", "%".$this->searchType."%");
         }
+        dd($this->surveyId);
         $data = $query->orderBy($this->key_name,$this->sortingName)->paginate($this->perPage);
-        return view('livewire.admin.survey.index', [
+        return view('livewire.admin.survey.edit', [
             'data'=> $data,
             'surveyType' => $surveyType,
         ]);
@@ -138,10 +140,6 @@ class Index extends BaseLive {
         $this->reset('sortingName');
     }
 
-    public function export(){
-        $today = date("d_m_Y");
-        return Excel::download(new SurveyExport($this->key_name, $this->sortingName, $this->search, $this->searchName, $this->searchType), "Survey-export-".$today.".xlsx");
-    }
 
     public function sorting($key){
         if($this->key_name == $key){

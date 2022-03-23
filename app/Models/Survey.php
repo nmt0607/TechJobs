@@ -15,14 +15,7 @@ class Survey extends Model
         'content',
         'rate',
         'admin_id',
-        // 'customer_id', 
-        // 'admin_id', 
-        // 'status', 
-        // 'rate', 
-        // 'content', 
-        // 'email', 
-        // 'phone', 
-        // 'customer_name'
+        'status'
     ];
     //query search
     protected $searchableByOrWhere = [

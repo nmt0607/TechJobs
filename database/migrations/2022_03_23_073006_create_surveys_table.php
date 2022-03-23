@@ -20,15 +20,7 @@ class CreateSurveysTable extends Migration
             $table->smallInteger('type')->nullable()->comment('Loại survey');
             $table->bigInteger('admin_id')->nullable()->comment('Map với id của người quản trị');
             $table->double('rate',19,2)->nullable()->comment('Thang điểm đánh giá');
-
-            // $table->bigInteger('customer_id')->nullable()->comment('Map với id của khách hàng');
-            // $table->bigInteger('admin_id')->nullable()->comment('Map với id của người quản trị');
-            // $table->smallInteger('status')->nullable()->comment('Trạng thái');
-            // $table->double('rate',19,2)->nullable()->comment('Thang điểm đánh giá');
-            // $table->string('content')->nullable()->comment('Mô tả sản phẩm');   
-            // $table->string('email')->nullable()->comment('Email khách hàng');   
-            // $table->string('phone')->nullable()->comment('SĐT khách hàng');   
-            // $table->string('customer_name')->nullable()->comment('Tên khách hàng');   
+            $table->smallInteger('status')->nullable()->comment('Trạng thái');
             $table->timestamps();
         });
     }

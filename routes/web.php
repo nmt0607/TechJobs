@@ -40,6 +40,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::prefix('sla')->group(function (){
         Route::get("/priority", "App\Http\Controllers\Admin\Test\SlaController@priority")->name("sla.priority");
     });
+    Route::prefix('survey')->group(function (){
+        Route::get("/", "App\Http\Controllers\Admin\Test\SurveyController@index")->name("admin.survey.index");
+        Route::get("/{id}/edit", "App\Http\Controllers\Admin\Test\SurveyController@edit")->name("admin.survey.edit");
+    });
     Route::prefix('ticket')->group(function (){
         Route::get("/", "App\Http\Controllers\Admin\Test\TicketController@index")->name("ticket.index");
     });
@@ -58,5 +62,3 @@ Route::get("/test", "App\Http\Controllers\Admin\Test\TestController@index")->nam
 Route::get("/customer", "App\Http\Controllers\Admin\Test\CustomerController@index")->name("admin.customer.index");
 
 Route::get("/delegate", "App\Http\Controllers\Admin\Test\DelegateController@index")->name("admin.delegate.index");
-
-Route::get("/survey", "App\Http\Controllers\Admin\Test\SurveyController@index")->name("admin.survey.index");
