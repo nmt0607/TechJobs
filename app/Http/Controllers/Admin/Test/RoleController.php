@@ -13,4 +13,21 @@ class RoleController extends Controller{
         return view('admin.role.index');
     }
 
+    public function create(){
+        $mode = 'create';
+        $id = null;
+        return view('admin.role.detail', [
+            'id' => $id,
+            'mode' => $mode
+        ]);
+    }
+
+    public function edit($id){
+        $mode = 'update';
+        return view('admin.role.detail', [
+            'id' => $id,
+            'mode' => $mode,
+        ]);
+    }
+
 }

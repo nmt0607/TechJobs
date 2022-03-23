@@ -155,7 +155,14 @@ function checkButtonCanView($action)
 function checkRoutePermission($action) {
     $routerName = Route::getCurrentRoute()->getName();
     $arr = explode('.', $routerName);
-    $arr[count($arr) - 1] = $action;
+    $actions = ['index', 'create', 'edit', 'delete', 'show', 'import', 'export'];
+    if (in_array($arr[count($arr) - 1], $actions)) {
+        unset($arr[count($arr)-1]);
+    }
+    $arr[count($arr)] = $action;
+    if ($arr[0] != 'admin') {
+        array_unshift($arr, 'admin');
+    }
     $permission = join('.', $arr);
     return checkPermission($permission);
 }
