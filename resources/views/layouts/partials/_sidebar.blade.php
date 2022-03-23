@@ -111,6 +111,22 @@
                 </a>
               </li>
             </ul>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ route('sla.priority-spdv') }}" class="nav-link {{setActive2('sla/priority-spdv')}}" >
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Khai báo SLA theo SPDV</p>
+                </a>
+              </li>
+            </ul>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Khai báo SLA theo PLYC</p>
+                </a>
+              </li>
+            </ul>
           </li>
 
           <li class="nav-item active">

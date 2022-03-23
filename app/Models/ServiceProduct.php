@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Sla;
 
 class ServiceProduct extends Model
 {
@@ -81,7 +82,12 @@ class ServiceProduct extends Model
         'rate'=> 'Thang điểm',
         'description'=> 'Mô tả',
     ];
+
     public function getTranslate(){
         return $this->translate;
+    }
+
+    public function sla(){
+        return $this->belongsTo(Sla::class, 'sla_id');
     }
 }
