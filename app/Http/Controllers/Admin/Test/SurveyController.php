@@ -12,5 +12,10 @@ class SurveyController extends Controller{
     public function index(Request $request){
         return view('admin.survey.index');
     }
+    public function edit(Request $request){
+        return view('admin.survey.edit',[
+            'surveyId' => $request->id
+        ]);
+    }
 
 }

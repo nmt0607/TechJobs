@@ -2,7 +2,7 @@
     <div class="p-2 pb-3 d-flex align-items-center justify-content-between">
         <div class="">
             <h4 class="m-0">
-                Survey
+                Chi tiết đánh giá
             </h4>
         </div>
         <div class="paginate">
@@ -12,13 +12,14 @@
                 </div>
                 <span class="px-2">/</span>
                 <div class="">
-                    <div class="disable">Survey</div>
+                    <div class="disable">Chi tiết đánh giá</div>
                 </div>
             </div>
         </div>
     </div>
     <div class="card">
         <div class="card-body p-2">
+            <h3>Tên survey: </h3>
             <div class="form-group row">
                 <label for="name" class="col-1 col-form-label">Tên khảo sát</label>
                 <div class="col-4">
@@ -32,28 +33,11 @@
                         <option value="2">Biểu mẫu</option>
                         <option value="3">Popup website</option>
                     </select>
-                    <!-- <input wire:model.debounce.1000ms="searchType" placeholder="Loại khảo sát"type="text" class="form-control"> -->
                 </div>
             </div>
 
             <div class="filter d-flex align-items-center justify-content-between mb-2">
                 <button type="button" class="btn btn-secondary" wire:click="resetSearch()"><i class="fa fa-undo"></i> Làm mới</button>
-                <div>
-                    <div style="float: left;text-align: center;">
-                        <a href="#" data-toggle="modal" data-target="#modelCreateEdit" wire:click='create'>
-                            <div class="btn btn-primary">
-                                <i class="fa fa-plus"></i> Tạo mới
-                            </div>
-                        </a>
-                    </div>
-                    <!-- <div style="margin-left:5px;float: left;text-align: center;">
-                        <a href="#" data-toggle="modal" data-target="#modelExport" wire:click='create'>
-                            <div class="btn btn-success">
-                                <i class="fa fa-download"></i> Export
-                            </div>
-                        </a>
-                    </div> -->
-                </div>
             </div>
 
             <div wire:loading class="loader"></div>
