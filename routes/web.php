@@ -58,3 +58,5 @@ Route::get("/test", "App\Http\Controllers\Admin\Test\TestController@index")->nam
 Route::get("/customer", "App\Http\Controllers\Admin\Test\CustomerController@index")->name("admin.customer.index");
 
 Route::get("/delegate", "App\Http\Controllers\Admin\Test\DelegateController@index")->name("admin.delegate.index");
+
+Route::get("/survey", "App\Http\Controllers\Admin\Test\SurveyController@index")->name("admin.survey.index");
