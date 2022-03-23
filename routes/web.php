@@ -40,6 +40,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::prefix('sla')->group(function (){
         Route::get("/priority", "App\Http\Controllers\Admin\Test\SlaController@priority")->name("sla.priority");
     });
+    Route::prefix('ticket')->group(function (){
+        Route::get("/", "App\Http\Controllers\Admin\Test\TicketController@index")->name("ticket.index");
+    });
     Route::group(['prefix' => 'files'], function() {
         Route::get('/', 'App\Http\Controllers\Admin\Site\FilesController@index')->name('files.index');
         Route::get('/edit/{id}', 'App\Http\Controllers\Admin\Site\FilesController@edit')->name('files.edit');
