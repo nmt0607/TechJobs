@@ -48,6 +48,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get("/serviceProduct", "App\Http\Controllers\Admin\Test\MailController@index")->name("admin.serviceProduct.index");
     Route::get("/getMail", "App\Http\Controllers\Admin\Test\MailController@index")->name("admin.mail.index");
     Route::get("/role", "App\Http\Controllers\Admin\Test\RoleController@index")->name("admin.role.index");
+    Route::get("/unit", "App\Http\Controllers\Admin\Test\UnitController@index")->name("admin.unit.index");
 });
 
 Route::get("/test", "App\Http\Controllers\Admin\Test\TestController@index")->name("admin.test.index");

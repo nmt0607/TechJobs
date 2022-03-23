@@ -95,6 +95,12 @@
                     <p>Người đại diện</p>
                 </a>
             </li>
+          <li class="nav-item active">
+            <a href="{{route('admin.unit.index')}}" class="nav-link {{setActive2('unit')}}">
+              <i class="nav-icon fas fa-file"></i>
+              <p>Quản lý đơn vị</p>
+            </a>
+          </li>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
