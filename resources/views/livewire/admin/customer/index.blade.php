@@ -78,10 +78,14 @@
                             <td>{!!boldTextSearchV2($row->email,$searchEmail)!!}</td>
                             <td>{{reFormatDate($row->created_at)}}</td>
                             <td>
+                                <button type="button" data-toggle="modal" data-target="#modelCreateEdit"  class="btn par6" title="detail" wire:click='show({{$row}})'>
+                                    <img src="/images/eye.svg" alt="pent">
+                                </button>
                                 <button type="button" data-toggle="modal" data-target="#modelCreateEdit"  class="btn par6" title="update" wire:click='edit({{$row}})'>
                                     <img src="/images/pent2.svg" alt="pent">
                                 </button>
                                 @include('livewire.common.buttons._delete')
+                                
                             </td>
                         </tr>
                     @endforeach
@@ -98,7 +102,7 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">{{$this->mode=='create'?"Thêm mới":"Chỉnh sửa"}}</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">{{$this->mode=='create'?"Thêm mới":($this->mode=='show'?"Chi tiết khách hàng":"Chỉnh sửa")}}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close" wire:click="resetValidate()">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -106,7 +110,7 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label> Tên khách hàng(<span style="color:red">*</span>)</label>
-                        <input type="text"  class="form-control" placeholder="Tên khách hàng" wire:model.defer="name">
+                        <input type="text"  class="form-control" placeholder="Tên khách hàng" wire:model.defer="name" {{$mode=="show"?"disabled":""}}>
                         @error("name")
                             @include("layouts.partials.text._error")
                         @enderror
@@ -115,7 +119,7 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label> Số điện thoại(<span style="color:red">*</span>)</label>
-                        <input type="text"  class="form-control" placeholder="Số điện thoại" wire:model.defer="phone">
+                        <input type="text"  class="form-control" placeholder="Số điện thoại" wire:model.defer="phone" {{$mode=="show"?"disabled":""}}>
                         @error("phone")
                             @include("layouts.partials.text._error")
                         @enderror
@@ -124,7 +128,7 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label> Email(<span style="color:red">*</span>)</label>
-                        <input type="text"  class="form-control" placeholder="Email" wire:model.defer="email">
+                        <input type="text"  class="form-control" placeholder="Email" wire:model.defer="email" {{$mode=="show"?"disabled":""}}>
                         @error("email")
                             @include("layouts.partials.text._error")
                         @enderror
@@ -133,7 +137,7 @@
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" wire:click="resetValidate()">Đóng</button>
-                    <button type="button" class="btn btn-primary" wire:click='saveData'>Lưu</button>
+                    @if($mode!='show')<button type="button" class="btn btn-primary" wire:click='saveData'>Lưu</button>@endif
                 </div>
             </div>
         </div>
