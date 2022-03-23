@@ -12,4 +12,11 @@ class SlaController extends Controller{
         return view('admin.sla.priority');
     }
 
+    public function prioritySPDV(Request $request){
+        return view('admin.sla.priority-spdv');
+    }
+
+    public function priorityPLYC(Request $request){
+        return view('admin.sla.priority-plyc');
+    }
 }

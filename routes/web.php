@@ -39,6 +39,8 @@ Route::group(['middleware' => ['auth']], function () {
     });
     Route::prefix('sla')->group(function (){
         Route::get("/priority", "App\Http\Controllers\Admin\Test\SlaController@priority")->name("sla.priority");
+        Route::get("/priority-spdv", "App\Http\Controllers\Admin\Test\SlaController@prioritySPDV")->name("sla.priority-spdv");
+        Route::get("/priority-qlyc", "App\Http\Controllers\Admin\Test\SlaController@priorityQLYC")->name("sla.priority-qlyc");
     });
     Route::prefix('ticket')->group(function (){
         Route::get("/", "App\Http\Controllers\Admin\Test\TicketController@index")->name("ticket.index");
