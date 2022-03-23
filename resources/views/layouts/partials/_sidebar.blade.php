@@ -61,6 +61,36 @@
               </li>
             </ul>
           </li>
+          <li class="nav-item {{setOpen('customer')}} {{setOpen('role')}}">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-user"></i>
+              <p>Quản lý khách hàng</p>
+              <i class="fas fa-angle-left right"></i>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{route('admin.customer.index')}}" class="nav-link {{setActive2('customer')}}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Danh sách khách hàng</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item {{setOpen('ticker')}} {{setOpen('role')}}">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-user"></i>
+              <p>Quản lý ticket</p>
+              <i class="fas fa-angle-left right"></i>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="" class="nav-link {{setActive2('ticket')}}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Danh sách ticket</p>
+                </a>
+              </li>
+            </ul>
+          </li>
           <li class="nav-item {{setOpen('sla')}}">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-user"></i>
