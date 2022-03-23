@@ -44,21 +44,7 @@
                     <input wire:model.debounce.1000ms="searchEmail" placeholder="Nhập Email" type="text"
                            class="form-control">
                 </div>
-{{--                <label for="position" class="offset-1 col-1 col-form-label">Chức danh</label>--}}
-{{--                <div class="col-4">--}}
-{{--                    <input wire:model.debounce.1000ms="searchPosition" placeholder="Nhập chức danh" type="text"--}}
-{{--                           class="form-control">--}}
-{{--                </div>--}}
             </div>
-{{--            <div class="form-group row">--}}
-{{--                <label for="customer_id" class="col-1 col-form-label">Khách hàng</label>--}}
-{{--                <div class="col-4">--}}
-{{--                    <input wire:model.debounce.1000ms="searchCustomerId" placeholder="Customer" type="text"--}}
-{{--                           class="form-control">--}}
-{{--                </div>--}}
-{{--            </div>--}}
-
-
             <div class="filter d-flex align-items-center justify-content-between mb-2">
                 <button type="button" class="btn btn-secondary" wire:click="resetSearch()"><i class="fa fa-undo"></i>
                     Làm mới
@@ -100,8 +86,7 @@
                     <th class="{{$key_name=="position"?($sortingName=="desc"?"sorting_desc":"sorting_asc"):"sorting"}}"
                         wire:click="sorting('position')">Chức danh
                     </th>
-                    <th class="{{$key_name=="customer_id"?($sortingName=="desc"?"sorting_desc":"sorting_asc"):"sorting"}}"
-                        wire:click="sorting('customer_id')">Khách hàng
+                    <th>Khách hàng
                     </th>
 
                     <th>Action</th>
@@ -120,6 +105,9 @@
                             <button type="button" data-toggle="modal" data-target="#modelCreateEdit" class="btn par6"
                                     title="update" wire:click='edit({{$row}})'>
                                 <img src="/images/pent2.svg" alt="pent">
+                            </button>
+                            <button type="button" data-toggle="modal" data-target="#modelDetail" class="btn par6" title="detail" wire:click='detail({{ $row }})'>
+                                <img src="/images/eye.svg" alt="pent">
                             </button>
                             @include('livewire.common.buttons._delete')
                         </td>
@@ -155,15 +143,6 @@
                         @enderror
                     </div>
                 </div>
-                {{--                <div class="modal-body">--}}
-                {{--                    <div class="form-group">--}}
-                {{--                        <label> Code(<span style="color:red">*</span>)</label>--}}
-                {{--                        <input type="text"  class="form-control" placeholder="Code" wire:model.defer="code">--}}
-                {{--                        @error("code")--}}
-                {{--                            @include("layouts.partials.text._error")--}}
-                {{--                        @enderror--}}
-                {{--                    </div>--}}
-                {{--                </div>--}}
                 <div class="modal-body">
                     <div class="form-group">
                         <label> Số điện thoại(<span style="color:red">*</span>)</label>
@@ -223,6 +202,45 @@
                         Đóng
                     </button>
                     <button type="button" class="btn btn-primary" wire:click='saveData'>Lưu</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div wire:ignore.self class="modal fade" id="modelDetail" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel2"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label> Thông tin cá nhân</label>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label> Phiếu ghi</label>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label> Ghi chú</label>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label> Lịch sử chỉnh sửa</label>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" >
+                        Đóng
+                    </button>
                 </div>
             </div>
         </div>
