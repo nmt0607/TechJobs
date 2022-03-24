@@ -127,7 +127,7 @@
             </ul>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="" class="nav-link">
+                <a href="{{ route('sla.priority-plyc') }}" class="nav-link {{setActive2('sla/priority-plyc')}}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Khai báo SLA theo PLYC</p>
                 </a>
