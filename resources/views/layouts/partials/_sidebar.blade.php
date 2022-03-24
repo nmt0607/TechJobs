@@ -111,7 +111,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="{{ route('sla.priority') }}" class="nav-link {{setActive2('sla/priority')}}">
+                <a href="{{ route('sla.priority.index') }}" class="nav-link {{setActive2('sla/priority')}}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Mức độ ưu tiên</p>
                 </a>
@@ -119,7 +119,7 @@
             </ul>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="{{ route('sla.priority-spdv') }}" class="nav-link {{setActive2('sla/priority-spdv')}}" >
+                <a href="{{ route('sla.priority-spdv.index') }}" class="nav-link {{setActive2('sla/priority-spdv')}}" >
                   <i class="far fa-circle nav-icon"></i>
                   <p>Khai báo SLA theo SPDV</p>
                 </a>
@@ -127,7 +127,7 @@
             </ul>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="{{ route('sla.priority-plyc') }}" class="nav-link {{setActive2('sla/priority-plyc')}}">
+                <a href="{{ route('sla.priority-plyc.index') }}" class="nav-link {{setActive2('sla/priority-plyc')}}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Khai báo SLA theo PLYC</p>
                 </a>
