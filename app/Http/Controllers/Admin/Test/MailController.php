@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Test;
 
 use App\Http\Controllers\Controller;
+use App\Models\Ticket;
 use Illuminate\Http\Request;
 use Illuminate\Http\Reponse;
 use Webklex\IMAP\Facades\Client;
@@ -23,6 +24,15 @@ class MailController extends Controller{
         //Loop through every Mailbox
         $messages=$folders->messages()->since(Carbon::now('+5:53')->format('Y-m-d H:i:s'))->get();
         foreach($messages as $key => $message){
+            if(!Ticket::where('message_mail',$message->getMessageId())->first()){
+                Ticket::create([
+                    'message_mail'=>$message->getMessageId(),
+                    'title'=>$message->getSubject(),
+                    'sender'=>$message->getFrom()[0]->mail,
+                    'content'=>$message->getHTMLBody(),
+                    'send_date'=>$message->getDate()
+                ]);
+            }
             echo 'Người gửi: '.$message->getFrom()[0]->mail.'<br />';
             echo 'id message: '.$message->getMessageId().'<br />';
             echo 'Tiêu đề: '.$message->getSubject().'<br />';
@@ -48,6 +58,7 @@ class MailController extends Controller{
             echo '<br/>';
             echo '<br/>';
         }
+        $client->disconnect();
     }
     
 }

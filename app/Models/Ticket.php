@@ -38,6 +38,10 @@ class Ticket extends Model
         'solution',
         'rate',
         'feedback',
+        'message_mail',
+        'content',
+        'sender',
+        'send_date'
     ];
 
     //query search
