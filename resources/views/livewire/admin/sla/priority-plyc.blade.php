@@ -2,7 +2,7 @@
     <div class="p-2 pb-3 d-flex align-items-center justify-content-between">
         <div class="">
             <h4 class="m-0">
-                Khai báo SLA theo SPDV
+                Khai báo SLA theo PLYC
             </h4>
         </div>
         <div class="paginate">
@@ -74,12 +74,12 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label>SPDV</label>
+                        <label>PLYC</label>
                         @if($mode == 'edit')
                             <input class="form-control" wire:model='name' disabled>
                         @else
-                            <select class="form-control" wire:model.defer="product_id" >
-                                @foreach($product as $item)
+                            <select class="form-control" wire:model.defer="requirement_id" >
+                                @foreach($requirement as $item)
                                 <option value="{{$item->id}}">{{$item->name}}</option>
                                 @endforeach
                             </select>
