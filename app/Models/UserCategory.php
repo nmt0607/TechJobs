@@ -5,17 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
-use Spatie\Permission\Models\Role as ModelsRole;
 
-class Role extends ModelsRole implements Auditable
+class UserCategory extends Model implements Auditable
 {
     use HasFactory;
     // create, update column
     use \OwenIt\Auditing\Auditable;
-    protected $table = "roles";
+    protected $table = "user_category";
     protected $fillable = [
         'name',
-        'guard_name',
         'description',
     ];
 
@@ -68,12 +66,11 @@ class Role extends ModelsRole implements Auditable
         return $this->translate;
     }
 
-    // public function users() {
-    //     return $this->morphedByMany(User::class, 'model', 'model_has_roles');
-    // }
-
-    public function categories() {
-        return $this->morphedByMany(UserCategory::class, 'model', 'model_has_roles');
+    public function users() {
+        return $this->belongsToMany(User::class, 'user_category_has_user');
     }
 
+    // public function roles() {
+    //     return $this->belongsToMany(Role::class, 'user_category_has_role');
+    // }
 }

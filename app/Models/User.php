@@ -106,5 +106,9 @@ protected $translate = [
 public function getTranslate(){
     return $this->translate;
 }
+
+public function categories() {
+    return $this->belongsToMany(UserCategory::class, 'user_category_has_user', 'user_id', 'category_id');
+}
   
 }

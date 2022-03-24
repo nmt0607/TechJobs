@@ -40,7 +40,7 @@
               </li>
             </ul>
           </li>
-          <li class="nav-item {{setOpen('user')}} {{setOpen('role')}}">
+          <li class="nav-item {{setOpen('user')}} {{setOpen('role')}} {{setOpen('user-category')}}">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-user"></i>
               <p>Người dùng</p>
@@ -54,9 +54,15 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{route('admin.role.index')}}" class="nav-link {{setActive2('role')}}">
+                <a href="{{route('admin.user_category.index')}}" class="nav-link {{setActive2('user-category')}}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Danh sách nhóm người dùng</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route('admin.role.index')}}" class="nav-link {{setActive('role')}}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Quản lý phân quyền</p>
                 </a>
               </li>
             </ul>
@@ -82,7 +88,7 @@
                 <p>Quản lý khách hàng</p>
             </a>
         </li>
-          <li class="nav-item {{setOpen('ticker')}} {{setOpen('role')}}">
+          <li class="nav-item {{setOpen('ticker')}}">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-ticket-alt"></i>
               <p>Quản lý ticket</p>

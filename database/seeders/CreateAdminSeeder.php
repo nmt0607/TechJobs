@@ -18,13 +18,13 @@ class CreateAdminSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('users')->truncate();
-        $admin = User::create([
+        // DB::table('users')->truncate();
+        $admin = User::firstOrCreate([
             'name' => 'Hassan Raza',
             'email' => 'admin@test.com',
             'password' => bcrypt('123456'),
         ]);
-        $admin2 = User::create([
+        $admin2 = User::firstOrCreate([
             'name' => 'Le Minh Quan',
             'email' => 'leminhquan@test.com',
             'password' => bcrypt('12345678!'),
