@@ -111,8 +111,6 @@
                             @include("layouts.partials.text._error")
                         @enderror
                     </div>
-                </div>
-                <div class="modal-body">
                     <div class="form-group">
                         <label> Nội dung khảo sát(<span style="color:red">*</span>)</label>
                         <textarea class="form-control" placeholder="Nội dung khảo sát" wire:model.defer="content" rows=3></textarea>
@@ -120,8 +118,6 @@
                             @include("layouts.partials.text._error")
                         @enderror
                     </div>
-                </div>
-                <div class="modal-body">
                     <div class="form-group">
                         <label> Loại khảo sát(<span style="color:red">*</span>)</label>
                         <select class="form-control" wire:model.defer="type">

@@ -113,8 +113,6 @@
                             @include("layouts.partials.text._error")
                         @enderror
                     </div>
-                </div>
-                <div class="modal-body">
                     <div class="form-group">
                         <label> Trạng thái(<span style="color:red">*</span>)</label>
                         <select class="form-control" wire:model.defer="status" {{$mode=="show"?"disabled":""}}>
@@ -126,8 +124,6 @@
                             @include("layouts.partials.text._error")
                         @enderror
                     </div>
-                </div>
-                <div class="modal-body">
                     <div class="form-group">
                         <label> Danh mục sản phẩm</label>
                         <select class="form-control" wire:model.defer="category_id" {{$mode=="show"?"disabled":""}}>
@@ -140,8 +136,6 @@
                             @include("layouts.partials.text._error")
                         @enderror
                     </div>
-                </div>
-                <div class="modal-body">
                     <div class="form-group">
                         <label> Người quản lý</label>
                         <select class="form-control" wire:model.defer="user_id" {{$mode=="show"?"disabled":""}}>
@@ -154,8 +148,6 @@
                             @include("layouts.partials.text._error")
                         @enderror
                     </div>
-                </div>
-                <div class="modal-body">
                     <div class="form-group">
                         <label> Thang điểm</label>
                         <input type="text"  class="form-control" placeholder="Thang điểm" wire:model.defer="rate" {{$mode=="show"?"disabled":""}}>
@@ -163,8 +155,6 @@
                             @include("layouts.partials.text._error")
                         @enderror
                     </div>
-                </div>
-                <div class="modal-body">
                     <div class="form-group">
                         <label> Mô tả</label>
                         <textarea type="text"  class="form-control" placeholder="Mô tả" wire:model.defer="description" cols="30" rows="3" {{$mode=="show"?"disabled":""}}></textarea>
