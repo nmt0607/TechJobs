@@ -38,9 +38,9 @@ Route::group(['middleware' => ['auth', 'route-permission']], function () {
         Route::get('/', 'App\Http\Controllers\Admin\Test\UserController@index')->name('user.index');
     });
     Route::prefix('sla')->group(function (){
-        Route::get("/priority", "App\Http\Controllers\Admin\Test\SlaController@priority")->name("sla.priority");
-        Route::get("/priority-spdv", "App\Http\Controllers\Admin\Test\SlaController@prioritySPDV")->name("sla.priority-spdv");
-        Route::get("/priority-plyc", "App\Http\Controllers\Admin\Test\SlaController@priorityPLYC")->name("sla.priority-plyc");
+        Route::get("/priority", "App\Http\Controllers\Admin\Test\SlaController@priority")->name("sla.priority.index");
+        Route::get("/priority-spdv", "App\Http\Controllers\Admin\Test\SlaController@prioritySPDV")->name("sla.priority-spdv.index");
+        Route::get("/priority-plyc", "App\Http\Controllers\Admin\Test\SlaController@priorityPLYC")->name("sla.priority-plyc.index");
     });
     Route::prefix('survey')->group(function (){
         Route::get("/", "App\Http\Controllers\Admin\Test\SurveyController@index")->name("admin.survey.index");
