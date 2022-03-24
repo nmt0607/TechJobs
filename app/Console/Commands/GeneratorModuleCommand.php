@@ -32,6 +32,7 @@ class GeneratorModuleCommand extends Command
     protected $baseExport = 'baseExport';
     
     protected $modeLang = 'vi'; // vi or en
+    protected $hasShow = true;
 
     protected $baseNamespaceController = 'App\Http\Controllers\Admin\Test';
 
@@ -306,6 +307,7 @@ function generateRouter(){
             '{{ resetProperties }}' => $this->getResetProperties(),
             '{{ storeData }}' => $this->getStoreDataLiveWire(),
             '{{ getDataEditToModal }}' => $this->getDataEditToModal(),
+            '{{ getDataShowToModal }}' => $this->getDataShowToModal(),
             '{{ updateData }}' => $this->getUpdateDataLiveWire(),
             '{{ standardData }}' => $this->getStandardDataLiveWire(),
             '{{ destroyData }}' => $this->getDestroyDataLivewire(),
@@ -507,6 +509,29 @@ function generateRouter(){
         return $str;     
     }
 
+    public function getDataShowToModal(){
+        if($this->hasShow){
+            $class = 'App\\Models\\' . ucfirst($this->arguments()['name']);
+            $model = new $class;
+            if (!class_exists($class)){
+                throw new \Exception('Model Not Found. Please Check if Model Exists at -'.$class);
+            }
+            $columns = $model->getFillable();
+            $str = 'public function show($row){'.PHP_EOL;
+            $NTab = 2;
+            $str .= $this->getNTab($NTab)."$"."this->mode = 'show';".PHP_EOL;
+            $str .= $this->getNTab($NTab)."$"."this->editId = $"."row['id'];".PHP_EOL;
+            foreach ($columns as $column) {
+                if ($column != 'created_at' && $column != 'updated_at') {
+                    $str .= $this->getNTab($NTab).'$this->'.$column.' = $row["'.$column.'"];'.PHP_EOL;
+                }
+            }
+            $str .= $this->getNTab($NTab-1).'}';
+            return $str;     
+        }
+        return '';
+    }
+
     public function getUpdateDataLiveWire(){
         $class = 'App\\Models\\' . ucfirst($this->arguments()['name']);
         $model = new $class;
@@ -631,7 +656,9 @@ function generateRouter(){
             '{{ columnHeadTable }}' => $this->getColumnHeadTableLivewire(),
             '{{ columnBodyTable }}' => $this->getColumnBodyTableLivewire(),
             '{{ modalBodyLivewire }}' => $this->getModalBodyLivewire(),
-        
+            '{{ showButton }}' => $this->getShowButton(),
+            '{{ titleModal }}' => $this->getTitleModal(),
+            '{{ modalButtonSave }}' => $this->getmodalButtonSave(),
         ];
         return str_replace(array_keys($array), array_values($array), $content);
     }
@@ -746,21 +773,21 @@ function generateRouter(){
         $str = '';
         $NTab = 4;
         $i = 0;
+        $str .= '<div class="modal-body">'.PHP_EOL;
         foreach($columns as $key => $column){
             if ($column != 'created_at' && $column != 'updated_at') {
-                if(!$i) $str .= '<div class="modal-body">'.PHP_EOL;
-                else $str .= $this->getNTab($NTab).'<div class="modal-body">'.PHP_EOL;
+                // else $str .= $this->getNTab($NTab).'<div class="modal-body">'.PHP_EOL;
                 $str .= $this->getNTab($NTab+1).'<div class="form-group">'.PHP_EOL;
                 $str .= $this->getNTab($NTab+2).'<label> '.$this->getColumnLiveWire($column).'(<span style="color:red">*</span>)</label>'.PHP_EOL;
-                $str .= $this->getNTab($NTab+2).'<input type="text"  class="form-control" placeholder="'.$this->getColumnLiveWire($column).'" wire:model.defer="'.$column.'">'.PHP_EOL;
+                $str .= $this->getNTab($NTab+2).'<input type="text"  class="form-control" placeholder="'.$this->getColumnLiveWire($column).'" wire:model.defer="'.$column.'"'.($this->hasShow?"disabled":'').'>'.PHP_EOL;
                 $str .= $this->getNTab($NTab+2).'@error("'.$column.'")'.PHP_EOL;
                 $str .= $this->getNTab($NTab+3).'@include("layouts.partials.text._error")'.PHP_EOL;
                 $str .= $this->getNTab($NTab+2).'@enderror'.PHP_EOL;
                 $str .= $this->getNTab($NTab+1).'</div>'.PHP_EOL;
-                $str .= $this->getNTab($NTab).'</div>'.PHP_EOL;
                 $i++;
             }
         }
+        $str .= $this->getNTab($NTab).'</div>'.PHP_EOL;
         return $str;
     }
 
@@ -795,6 +822,33 @@ function generateRouter(){
             $str.= '    ';
         }
         return $str;
+    }
+    public function getShowButton(){
+        $str = '';
+        $NTab = 8;
+        if($this->hasShow){
+            $str .=  '<button type="button" data-toggle="modal" data-target="#modelCreateEdit"  class="btn par6" title="show" wire:click="show({{$row}})">'.PHP_EOL;
+            $str .= $this->getNTab($NTab+1).'<img src="/images/eye.svg" alt="Chi tiết">'.PHP_EOL;
+            $str .= $this->getNTab($NTab).'</button>'.PHP_EOL;
+            // dd($str);
+            return $str;
+        }
+        return '';
+    }
+    public function getTitleModal(){
+        if($this->hasShow){
+            return '{{$this->mode=="create"?"Thêm mới":($this->mode=="update"?"Chỉnh sửa":"Chi tiết")}}';
+        }
+        else {
+            return '{{$this->mode=="create"?"Thêm mới":"Chỉnh sửa"}}';
+        }
+    }
+
+    public function getmodalButtonSave(){
+        if($this->hasShow){
+            return '@if($mode!="show") <button type="button" class="btn btn-primary" wire:click="saveData">Lưu</button> @endif';
+        }
+        return '<button type="button" class="btn btn-primary" wire:click="saveData">Lưu</button>';
     }
 // generateViewLiveWire end
 

@@ -155,7 +155,7 @@
           </li>
           <li class="nav-item active">
             <a href="{{route('admin.survey.index')}}" class="nav-link {{setActive2('survey')}}">
-              <i class="nav-icon fas fa-building"></i>
+              <i class="nav-icon fas fa-poll-h"></i>
               <p>Khảo sát</p>
             </a>
           </li>

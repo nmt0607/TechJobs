@@ -10,33 +10,21 @@ use App\Exports\SurveyExport;
 use App\Enums\ESurveyType;
 class Edit extends BaseLive {
 
-    public $mode = 'create';
     public $editId;
     public $showId;
     public $deleteId;
-    public $key_name='id', $sortingName='desc';
-    public $name;
-    public $content;
-    public $type;
     public $surveyId;
-
-
-    protected $rules = [
-        'name' => 'required',
-        'type' => 'required',
-        'content' => 'required',
-    ];
-
-    protected $messages = [
-        'name.required' => 'Tên khảo sát bắt buộc',
-        'type.required' => 'Loại khảo sát bắt buộc',
-        'content.required' => 'Câu hỏi khảo sát bắt buộc',
-    ];
-
+    public $key_name='id', $sortingName='desc';
+    public $customer_name;
+    public $content;
+    public $rate;
+    public $email;
+    public $phone;
+    public $created_at;
 
     public $search;
-    public $searchName;
-    public $searchType;
+    public $searchCustomerName;
+    public $searchPhone;
 
 
     public function mount(){
@@ -44,19 +32,20 @@ class Edit extends BaseLive {
     }
 
     public function render(){
-        $query = Survey::query();
-        $surveyType = ESurveyType::getESurveyType();
-        if($this->searchName) {
-            $query->where("name", "like", "%".$this->searchName."%");
+        $query = Survey::where('survey.id',$this->surveyId)
+            ->Join('survey_customer','survey_customer.survey_id','survey.id')
+            ->select('survey_customer.*');
+        if($this->searchCustomerName){
+            $query->where('survey_customer.customer_name','like','%'.$this->searchCustomerName.'%');
         }
-        if($this->searchType) {
-            $query->where("type", "like", "%".$this->searchType."%");
+        if($this->searchPhone){
+            $query->where('survey_customer.phone','like','%'.$this->searchPhone.'%');
         }
-        dd($this->surveyId);
         $data = $query->orderBy($this->key_name,$this->sortingName)->paginate($this->perPage);
+        $survey = Survey::find($this->surveyId);
         return view('livewire.admin.survey.edit', [
             'data'=> $data,
-            'surveyType' => $surveyType,
+            'survey' => $survey,
         ]);
     }
 
@@ -71,71 +60,39 @@ class Edit extends BaseLive {
         $this->resetValidation();
     }
 
-    public function create (){
-        $this->mode = 'create';
-    }
-
     public function saveData (){
         $this->standardData();
         $this->validate();
-        if($this->mode=='create'){
-            Survey::create([
-                "name" => $this->name,
-                "type" => $this->type,
-                "content" => $this->content,
-                "admin_id" => auth()->id(),
-            ]);
-
-        }
-        else {
-            Survey::where("id",$this->editId)->update([
-                "name" => $this->name,
-                "type" => $this->type,
-                "content" => $this->content,
-            ]);
-
-        }
+        Survey::where("id",$this->editId)->update([
+            "name" => $this->name,
+            "type" => $this->type,
+            "content" => $this->content,
+        ]);
         $this->resetValidate();
-        if($this->mode=='create'){
-            $this->dispatchBrowserEvent('show-toast', ["type" => "success", "message" => 'Thêm mới thành công']);
-        }
-        else {
-            $this->dispatchBrowserEvent('show-toast', ["type" => "success", "message" => 'Chỉnh sửa thành công']);
-        }
+        $this->dispatchBrowserEvent('show-toast', ["type" => "success", "message" => 'Chỉnh sửa thành công']);
         $this->emit('closeModalCreateEdit');
     }
 
     public function edit($row){
-        $this->mode = 'update';
         $this->editId = $row['id'];
-        $this->name = $row["name"];
-        $this->type = $row["type"];
+        $this->rate = $row["rate"];
         $this->content = $row["content"];
+        $this->email = $row["email"];
+        $this->phone = $row["phone"];
+        $this->customer_name = $row["customer_name"];
+        $this->created_at = $row["created_at"];
     }
-    // public function show($row){
-    //     $this->mode = 'show';
-    //     $this->showId = $row['id'];
-    //     $this->name = $row["name"];
-    //     $this->type = $row["type"];
-    //     $this->content = $row["content"];
-    // }
 
     public function standardData(){
         $this->name = trim($this->name);
         $this->type = trim($this->type);
         $this->content = trim($this->content);
-
     }
 
-    public function delete(){
-        Survey::find($this->deleteId)->delete();
-        $this->dispatchBrowserEvent('show-toast', ["type" => "success", "message" => 'Xóa thành công']);
-    }
 
     public function resetSearch(){
-        $this->search = "";
-        $this->searchName = "";
-        $this->searchType = "";
+        $this->searchCustomerName = "";
+        $this->searchPhone = "";
         $this->reset('key_name');
         $this->reset('sortingName');
     }

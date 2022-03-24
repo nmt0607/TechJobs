@@ -134,6 +134,16 @@ class Index extends BaseLive {
 
     }
 
+    public function show($row){
+        $this->mode = 'show';
+        $this->editId = $row['id'];
+        $this->name = $row["name"];
+        $this->contract_number = $row["contract_number"];
+        $this->actor_name = $row["actor_name"];
+        $this->director = $row["director"];
+        $this->status = $row["status"];
+    }
+    
     public function standardData(){
         $this->name = trim($this->name);
         $this->contract_number = trim($this->contract_number);

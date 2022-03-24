@@ -30,7 +30,7 @@
                         <option value="">---Tất cả---</option>
                         <option value="1">Email</option>
                         <option value="2">Biểu mẫu</option>
-                        <option value="3">Popup website</option>
+                        <option value="3">Popup</option>
                     </select>
                     <!-- <input wire:model.debounce.1000ms="searchType" placeholder="Loại khảo sát"type="text" class="form-control"> -->
                 </div>
