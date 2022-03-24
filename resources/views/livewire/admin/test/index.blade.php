@@ -85,6 +85,10 @@
                             <td>{!!boldTextSearchV2($row->director,$searchDirector)!!}</td>
                             <td>{!!boldTextSearchV2($row->status,$searchStatus)!!}</td>
                             <td>
+                                <button type="button" data-toggle="modal" data-target="#modelCreateEdit"  class="btn par6" title="show" wire:click="show({{$row}})">
+                                    <img src="/images/eye.svg" alt="Chi tiết">
+                                </button>
+
                                 <button type="button" data-toggle="modal" data-target="#modelCreateEdit"  class="btn par6" title="update" wire:click='edit({{$row}})'>
                                     <img src="/images/pent2.svg" alt="pent">
                                 </button>
@@ -105,7 +109,7 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">{{$this->mode=='create'?"Thêm mới":"Chỉnh sửa"}}</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">{{$this->mode=="create"?"Thêm mới":($this->mode=="update"?"Chỉnh sửa":"Chi tiết")}}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close" wire:click="resetValidate()">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -113,43 +117,35 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label> Tên sản phẩm(<span style="color:red">*</span>)</label>
-                        <input type="text"  class="form-control" placeholder="Tên sản phẩm" wire:model.defer="name">
+                        <input type="text"  class="form-control" placeholder="Tên sản phẩm" wire:model.defer="name"disabled>
                         @error("name")
                             @include("layouts.partials.text._error")
                         @enderror
                     </div>
-                </div>
-                <div class="modal-body">
                     <div class="form-group">
                         <label> Số hợp đồng(<span style="color:red">*</span>)</label>
-                        <input type="text"  class="form-control" placeholder="Số hợp đồng" wire:model.defer="contract_number">
+                        <input type="text"  class="form-control" placeholder="Số hợp đồng" wire:model.defer="contract_number"disabled>
                         @error("contract_number")
                             @include("layouts.partials.text._error")
                         @enderror
                     </div>
-                </div>
-                <div class="modal-body">
                     <div class="form-group">
                         <label> Đạo diễn(<span style="color:red">*</span>)</label>
-                        <input type="text"  class="form-control" placeholder="Đạo diễn" wire:model.defer="actor_name">
+                        <input type="text"  class="form-control" placeholder="Đạo diễn" wire:model.defer="actor_name"disabled>
                         @error("actor_name")
                             @include("layouts.partials.text._error")
                         @enderror
                     </div>
-                </div>
-                <div class="modal-body">
                     <div class="form-group">
                         <label> Giám đốc(<span style="color:red">*</span>)</label>
-                        <input type="text"  class="form-control" placeholder="Giám đốc" wire:model.defer="director">
+                        <input type="text"  class="form-control" placeholder="Giám đốc" wire:model.defer="director"disabled>
                         @error("director")
                             @include("layouts.partials.text._error")
                         @enderror
                     </div>
-                </div>
-                <div class="modal-body">
                     <div class="form-group">
                         <label> Trạng thái(<span style="color:red">*</span>)</label>
-                        <input type="text"  class="form-control" placeholder="Trạng thái" wire:model.defer="status">
+                        <input type="text"  class="form-control" placeholder="Trạng thái" wire:model.defer="status"disabled>
                         @error("status")
                             @include("layouts.partials.text._error")
                         @enderror
@@ -158,7 +154,7 @@
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" wire:click="resetValidate()">Đóng</button>
-                    <button type="button" class="btn btn-primary" wire:click='saveData'>Lưu</button>
+                    @if($mode!="show") <button type="button" class="btn btn-primary" wire:click="saveData">Lưu</button> @endif
                 </div>
             </div>
         </div>

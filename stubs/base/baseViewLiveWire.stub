@@ -55,6 +55,7 @@
                             <td>{{($data->currentPage() - 1) * $data->perPage() + $loop->iteration}}</td>
                             {{ columnBodyTable }}
                             <td>
+                                {{ showButton }}
                                 <button type="button" data-toggle="modal" data-target="#modelCreateEdit"  class="btn par6" title="update" wire:click='edit({{$row}})'>
                                     <img src="/images/pent2.svg" alt="pent">
                                 </button>
@@ -75,7 +76,7 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">{{$this->mode=='create'?"Thêm mới":"Chỉnh sửa"}}</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">{{ titleModal }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close" wire:click="resetValidate()">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -83,7 +84,7 @@
                 {{ modalBodyLivewire }}
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" wire:click="resetValidate()">Đóng</button>
-                    <button type="button" class="btn btn-primary" wire:click='saveData'>Lưu</button>
+                    {{ modalButtonSave }}
                 </div>
             </div>
         </div>

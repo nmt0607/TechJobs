@@ -28,6 +28,6 @@ class CreateSlasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('slas');
+        Schema::dropIfExists('sla');
     }
 }
