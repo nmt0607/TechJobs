@@ -8,6 +8,7 @@ use App\Models\Survey;
 use Excel;
 use App\Exports\SurveyExport;
 use App\Enums\ESurveyType;
+use DB;
 class Edit extends BaseLive {
 
     public $editId;
@@ -61,14 +62,16 @@ class Edit extends BaseLive {
     }
 
     public function saveData (){
-        $this->standardData();
-        $this->validate();
-        Survey::where("id",$this->editId)->update([
-            "name" => $this->name,
-            "type" => $this->type,
+        // $this->standardData();
+        // $this->validate();
+        DB::table('survey_customer')->where("id",$this->editId)->update([
+            "rate" => $this->rate,
             "content" => $this->content,
+            "email" => $this->email,
+            "phone" => $this->phone,
+            "customer_name" => $this->customer_name,
         ]);
-        $this->resetValidate();
+        // $this->resetValidate();
         $this->dispatchBrowserEvent('show-toast', ["type" => "success", "message" => 'Chỉnh sửa thành công']);
         $this->emit('closeModalCreateEdit');
     }
