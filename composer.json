@@ -22,6 +22,7 @@
         "nicolaslopezj/searchable": "^1.13",
         "owen-it/laravel-auditing": "^12.0",
         "phpoffice/phpspreadsheet": "^1.17",
+        "pusher/pusher-php-server": "^7.0",
         "spatie/laravel-permission": "^4.0",
         "webklex/laravel-imap": "^2.4"
     },

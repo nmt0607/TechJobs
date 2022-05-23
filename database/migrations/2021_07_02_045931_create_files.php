@@ -20,6 +20,7 @@ class CreateFiles extends Migration
             $table->string('file_name', 255)->nullable()->comment('Ten file');
             $table->string('model_name')->nullable()->comment();
             $table->bigInteger('model_id')->nullable()->comment('map voi id bang');
+            $table->bigInteger('user_id')->nullable()->comment('map voi id bang');
             $table->string('size_file', 255)->nullable();
             $table->tinyInteger('type')->nullable()->comment('1: working, 2..');
             $table->tinyInteger('status')->nullable()->comment('0; luu nhap, 1 da luu');

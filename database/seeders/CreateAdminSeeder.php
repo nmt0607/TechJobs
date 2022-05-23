@@ -29,32 +29,5 @@ class CreateAdminSeeder extends Seeder
             'email' => 'leminhquan@test.com',
             'password' => bcrypt('12345678!'),
         ]);
-
-        // $admin->assignRole('admin');
-        // $admin2->assignRole('admin');
-
-        // tạo category
-        for($i = 1; $i <= 5; $i++){
-            Category::create([
-                'name' => 'Danh mục '.$i,
-            ]);
-        }
-        // seeder sla
-        Sla::create([
-            'type' => 1,
-            'process_time_json' => '{"day":5,"hour":12,"minute":30}'
-        ]);
-        Sla::create([
-            'type' => 2,
-            'process_time_json' => '{"day":1,"hour":18,"minute":0}'
-        ]);
-        Sla::create([
-            'type' => 3,
-            'process_time_json' => '{"day":1,"hour":0,"minute":0}'
-        ]);
-        Sla::create([
-            'type' => 4,
-            'process_time_json' => '{"day":0,"hour":6,"minute":0}'
-        ]);
     }
 }

@@ -25,6 +25,7 @@ class Files extends BaseLive
     public $uploadOnShow = 0;
     public $deleteUnknownFilesOnMount = true;
     public $disabled;
+    public $admin_id;
 
     public $maximumFileSize = 255; // Mb
     public $maximumUploads = 5;
@@ -33,7 +34,8 @@ class Files extends BaseLive
     public $files = [];
 
     protected $listeners = [
-        'updateFile' => 'render'
+        'updateFile' => 'render',
+        'updateFile2' => 'updateFile2',
     ];
 
     public function rules() {
@@ -76,11 +78,12 @@ class Files extends BaseLive
 
     public function render()
     {
-
+        //dd('a');
         $this->files = File::query()
             ->where('model_name', $this->model_name)
             ->where('type', $this->type)
             ->where('model_id', $this->model_id)
+            ->where('admin_id', $this->admin_id)
             ->get()
             ->keyBy('id')
             ->toArray();
@@ -93,9 +96,7 @@ class Files extends BaseLive
 
     public function updatedFile()
     {
-
         $this->validate();
-
         $originalName = $this->file->getClientOriginalName();
         $filePath = $this->file->storeAs('uploads/' . $this->folder . '/files/' . auth()->id(), $this->file->getFilename(), 'local');
 
@@ -134,5 +135,9 @@ class Files extends BaseLive
             $bytes /= 1024;
         }
         return round($bytes, 2) . ' ' . $units[$i];
+    }
+
+    public function updateFile2($id){
+        $this->admin_id = $id;
     }
 }

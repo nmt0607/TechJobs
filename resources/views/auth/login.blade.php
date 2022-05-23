@@ -1,67 +1,61 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="login-box">
-  <div class="login-logo">
-    <a href="../../index2.html"><b>Admin</b></a>
-  </div>
-  <!-- /.login-logo -->
-  <div class="card">
-    <div class="card-body login-card-body">
-      <p class="login-box-msg">Sign in to start your session</p>
-
-      <form method="POST" action="{{ route('login') }}">
-        @csrf
-        <div class="input-group mb-3">
-          <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-          <div class="input-group-append">
-            <div class="input-group-text">
-              <span class="fas fa-envelope"></span>
-            </div>
-          </div>
-           @error('email')
-              <span class="invalid-feedback" role="alert">
-                  <strong>{{ $message }}</strong>
-              </span>
-          @enderror
-        </div>
-        <div class="input-group mb-3">
-          <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
-          <div class="input-group-append">
-            <div class="input-group-text">
-              <span class="fas fa-lock"></span>
-            </div>
-          </div>
-          @error('password')
-              <span class="invalid-feedback" role="alert">
-                  <strong>{{ $message }}</strong>
-              </span>
-          @enderror
-        </div>
+<div class="login-main">
+    <div class="w-login m-auto">
         <div class="row">
-          <div class="col-8">
-            <div class="icheck-primary">
-              <input type="checkbox" id="remember">
-              <label for="remember">
-                Remember Me
-              </label>
+            <!-- login main descriptions -->
+            <div class="col-md-6 col-sm-12 col-12 login-main-left">
+                <img src="img/banner-login.png">
             </div>
-          </div>
-          <!-- /.col -->
-          <div class="col-4">
-            <button type="submit" class="btn btn-primary btn-block">Sign In</button>
-          </div>
-          <!-- /.col -->
-        </div>
-      </form>
+            <!-- login main form -->
+            <div class="col-md-6 col-sm-12 col-12 login-main-right">
 
-      <p class="mb-1">
-        <a class="btn btn-link" href="{{ route('password.request') }}">
-            {{ __('Forgot Your Password?') }}
-        </a>
-      </p>
+                <form class="login-form" method="POST" action="{{ route('login') }}">
+                @csrf
+                    <div class="login-main-header">
+                        <h3>Đăng Nhập</h3>
+                    </div>
+                    <div class="input-div one">
+                        <div class="div lg-lable">
+                            <h5>Username</h5>
+                            <input name="email" type="text" class="input form-control-lgin">
+                        </div>
+                    </div>
+                    <div class="input-div pass">
+                        <div class="div lg-lable">
+                            <h5>Password</h5>
+                            <input name="password" type="password" class="input form-control-lgin">
+                        </div>
+                    </div>
+                    <div class="form-group d-block frm-text">
+                        <a href="#" class="fg-login d-inline-block">Quên mật khẩu</a>
+                        <a href="#" class="fg-login float-right d-inline-block">Bạn chưa có tài khoản? Đăng ký</a>
+                    </div>
+                    <button type="submit" class="btn btn-primary float-right btn-login d-block w-100">Đăng Nhập</button>
+                    <div class="form-group d-block w-100 mt-5">
+                        <div class="text-or text-center">
+                            <span>Hoặc</span>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-6 col-12 pr-7">
+                                <button class="btn btn-secondary btn-login-facebook btnw w-100 float-left">
+                                    <i class="fa fa-facebook" aria-hidden="true"></i>
+                                    <span>Đăng nhập bằng Facebook</span>
+                                </button>
+                            </div>
+                            <div class="col-sm-6 col-12 pl-7">
+                                <button class="btn btn-secondary btn-login-google btnw w-100 float-left">
+                                    <i class="fa fa-google" aria-hidden="true"></i>
+                                    <span>Đăng nhập bằng Google</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-    <!-- /.login-card-body -->
-  </div>
 </div>
 @endsection

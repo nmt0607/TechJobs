@@ -3066,6 +3066,7 @@ readers do not read off random characters that represent icons */
 .fa-place-of-worship:before {
   content: "\f67f"; }
 
+  
 .fa-plane:before {
   content: "\f072"; }
 
