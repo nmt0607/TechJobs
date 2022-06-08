@@ -28,9 +28,9 @@
                             <div class="job-detail-header-tag">
                                 <ul>
                                     @foreach($job->tags as $tag)
-                                        <li>
-                                            <at>{{$tag->name}}</a>
-                                        </li>
+                                    <li>
+                                        <a>{{$tag->name}}</a>
+                                    </li>
                                     @endforeach
                                 </ul>
                             </div>
@@ -39,10 +39,14 @@
                     <div class="col-md-3 col-sm-12 col-12">
                         <div class="jd-header-wrap-right">
                             <div class="jd-center">
-                                @if ($appliedJobs->contains($job))
-                                    <a data-toggle="modal" data-target="#modalCancelApply" class="btn btn-warning btn-waiting" style="color: white">Chờ chấp nhận</a>
+                                @if($statusApply == 1)
+                                <a data-toggle="modal" data-target="#modalCancelApply" class="btn btn-warning btn-waiting" style="color: white">Chờ chấp nhận</a>
+                                @elseif($statusApply == 2)
+                                <a class="btn btn-success btn-waiting" style="color: white">Đang thực hiện</a>
+                                @elseif($statusApply == 3)
+                                <a class="btn btn-secondary btn-waiting" style="color: white">Đã bị từ chối</a>
                                 @else
-                                    <a data-toggle="modal" data-target="#modalApplyJob" class="btn btn-primary btn-apply" style="color: white">Nộp đơn</a>
+                                <a data-toggle="modal" data-target="#modalApplyJob" class="btn btn-primary btn-waiting" style="color: white">Nộp đơn</a>
                                 @endif
                                 <p class="jd-view">Lượt xem: <span>1.520</span></p>
                             </div>
@@ -195,7 +199,6 @@
                                     </div>
                                 </div>
                             </div>
-
                             <div class="job-info-list">
                                 <div class="row">
                                     <div class="col-sm-4">
@@ -206,7 +209,6 @@
                                     </div>
                                 </div>
                             </div>
-
                             <div class="job-info-list">
                                 <div class="row">
                                     <div class="col-sm-4">
@@ -218,10 +220,7 @@
                                 </div>
                             </div>
                         </div>
-
-
                     </div>
-
                     <div class="side-bar mb-3">
                         <h2 class="widget-title">
                             <span>Giới thiệu công ty</span>
@@ -413,27 +412,39 @@
     </div>
     <!-- (end) job support -->
     <div wire:ignore.self class="modal fade" id="modalApplyJob" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" style="top: 20vh">
+        <div class="modal-dialog" style="top: 20vh">
             <div class="modal-content">
                 <div class="modal-header">
                     <h2 class="modal-title" id="exampleModalLabel">Nộp đơn ứng tuyển</h2>
                 </div>
                 <div class="modal-body">
-
-                    @livewire('component.files',[
-                        'model_name' => \App\Models\Job::class,
-                        'model_id'=>$job->id,
-                        'folder' => 'jobs',
-                        'admin_id'=>auth()->id(),
-                        'canUpload'=>true,
-                        'displayUploadfile' => true,
-                        'displayFile'=>true
-                    ])
-
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label text-right label">Báo giá(<span style="color:red">*</span>)</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" wire:model.defer="offer" placeholder="Nhập báo giá (nghìn đồng)">
+                            @error("offer")
+                            @include("layouts.partials.text._error")
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        
+                        <div class="col-sm-12">
+                            @livewire('component.files',[
+                            'model_name' => \App\Models\Job::class,
+                            'model_id'=>$job->id,
+                            'folder' => 'jobs',
+                            'admin_id'=>auth()->id(),
+                            'canUpload'=>true,
+                            'displayUploadfile' => true,
+                            'displayFile'=>true
+                            ])
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-                    <button type="button" class="btn btn-success" data-dismiss="modal" wire:click="apply()">Ứng tuyển</button>
+                    <button type="button" id="close-modal-apply" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                    <button type="button" class="btn btn-success" wire:click="apply()">Ứng tuyển</button>
                 </div>
             </div>
         </div>
@@ -456,3 +467,13 @@
         </div>
     </div>
 </div>
+<script>
+    $("document").ready(() => {
+        $('#modalApplyJob').on('hidden.bs.modal', function() {
+            @this.emit('resetData');
+        })
+        window.livewire.on('close-modal-apply', () => {
+            $("#close-modal-apply").click();
+        });
+    })
+</script>

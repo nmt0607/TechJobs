@@ -6,13 +6,15 @@ use Illuminate\Support\Facades\Auth;
 
 class Notification extends Component
 {
-    public $listeners = ['sendNotify'];
+    public $listeners = ['updateRealtime'];
     public $unseenNotifyCount;
     public $unseenMessageCount;
+    public $imagePath;
 
     public function mount(){
+        $this->imagePath = auth()->user()->image; 
         $this->unseenNotifyCount = Auth::user()->unreadNotifications()->where('type', 'App\Notifications\ApplyNotification')->count();
-        // $this->unseenMessageCount = Auth::user()->unreadNotifications()->where('type', 'App\Notifications\CommentTicketNotification')->count();
+        $this->unseenMessageCount = Auth::user()->unreadNotifications()->where('type', 'App\Notifications\MessageNotification')->count();
     }
 
     public function render(){
@@ -20,7 +22,8 @@ class Notification extends Component
         $unreadNotify = Auth::user()->unreadNotifications()->where('type', 'App\Notifications\ApplyNotification')->get();
         $readNotify = Auth::user()->notifications ()->where('type', 'App\Notifications\ApplyNotification')->whereNotNull('read_at')->get();
         $notify = $unreadNotify->merge($readNotify);
-        return view('livewire.component.notification', compact('notify'));
+        $friendChat = Auth::user()->friendChat();
+        return view('livewire.component.notification', compact('notify', 'friendChat'));
     }
 
     // public function markAllAsRead(){
@@ -43,7 +46,9 @@ class Notification extends Component
     //     }
     // }
 
-    public function sendNotify(){
+    public function updateRealtime(){
+        $this->imagePath = auth()->user()->image; 
         $this->unseenNotifyCount = Auth::user()->unreadNotifications()->where('type', 'App\Notifications\ApplyNotification')->count();
+        $this->unseenMessageCount = Auth::user()->unreadNotifications()->where('type', 'App\Notifications\MessageNotification')->count();
     }
 }

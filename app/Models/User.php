@@ -29,7 +29,8 @@ class User extends Authenticatable
         'email',
         'date',
         'sex',
-        'department'
+        'department',
+        'password',
     ];
 
     //query search
@@ -85,12 +86,19 @@ class User extends Authenticatable
     //export
     protected $columnExport = [
         'name',
-        'account',
         'phone',
         'email',
         'date',
         'sex',
-        'department'
+        'password',
+        'level',
+        'exp',
+        'type',
+        'status',
+        'type_job',
+        'salary',
+        'province_id',
+        'address',
     ];
     public function  getColumnExport()
     {
@@ -139,7 +147,7 @@ class User extends Authenticatable
 
     public function jobs()
     {
-        return $this->belongsToMany(Job::class, 'applications')->withPivot('status')->withTimestamps();
+        return $this->belongsToMany(Job::class, 'applications')->withPivot('status', 'offer')->withTimestamps();
     }
 
     public function conversation($partnerId){
@@ -162,5 +170,30 @@ class User extends Authenticatable
         }
         $listFriend = User::whereIn('id', array_unique($listFriendId))->get();
         return $listFriend;
+    }
+
+    public function friendChat(){
+        $friendChatId1 = Message::where('from_id', auth()->id())->select('to_id as id', 'created_at')->get()->toArray();
+        $friendChatId2 = Message::where('to_id', auth()->id())->select('from_id as id', 'created_at')->get()->toArray();
+        $friendChatId = array_merge($friendChatId1, $friendChatId2);
+        $date = array_column($friendChatId, 'created_at');
+        array_multisort($date, SORT_DESC, $friendChatId);
+        $friendChatId = array_column($friendChatId, 'id');
+        $friendChatId = array_values(array_unique($friendChatId));
+        $ids_ordered = implode(',', $friendChatId);
+        $friendChat = User::whereIn('id', $friendChatId)->orderByRaw("FIELD(id, $ids_ordered)")->get();
+        return $friendChat;
+    }
+
+    public function lastMessage($partnerId){
+        $query = Message::query();
+        $query->where(function($query) use ($partnerId){
+            $query->where('from_id', auth()->id());
+            $query->where('to_id', $partnerId);
+        })->orWhere(function($query) use ($partnerId){
+            $query->where('to_id', auth()->id());
+            $query->where('from_id', $partnerId);
+        })->orderBy('created_at', 'desc');
+        return $query->first();
     }
 }

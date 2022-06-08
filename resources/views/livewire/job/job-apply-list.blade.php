@@ -59,25 +59,27 @@
                         </h2>
                         <div class="company-intro">
                             <a href="#">
-                                <img src="{{asset('dist/img/user1-128x128.jpg')}}" class="job-logo-ima" alt="job-logo">
+                                <img src="{{asset($user->image??'dist/img/default-avatar.png')}}" class="job-logo-ima" alt="job-logo">
                             </a>
                         </div>
-                        <h2 class="company-intro-name">{{$user->name??''}}</h2>
+                        <h2 class="company-intro-name">{{$user->name??'Tên ứng viên'}}</h2>
                         <ul class="job-add">
 
                             <li>
                                 <i class="fa fa-money ja-icn"></i>
-                                <span>Báo giá: 15 triệu</span>
+                                <span>Báo giá: {{$user->offer??''}}</span>
                             </li>
-                            @livewire('component.files',[
-                            'model_name' => \App\Models\Job::class,
-                            'model_id'=>$job->id,
-                            'admin_id'=>$user->id??'',
-                            'folder' => 'jobs',
-                            'canUpload'=>false,
-                            'displayUploadfile' => false,
-                            'displayFile'=>true
-                            ])
+                            @if($user)
+                                @livewire('component.files',[
+                                'model_name' => \App\Models\Job::class,
+                                'model_id'=>$job->id,
+                                'admin_id'=>$user->id??'',
+                                'folder' => 'jobs',
+                                'canUpload'=>false,
+                                'displayUploadfile' => false,
+                                'displayFile'=>true
+                                ])
+                            @endif
                         </ul>
                         <div class="wrap-comp-info mb-2">
                             @if($statusUser == 2)
@@ -101,7 +103,7 @@
                                     <div class="job-content " id="profile-user" wire:click="selectUser({{$row->id}})" tabindex="0" style="padding: 0px;">
                                         <div class="job-logo">
                                             <a href="#">
-                                                <img class="img-circle" style="height: 70px;" src="{{asset('dist/img/user1-128x128.jpg')}}" class="job-logo-ima" alt="job-logo">
+                                                <img class="img-circle" style="height: 70px;" src="{{asset($row->image)}}" class="job-logo-ima" alt="job-logo">
                                             </a>
                                         </div>
 

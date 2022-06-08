@@ -22,7 +22,7 @@
                 <img src="/images/File.svg" alt="file" width="50px">
                 <div>
                     <a href="{{ $canDownload ? asset('storage/' . $val['url']) : '#' }}" download>
-                        <span class="d-block mb-0" style="word-break: break-all;">{{ $val['file_name'] }}</span>
+                        <span class="d-block mb-0" style="word-break: break-all;">{{ strLimit($val['file_name']) }}</span>
                         <small class="kb">{{ $val['size_file'] }}</small>
                     </a>
                 </div>

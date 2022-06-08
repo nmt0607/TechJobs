@@ -29,6 +29,9 @@ class JobApplyList extends BaseLive {
         $acceptedCandidate = $job->users()->where('applications.status', 2)->get();
         $appliedJobs = auth()->user()->jobs()->where('applications.status', 1)->get();
         $user = $this->user;
+        if($user) {
+            $user->offer = $job->users()->where('applications.user_id', $user->id)->first()->pivot->offer;
+        }
         return view('livewire.job.job-apply-list', compact('job', 'appliedJobs', 'data', 'user', 'acceptedCandidate'));
     }  
     
@@ -45,15 +48,20 @@ class JobApplyList extends BaseLive {
         $data = [$this->jobId, 2];
         $this->user->notify(new ApplyNotification($data));
         event(new NotificationEvent($this->user->id));
+        $this->user = null;
+        $this->statusUser = null;
     }
 
     public function reject()
     {
         $this->job->users()->where('applications.user_id', $this->user->id)->update(['applications.status' => 3]);
+        
     }
 
     public function finish()
     {
         $this->job->users()->where('applications.user_id', $this->user->id)->update(['applications.status' => 4]);
+        $this->user = null;
+        $this->statusUser = null;
     }
 }

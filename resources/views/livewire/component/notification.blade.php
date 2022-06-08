@@ -4,57 +4,31 @@
     <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown">
             <i class="far fa-comments" style="font-size: 17px;"></i>
-            <span class="badge badge-danger navbar-badge">3</span>
+            <span class="badge badge-danger navbar-badge">{{$unseenMessageCount}}</span>
         </a>
-        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right notification scroll">
+        <span style="position: sticky;
+top: 0; background-color: white" class="dropdown-item dropdown-header">{{$unseenMessageCount}} Message</span>
+            <div class="dropdown-divider"></div>
+            @foreach($friendChat as $friend)
             <a href="#" class="dropdown-item">
                 <!-- Message Start -->
                 <div class="media">
                     <img src="/dist/img/user1-128x128.jpg" alt="User Avatar" class="img-size-50 mr-3 img-circle">
                     <div class="media-body">
                         <h3 class="dropdown-item-title">
-                            Brad Diesel
+                            {{$friend->name}}
                             <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
                         </h3>
-                        <p class="text-sm">Call me whenever you can...</p>
-                        <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
+                        <p class="text-sm">{{auth()->user()->lastMessage($friend->id)->content}}</p>
+                        <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i>{{auth()->user()->lastMessage($friend->id)->created_at->diffForHumans()}}</p>
                     </div>
                 </div>
                 <!-- Message End -->
             </a>
             <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item">
-                <!-- Message Start -->
-                <div class="media">
-                    <img src="/dist/img/user8-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
-                    <div class="media-body">
-                        <h3 class="dropdown-item-title" style="line-height: 18px">
-                            John Pierce
-                            <span class="float-right text-sm text-muted"><i class="fas fa-star"></i></span>
-                        </h3>
-                        <p class="text-sm">I got your message bro</p>
-                        <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-                    </div>
-                </div>
-                <!-- Message End -->
-            </a>
-            <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item">
-                <!-- Message Start -->
-                <div class="media">
-                    <img src="/dist/img/user3-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
-                    <div class="media-body">
-                        <h3 class="dropdown-item-title">
-                            Nora Silvester
-                            <span class="float-right text-sm text-warning"><i class="fas fa-star"></i></span>
-                        </h3>
-                        <p class="text-sm">The subject goes here</p>
-                        <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-                    </div>
-                </div>
-                <!-- Message End -->
-            </a>
-            <div class="dropdown-divider"></div>
+            @endforeach
+            
             <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
         </div>
     </li>
@@ -84,7 +58,7 @@ top: 0; background-color: white" class="dropdown-item dropdown-header">{{$unseen
         </a>
     </li>
     <li class="nav-item" style='margin-right:-13px !important;'>
-      <img id='userImage' src="/dist/img/user1-128x128.jpg"  class="img-circle" style="opacity: 1.0;width:35px; margin-top: 6px;" />
+      <img id='userImage' src="{{asset($imagePath)}}"  class="img-circle" style="opacity: 1.0;width:35px; margin-top: 6px;" />
     </li>
     <li class="dropdown dropdown-user">
         <a class="nav-link dropdown-toggle link" data-toggle="dropdown">
@@ -101,8 +75,8 @@ top: 0; background-color: white" class="dropdown-item dropdown-header">{{$unseen
         </ul>
     </li>
 </ul>
-
-<!-- <script>
+<script src="{{asset('/js/pusher.min.js')}}"></script>
+<script>
     //Thay giá trị PUSHER_APP_KEY vào chỗ xxx này nhé
     Pusher.logToConsole = true;
     var pusher = new Pusher("6f774f042487109efc9c", {
@@ -114,6 +88,6 @@ top: 0; background-color: white" class="dropdown-item dropdown-header">{{$unseen
 
     // Bind a function to a Event (the full Laravel class)
     channel.bind('notify-event', function() {
-        @this.emit('sendNotify');
+        @this.emit('updateRealtime');
     });
-</script> -->
+</script>

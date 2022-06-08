@@ -184,6 +184,5 @@
     <!-- Owl Stylesheets Javascript -->
     <script src="{{asset('/js/owlcarousel/owl.carousel.js')}}"></script>
     <!-- Read More Plugin -->
-    <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
 </body>
 </html>

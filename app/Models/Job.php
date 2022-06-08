@@ -28,7 +28,7 @@ class Job extends Model
 
     public function users()
     {
-        return $this->belongsToMany(User::class, 'applications')->withPivot('status')->withTimestamps();
+        return $this->belongsToMany(User::class, 'applications')->withPivot('status', 'offer')->withTimestamps();
     }
 
     public function tags()

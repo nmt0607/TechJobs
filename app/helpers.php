@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
+use App\Jobs\SendMail;
 
 function setActive($path)
 {
@@ -531,5 +532,8 @@ function convertTimeJsonToText($json){
         $str = $str.$array->minute. 'p';
     }
     return $str;
+}
+function sendMail($data){
+    SendMail::dispatch($data);
 }
 

@@ -269,7 +269,7 @@
                                 <div class="job-content">
                                     <div class="job-logo">
                                         <a href="#">
-                                            <img src="{{asset('img/fpt-logo.png')}}" class="job-logo-ima" alt="job-logo">
+                                            <img src="{{asset($row->user->image)}}" class="job-logo-ima" alt="job-logo">
                                         </a>
                                     </div>
 

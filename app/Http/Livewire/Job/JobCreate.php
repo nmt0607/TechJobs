@@ -47,11 +47,13 @@ class JobCreate extends BaseLive {
             $this->tagSelect = $job->tags->pluck('id')->toArray();
         }
         $this->tags = Tag::all();
+        $this->user = auth()->user();
     }
 
     public function render(){
         $tags = $this->tags;
-        return view('livewire.job.job-create', compact('tags'));
+        $user = $this->user;
+        return view('livewire.job.job-create', compact('tags', 'user'));
     }  
 
     public function create(){

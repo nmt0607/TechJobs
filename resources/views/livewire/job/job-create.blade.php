@@ -218,7 +218,7 @@
                 <div class="col-md-4 col-sm-12 col-12">
                     <div class="recuiter-info">
                         <div class="recuiter-info-avt">
-                            <img src="img/icon_avatar.jpg">
+                            <img src="{{asset($user->image)}}">
                         </div>
                         <div class="clearfix list-rec">
                             <h4>NESTLE Inc.</h4>
