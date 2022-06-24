@@ -1,9 +1,9 @@
 .loader{
     content: '';
     /*box-sizing: border-box;*/
-    position: absolute;
+    position: fixed;
     opacity: 0.6;
-    top: 50%;
+    top: 35%;
     left: 50%;
     width: 50px;
     height: 50px;
@@ -15,5 +15,5 @@
     animation: spinner  linear infinite;
     background: url('/images/loading2.gif')
     50% 50% no-repeat rgb(249,249,249);
-    z-index: 1100;
+    z-index: 1;
 }

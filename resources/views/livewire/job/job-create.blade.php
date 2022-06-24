@@ -1,36 +1,4 @@
 <div>
-    <nav class="navbar navbar-expand-lg navbar-light nav-recuitment">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNava" aria-controls="navbarNava" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse container" id="navbarNava">
-            <ul class="navbar-nav nav-recuitment-li">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Quản lý đăng tuyển</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Quản lý ứng viên</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Quản lý đăng tin</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Quản lý hồ sơ</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Tài khoản</a>
-                </li>
-            </ul>
-            <ul class="rec-nav-right">
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Tìm hồ sơ</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Đăng tuyển</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
     <!--  recuiter Nav -->
 
     <!-- widget recuitment  -->
@@ -75,12 +43,18 @@
                                             <label class="col-sm-3 col-form-label text-right label">Tiêu đề<span style="color: red" class="pl-2">*</span></label>
                                             <div class="col-sm-9">
                                                 <input wire:model.defer="title" type="text" class="form-control" placeholder="Nhập tiêu đề">
+                                                @error("title")
+                                                @include("layouts.partials.text._error")
+                                                @enderror
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-sm-3 col-form-label text-right label">Số lượng cần tuyển</label>
+                                            <label class="col-sm-3 col-form-label text-right label">Số lượng cần tuyển<span style="color: red" class="pl-2">*</span> </label>
                                             <div class="col-sm-9">
                                                 <input wire:model.defer="number" type="number" class="form-control" placeholder="1">
+                                                @error("number")
+                                                @include("layouts.partials.text._error")
+                                                @enderror
                                             </div>
                                         </div>
                                         <div class="form-group row">
@@ -92,18 +66,29 @@
                                                     <option value="1">Nam</option>
                                                     <option value="2">Nữ</option>
                                                 </select>
+
                                             </div>
+                                            <div class="col-sm-3"></div>&nbsp;&nbsp;&nbsp;&nbsp;
+                                            @error("gender")
+                                            @include("layouts.partials.text._error")
+                                            @enderror
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label text-right label">Mô tả công việc<span style="color: red" class="pl-2">*</span></label>
                                             <div class="col-sm-9">
-                                                <textarea wire:model.defer="description" type="text" class="form-control" placeholder="Nhập mô tả công việc" rows="5"></textarea>
+                                                <textarea wire:model.defer="description" rows="20" type="text" class="form-control" placeholder="Nhập mô tả công việc" rows="5"></textarea>
+                                                @error("description")
+                                                @include("layouts.partials.text._error")
+                                                @enderror
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label text-right label">Yêu cầu công việc<span style="color: red" class="pl-2">*</span></label>
                                             <div class="col-sm-9">
-                                                <textarea wire:model.defer="requirement" type="text" class="form-control" placeholder="Nhập yêu cầu công việc" rows="5"></textarea>
+                                                <textarea wire:model.defer="requirement" rows="20" type="text" class="form-control" placeholder="Nhập yêu cầu công việc" rows="5"></textarea>
+                                                @error("requirement")
+                                                @include("layouts.partials.text._error")
+                                                @enderror
                                             </div>
                                         </div>
                                         <div class="form-group row">
@@ -119,31 +104,44 @@
                                                     <option value="6">Manager</option>
                                                 </select>
                                             </div>
+                                            <div class="col-sm-3"></div>&nbsp;&nbsp;&nbsp;&nbsp;
+                                            @error("level")
+                                            @include("layouts.partials.text._error")
+                                            @enderror
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label text-right label">Kinh nghiệm<span style="color: red" class="pl-2">*</span></label>
                                             <div class="col-sm-9">
                                                 <input wire:model.defer="exp" type="text" class="form-control" placeholder="Kinh nghiệm">
+                                                @error("exp")
+                                                @include("layouts.partials.text._error")
+                                                @enderror
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label text-right label">Mức lương<span style="color: red" class="pl-2">*</span></label>
                                             <div class="col-sm-9">
                                                 <input wire:model.defer="salary" type="text" class="form-control" placeholder="Mức lương">
+                                                @error("salary")
+                                                @include("layouts.partials.text._error")
+                                                @enderror
                                             </div>
                                         </div>
 
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label text-right label">Quyền lợi<span style="color: red" class="pl-2">*</span></label>
                                             <div class="col-sm-9">
-                                                <textarea wire:model.defer="benefit" type="text" class="form-control" placeholder="Quyền lợi công việc" rows="5"></textarea>
+                                                <textarea wire:model.defer="benefit" rows="10" type="text" class="form-control" placeholder="Quyền lợi công việc" rows="5"></textarea>
+                                                @error("benefit")
+                                                @include("layouts.partials.text._error")
+                                                @enderror
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-sm-3 col-form-label text-right label">Ngành nghề</label>
+                                            <label class="col-sm-3 col-form-label text-right label">Ngành nghề<span style="color: red" class="pl-2">*</span></label>
                                             <div class="col-sm-9" wire:ignore>
                                                 <select wire:model.defer="type" type="text" class="form-control" id="jobType">
-                                                    <option selected="selected" value="">Chọn ngành nghề</option>
+                                                    <option selected="selected">Chọn ngành nghề</option>
                                                     <option value="1">Web Developer</option>
                                                     <option value="2">Mobile Developer</option>
                                                     <option value="3">Business Analyst</option>
@@ -151,23 +149,32 @@
                                                     <option value="5">Data Scientist</option>
                                                 </select>
                                             </div>
+                                            <div class="col-sm-3"></div>&nbsp;&nbsp;&nbsp;&nbsp;
+                                            @error("type")
+                                            @include("layouts.partials.text._error")
+                                            @enderror
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-sm-3 col-form-label text-right label">Nơi làm việc</label>
+                                            <label class="col-sm-3 col-form-label text-right label">Nơi làm việc<span style="color: red" class="pl-2">*</span></label>
                                             <div class="col-sm-9" wire:ignore>
                                                 <select wire:model.defer="address_id" type="text" class="form-control" id="jobProvince">
+                                                    <option selected="selected">Chọn địa điểm</option>
                                                     <option value="1">Hồ Chí Minh</option>
                                                     <option value="2">Hà Nội</option>
-                                                    <option value="3">An Giang</option>
-                                                    <option value="4">Bạc Liêu</option>
-
                                                 </select>
                                             </div>
+                                            <div class="col-sm-3"></div>&nbsp;&nbsp;&nbsp;&nbsp;
+                                            @error("address_id")
+                                            @include("layouts.partials.text._error")
+                                            @enderror
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label text-right label">Hạn nộp hồ sơ<span style="color: red" class="pl-2">*</span></label>
                                             <div class="col-sm-9">
                                                 <input wire:model.defer="end_date" type="date" class="form-control" placeholder="Nhập nơi làm việc">
+                                                @error("end_date")
+                                                @include("layouts.partials.text._error")
+                                                @enderror
                                             </div>
                                         </div>
                                     </div>
@@ -188,7 +195,7 @@
                                     <div class="card-body recuitment-body">
                                         <div class="checkboxsec" id="checkboxSection">
                                             @foreach($tags as $tag)
-                                            <div class="filter-topic" style = 'padding: 8px 50px'>
+                                            <div class="filter-topic" style='padding: 8px 50px'>
                                                 <label class="label-container">
                                                     <span>{{$tag->name}}</span>
                                                     <input type="checkbox" {{in_array($tag->id, $tagSelect)?'checked':''}} class='tags' name="tags[]" value="{{$tag->id}}">
@@ -210,7 +217,7 @@
                                 </button>
                             </div>
                         </center>
-                        
+
                     </div>
 
                 </div>
@@ -221,15 +228,26 @@
                             <img src="{{asset($user->image)}}">
                         </div>
                         <div class="clearfix list-rec">
-                            <h4>NESTLE Inc.</h4>
+                            <h4>{{$user->name}}</h4>
+                            <ul class="job-add">
+                                <li>
+                                    <i class="fa fa-map-marker ja-icn"></i>
+                                    <span>Trụ sở: {{$user->address}}</span>
+                                </li>
+                                <li>
+                                    <i class="fa fa-bar-chart ja-icn"></i>
+                                    <span>Quy mô công ty: {{$user->size}} người</span>
+                                </li>
+                            </ul>
+                            <hr>
                             <ul>
-                                <li><a href="#">Việc làm đang đăng <strong>(0)</strong></a></li>
-                                <li><a href="#">Follower <strong>(450)</strong></a></li>
+                                <li><a href="#">Công việc đang đăng <strong>({{$user->jobsCreate->count()}})</strong></a></li>
+                                <li><a href="#">Ứng viên đang ứng tuyển <strong>({{$user->countApplyingUser()}})</strong></a></li>
                             </ul>
                         </div>
                     </div>
 
-
+                    
                     <div class="block-sidebar" style="margin-bottom: 20px;">
                         <header>
                             <h3 class="title-sidebar font-roboto bg-primary">
@@ -351,6 +369,11 @@
                             </ul>
                         </div>
                     </div>
+                    <div class="job-sidebar">
+                        <div class="sb-banner">
+                            <img src="{{asset('img/ads1.jpg')}}" class="advertisement">
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -358,55 +381,29 @@
     <!-- (end) published recuitment -->
     <div class="clearfix"></div>
     <!-- job support -->
-    <div class="container-fluid job-support-wrapper">
-        <div class="container-fluid job-support-wrap">
-            <div class="container job-support">
-                <div class="row">
-                    <div class="col-md-6 col-sm-12 col-12">
-                        <ul class="spp-list">
-                            <li>
-                                <span><i class="fa fa-question-circle pr-2 icsp"></i>Hỗ trợ nhà tuyển dụng:</span>
-                            </li>
-                            <li>
-                                <span><i class="fa fa-phone pr-2 icsp"></i>0123.456.789</span>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="col-md-6 col-sm-12 col-12">
-                        <div class="newsletter">
-                            <span class="txt6">Đăng ký nhận bản tin việc làm</span>
-                            <div class="input-group frm1">
-                                <input type="text" placeholder="Nhập email của bạn" class="newsletter-email form-control">
-                                <a href="#" class="input-group-addon"><i class="fa fa-lg fa-envelope-o colorb"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    @livewire('component.support')
 </div>
 <!-- (end) job support -->
 <script>
     $("document").ready(() => {
-        $('#jobGender').on('change', function (e) {
+        $('#jobGender').on('change', function(e) {
             var data = $('#jobGender').select2('val');
-        @this.set('gender', data);
+            @this.set('gender', data);
         });
-        $('#jobLevel').on('change', function (e) {
+        $('#jobLevel').on('change', function(e) {
             var data = $('#jobLevel').select2('val');
-        @this.set('level', data);
+            @this.set('level', data);
         });
-        $('#jobType').on('change', function (e) {
+        $('#jobType').on('change', function(e) {
             var data = $('#jobType').select2('val');
-        @this.set('type', data);
+            @this.set('type', data);
         });
-        $('#jobProvince').on('change', function (e) {
+        $('#jobProvince').on('change', function(e) {
             var data = $('#jobProvince').select2('val');
-        @this.set('address_id', data);
+            @this.set('address_id', data);
         });
-        $('.tags').on('change', function (e) {
-            var data = $("input:checked").map(function(){
+        $('.tags').on('change', function(e) {
+            var data = $("input:checked").map(function() {
                 return $(this).val();
             }).get();
             @this.set('tagSelect', data);

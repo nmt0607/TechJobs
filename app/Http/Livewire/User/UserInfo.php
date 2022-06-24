@@ -35,6 +35,8 @@ class UserInfo extends BaseLive {
     public $oldPassword;
     public $newPassword;
     public $confirmPassword;
+    public $description;
+    public $size;
 
     public $listeners = ['resetData'];
     
@@ -43,9 +45,6 @@ class UserInfo extends BaseLive {
         $this->imagePath = auth()->user()->image;
         $this->tags = Tag::all();
         $this->tagSelect = $this->user->tags->pluck('id')->toArray();
-    }
-
-    public function render(){  
         $user = $this->user;
         $this->name = $user->name;
         $this->phone = $user->phone;
@@ -61,6 +60,12 @@ class UserInfo extends BaseLive {
         $this->salary = $user->salary;
         $this->province_id = $user->province_id;
         $this->address = $user->address;
+        $this->size = $user->size;
+        $this->description = $user->description;
+    }
+
+    public function render(){  
+        $user = $this->user;
         return view('livewire.user.user-info', compact($user));
     }  
 
@@ -69,6 +74,29 @@ class UserInfo extends BaseLive {
     }
 
     public function update(){
+        if(auth()->user()->type == 2)
+            $this->validate([
+                'name' => 'required',
+                'phone' => 'required',
+            ],[
+                'name.required' => 'Trường này không được bỏ trống',
+                'phone.required' => 'Trường này không được bỏ trống',
+            ],[]);
+        else{
+            $this->validate([
+                'name' => 'required',
+                'phone' => 'required',
+                'address' => 'required',
+                'size' => 'required',
+                'description' => 'required',
+            ],[
+                'name.required' => 'Trường này không được bỏ trống',
+                'phone.required' => 'Trường này không được bỏ trống',
+                'address.required' => 'Trường này không được bỏ trống',
+                'size.required' => 'Trường này không được bỏ trống',
+                'description.required' => 'Trường này không được bỏ trống',
+            ],[]);
+        }
         $user = $this->user;
         $user->name = $this->name;
         $user->phone = $this->phone;
@@ -84,8 +112,11 @@ class UserInfo extends BaseLive {
         $user->province_id = $this->province_id;
         $user->address = $this->address;
         $user->image = $this->imagePath;
+        $user->size = $this->size;
+        $user->description = $this->description;
         $user->save();
         $user->tags()->sync($this->tagSelect);
+        $this->dispatchBrowserEvent('show-toast', ["type" => "success", "message" => 'Lưu thành công']);
         $this->emit('updateRealtime');
     }
 
@@ -103,6 +134,7 @@ class UserInfo extends BaseLive {
         ],[]);
 
         auth()->user()->update(['password' => Hash::make($this->newPassword)]);
+        $this->dispatchBrowserEvent('show-toast', ["type" => "success", "message" => 'Đổi mật khẩu thành công']);
         $this->emit('close-modal');
     }
 

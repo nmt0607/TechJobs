@@ -1,15 +1,18 @@
 <?php
 
-namespace app\Http\Livewire\Job;
+namespace app\Http\Livewire;
 
 use App\Http\Livewire\Base\BaseLive;
 use App\Models\Job;
 use App\Models\Tag;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
+use DB;
 
-class JobList extends BaseLive {
+class Index extends BaseLive {
 
     public $tags;
+    public $users;
     public $searchTag;
     public $searchName;
     public $searchCompany;
@@ -24,6 +27,7 @@ class JobList extends BaseLive {
     public $countJobType5;
 
     public function mount(){
+        \Carbon\Carbon::setLocale('vi');
         if(isset($_GET['type'])){
             $this->type = $_GET['type'];
         }
@@ -31,6 +35,7 @@ class JobList extends BaseLive {
             $this->typeJob = $_GET['type_job'];
         }
         $this->tags = Tag::all();
+        $this->users = User::all();
         $this->countJobAll = Job::all()->count();
         $this->countJobType1 = Job::where('type', 1)->get()->count();
         $this->countJobType2 = Job::where('type', 2)->get()->count();
@@ -41,6 +46,8 @@ class JobList extends BaseLive {
 
     public function render(){
         $query = Job::query();
+        $newJobs = Job::query()->orderBy('created_at', 'desc')->get();
+        $urgentJobs = Job::query()->orderBy('end_date')->get();
         if($this->type){
             $query = auth()->user()->jobs();
         }
@@ -50,6 +57,7 @@ class JobList extends BaseLive {
                 $query->where('tag_id', 'like', $this->searchTag);
             });
         }
+
         if($this->searchName){
             $query->where('title', 'like', '%'.$this->searchName.'%');
         }
@@ -65,10 +73,9 @@ class JobList extends BaseLive {
         }
         $data = $query->paginate(5);
         $tags = $this->tags;
+        $users = $this->users;
         $listCompany = Job::listCompany();
-        return view('livewire.job.job-list', compact('data', 'tags', 'listCompany'));
+        return view('livewire.index', compact('data', 'tags', 'listCompany', 'users', 'newJobs', 'urgentJobs'));
     }  
     
-    public function search(){
-    }
 }

@@ -52,4 +52,16 @@ class Job extends Model
         $listCompanyId = $query->groupBy('user_id')->pluck('user_id')->toArray();
         return User::whereIn('id', $listCompanyId)->get();
     }
+
+    public function listTag(){
+        $listTagString = '';
+        foreach($this->tags as $tag){
+            $listTagString = $listTagString.$tag->name.', ';
+        }
+        return substr($listTagString, 0, -2);                                           
+    }
+
+    public function applyingUser(){
+        return $this->users()->where('applications.status', 1)->get();
+    }
 }

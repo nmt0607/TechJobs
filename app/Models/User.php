@@ -31,6 +31,13 @@ class User extends Authenticatable
         'sex',
         'department',
         'password',
+        'type',
+        'image',
+        'level',
+        'province_id',
+        'type_job',
+        'size',
+        'description'
     ];
 
     //query search
@@ -150,29 +157,61 @@ class User extends Authenticatable
         return $this->belongsToMany(Job::class, 'applications')->withPivot('status', 'offer')->withTimestamps();
     }
 
-    public function conversation($partnerId){
+    public function jobsCreate()
+    {
+        return $this->hasMany(Job::class);
+    }
+
+    public function jobApplying()
+    {
+        return $this->belongsToMany(Job::class, 'applications')->where('applications.status', 1)->withPivot('status', 'offer')->withTimestamps();
+    }
+
+    public function jobFinish()
+    {
+        return $this->belongsToMany(Job::class, 'applications')->where('applications.status', 4)->withPivot('status', 'offer')->withTimestamps();
+    }
+
+    public function conversation($partnerId)
+    {
         $query = Message::query();
-        $query->where(function($query) use ($partnerId){
+        $query->where(function ($query) use ($partnerId) {
             $query->where('from_id', auth()->id());
             $query->where('to_id', $partnerId);
-        })->orWhere(function($query) use ($partnerId){
+        })->orWhere(function ($query) use ($partnerId) {
             $query->where('to_id', auth()->id());
             $query->where('from_id', $partnerId);
         });
         return $query->get();
     }
 
-    public function friend(){
-        $listJobAppliedIds = auth()->user()->jobs->pluck('user_id')->toArray();
-        $listFriendId = [];
-        foreach($listJobAppliedIds as $id){
-            $listFriendId[] = $id;
+    public function friend()
+    {
+        if (auth()->user()->type == 2) {
+            $listJobAppliedIds = auth()->user()->jobs->pluck('user_id')->toArray();
+            $listFriendId = [];
+            foreach ($listJobAppliedIds as $id) {
+                $listFriendId[] = $id;
+            }
+            $listFriend = User::whereIn('id', array_unique($listFriendId))->get();
+            return $listFriend;
+        } else {
+            $id = auth()->id();
+            $jobs = Job::where('user_id', $id)->get();
+            $listFriendId = [];
+            foreach ($jobs as $job) {
+                $users = $job->users()->whereIn('applications.status', [2, 3, 4])->get();
+                foreach ($users as $user) {
+                    $listFriendId[] = $user->id;
+                }
+            }
+            $listFriend = User::whereIn('id', array_unique($listFriendId))->get();
+            return $listFriend;
         }
-        $listFriend = User::whereIn('id', array_unique($listFriendId))->get();
-        return $listFriend;
     }
 
-    public function friendChat(){
+    public function friendChat()
+    {
         $friendChatId1 = Message::where('from_id', auth()->id())->select('to_id as id', 'created_at')->get()->toArray();
         $friendChatId2 = Message::where('to_id', auth()->id())->select('from_id as id', 'created_at')->get()->toArray();
         $friendChatId = array_merge($friendChatId1, $friendChatId2);
@@ -185,15 +224,68 @@ class User extends Authenticatable
         return $friendChat;
     }
 
-    public function lastMessage($partnerId){
+    public function lastMessage($partnerId)
+    {
         $query = Message::query();
-        $query->where(function($query) use ($partnerId){
+        $query->where(function ($query) use ($partnerId) {
             $query->where('from_id', auth()->id());
             $query->where('to_id', $partnerId);
-        })->orWhere(function($query) use ($partnerId){
+        })->orWhere(function ($query) use ($partnerId) {
             $query->where('to_id', auth()->id());
             $query->where('from_id', $partnerId);
         })->orderBy('created_at', 'desc');
-        return $query->first();
+        $msg = $query->first();
+        if($msg && $msg->from_id == auth()->id())
+        {
+            return 'Bạn: '.$msg->content;
+        }
+        return $msg->content??'';
+    }
+
+    public function lastMessageTimeDiff($partnerId)
+    {
+        $query = Message::query();
+        $query->where(function ($query) use ($partnerId) {
+            $query->where('from_id', auth()->id());
+            $query->where('to_id', $partnerId);
+        })->orWhere(function ($query) use ($partnerId) {
+            $query->where('to_id', auth()->id());
+            $query->where('from_id', $partnerId);
+        })->orderBy('created_at', 'desc');
+        return $query->first()?$query->first()->created_at->diffForHumans():'';
+    }
+
+    public function lastMessageTime($partnerId)
+    {
+        $query = Message::query();
+        $query->where(function ($query) use ($partnerId) {
+            $query->where('from_id', auth()->id());
+            $query->where('to_id', $partnerId);
+        })->orWhere(function ($query) use ($partnerId) {
+            $query->where('to_id', auth()->id());
+            $query->where('from_id', $partnerId);
+        })->orderBy('created_at', 'desc');
+        return $query->first()?$query->first()->created_at->format('H:i'):'';
+    }
+
+    public function countUnseenMsg($id)
+    {
+        return auth()->user()->unreadNotifications()->where('type', 'App\Notifications\MessageNotification')->where('data', 'like', '%"fromId":' . $id . '%')->count();
+    }
+
+    public function listTag(){
+        $listTagString = '';
+        foreach($this->tags as $tag){
+            $listTagString = $listTagString.$tag->name.', ';
+        }
+        return substr($listTagString, 0, -2);                                           
+    }
+
+    public function countApplyingUser(){
+        $count = 0;
+        foreach($this->jobs as $job){
+            $count += $job->applyingUser()->count();
+        }
+        return $count;
     }
 }

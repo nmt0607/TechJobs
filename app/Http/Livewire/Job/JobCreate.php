@@ -11,7 +11,7 @@ class JobCreate extends BaseLive {
 
     public $jobId;
     public $title;
-    public $number;
+    public $number = 1;
     public $gender;
     public $description;
     public $requirement;
@@ -57,6 +57,20 @@ class JobCreate extends BaseLive {
     }  
 
     public function create(){
+        $this->validate([
+            'title' => 'required',
+            'number' => 'required',
+            'gender' => 'required',
+            'description' => 'required',
+            'requirement' => 'required',
+            'level' => 'required',
+            'exp' => 'required',
+            'salary' => 'required',
+            'benefit' => 'required',
+            'type' => 'required',
+            'address_id' => 'required',
+            'end_date' => 'required',
+        ],[],[]);
         if($this->jobId){
             $job = Job::find($this->jobId);
             $job->title = $this->title;
@@ -71,10 +85,12 @@ class JobCreate extends BaseLive {
             $job->type = $this->type;
             $job->address_id = $this->address_id;
             $job->end_date = $this->end_date;
-            $job->user_id = $this->user_id;
+            $job->user_id = $this->user->id;
             $job->status = $this->status;
             $job->save();
             $job->tags()->sync($this->tagSelect);
+            $this->dispatchBrowserEvent('show-toast', ["type" => "success", "message" => 'Cập nhật công việc thành công']);
+
         }
         else {
             $job = Job::create([
@@ -90,10 +106,11 @@ class JobCreate extends BaseLive {
                 "type" => $this->type,
                 "address_id" => $this->address_id,
                 "end_date" => $this->end_date,
-                "user_id" => $this->user_id,
+                "user_id" => $this->user->id,
                 "status" => $this->status,
             ]);
             $job->tags()->attach($this->tagSelect);
+            $this->dispatchBrowserEvent('show-toast', ["type" => "success", "message" => 'Tạo mới công việc thành công']);
         }
     }  
 }

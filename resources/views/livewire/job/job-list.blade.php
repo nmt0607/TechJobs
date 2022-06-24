@@ -1,12 +1,32 @@
 <div>
+    <div wire:loading class="loader"></div>
+    <div class="container-fluid">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="home-ads">
+                        <a href="#">
+                            <img src="{{asset('img/hna2.jpg')}}">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="container-fluid search-fluid">
         <div class="container">
             <div class="search-wrapper">
 
                 <ul class="nav nav-tabs search-nav-tabs" id="myTab" role="tablist">
+                    @if(!$type)
                     <li class="nav-item search-nav-item">
                         <a class="nav-link snav-link active" style="color: black" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Tìm việc làm</a>
                     </li>
+                    @else
+                    <li class="nav-item search-nav-item">
+                        <a class="nav-link snav-link active" style="color: black" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Công việc đang ứng tuyển</a>
+                    </li>
+                    @endif
                 </ul>
                 <div class="tab-content search-tab-content" id="myTabContent">
                     <!-- content tab 1 -->
@@ -17,7 +37,7 @@
                                     <div class="row">
                                         <div class="col-md-3">
                                             <div class="input-group s-input-group">
-                                                <input type="text" class="form-control sinput" placeholder="Nhập tên công việc">
+                                                <input wire:model='searchName' type="text" class="form-control sinput" placeholder="Nhập tên công việc">
                                                 <span><i class="fa fa-search"></i></span>
                                             </div>
                                         </div>
@@ -33,12 +53,9 @@
                                         <div class="col-md-3" wire:ignore>
                                             <select id="s-provinces">
                                                 <option value="" selected hidden>Tất cả địa điểm</option>
-                                                <option>Đà Nẵng</option>
-                                                <option>Hà Nội</option>
-                                                <option>Hồ Chí Minh</option>
-                                                <option>Buôn Ma Thuột</option>
-                                                <option>Quy Nhơn</option>
-                                                <option>Nha Trang</option>
+                                                <option value="2">Hà Nội</option>
+                                                <option value="1">Hồ Chí Minh</option>
+                                                <option value="3">Đà Nẵng</option>
                                             </select>
                                             <i class="fa fa-map-marker sfa" aria-hidden="true"></i>
                                         </div>
@@ -56,11 +73,7 @@
                             </div>
                         </div>
                     </div>
-                    <!-- (end) content tab 1 -->
-                    <!-- content tab 2 -->
-                    <!-- (end) content tab 2 -->
                 </div>
-
             </div>
         </div>
     </div>
@@ -91,28 +104,28 @@
                                                 <div class="filter-panel">
                                                     <div class="panel-content">
                                                         <div class="filter-topic cotain-common-filter">
-                                                            <a href="#" class="filter-action">Tất cả ngành nghề</a>
-                                                            <span class="filter-count">1,000</span>
+                                                            <a href="{{route('job.index')}}" class="filter-action">Tất cả ngành nghề</a>
+                                                            <span class="filter-count">{{$countJobAll}}</span>
                                                         </div>
                                                         <div class="filter-topic cotain-common-filter">
-                                                            <a href="#" class="filter-action">Web Developer</a>
-                                                            <span class="filter-count">555</span>
+                                                            <a href="{{route('job.index', ['type_job'=>1])}}" class="filter-action">Web Developer</a>
+                                                            <span class="filter-count">{{$countJobType1}}</span>
                                                         </div>
                                                         <div class="filter-topic cotain-common-filter">
-                                                            <a href="#" class="filter-action">Mobile Developer</a>
-                                                            <span class="filter-count">233</span>
+                                                            <a href="{{route('job.index', ['type_job'=>2])}}" class="filter-action">Mobile Developer</a>
+                                                            <span class="filter-count">{{$countJobType2}}</span>
                                                         </div>
                                                         <div class="filter-topic cotain-common-filter">
-                                                            <a href="#" class="filter-action">Business Analyst</a>
-                                                            <span class="filter-count">100</span>
+                                                            <a href="{{route('job.index', ['type_job'=>3])}}" class="filter-action">Business Analyst</a>
+                                                            <span class="filter-count">{{$countJobType3}}</span>
                                                         </div>
                                                         <div class="filter-topic cotain-common-filter">
-                                                            <a href="#" class="filter-action">Automation Test</a>
-                                                            <span class="filter-count">100</span>
+                                                            <a href="{{route('job.index', ['type_job'=>4])}}" class="filter-action">Automation Test</a>
+                                                            <span class="filter-count">{{$countJobType4}}</span>
                                                         </div>
                                                         <div class="filter-topic cotain-common-filter">
-                                                            <a href="#" class="filter-action">Data Scientist</a>
-                                                            <span class="filter-count">100</span>
+                                                            <a href="{{route('job.index', ['type_job'=>5])}}" class="filter-action">Data Scientist</a>
+                                                            <span class="filter-count">{{$countJobType5}}</span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -200,45 +213,6 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <p>
-                                            <a id="clickc4_advance" class="btnf btn-filter" data-toggle="collapse" href="#filter-provider" role="button" aria-expanded="false" aria-controls="collapseExample">
-                                                Cấp bậc
-                                                <i class="fa fa-angle-up" aria-hidden="true"></i>
-                                            </a>
-                                        </p>
-                                        <div class="collapse show" id="filter-provider">
-                                            <div class="card o-card card-body">
-                                                <div class="filter-panel">
-                                                    <div class="panel-content">
-                                                        <div class="filter-topic cotain-common-filter">
-                                                            <a href="#" class="filter-action">Tất cả cấp bậc</a>
-                                                            <span class="filter-count">2,450</span>
-                                                        </div>
-                                                        <div class="filter-topic cotain-common-filter">
-                                                            <a href="#" class="filter-action">Thực tập sinh</a>
-                                                            <span class="filter-count">555</span>
-                                                        </div>
-                                                        <div class="filter-topic cotain-common-filter">
-                                                            <a href="#" class="filter-action">Nhân viên</a>
-                                                            <span class="filter-count">233</span>
-                                                        </div>
-                                                        <div class="filter-topic cotain-common-filter">
-                                                            <a href="#" class="filter-action">Trưởng nhóm</a>
-                                                            <span class="filter-count">100</span>
-                                                        </div>
-                                                        <div class="filter-topic cotain-common-filter">
-                                                            <a href="#" class="filter-action">Trưởng phòng</a>
-                                                            <span class="filter-count">99</span>
-                                                        </div>
-                                                        <div class="filter-topic cotain-common-filter">
-                                                            <a href="#" class="filter-action">Phó giám đốc</a>
-                                                            <span class="filter-count">95</span>
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
                                     </div>
 
                                 </div>
@@ -264,7 +238,7 @@
                     <h4 class="search-find">Tìm thấy {{$data->count()}} việc làm đang tuyển dụng</h4>
                     <div class="job-board-wrap">
                         <div class="job-group">
-                            @foreach($data as $row)
+                            @forelse($data as $row)
                             <div class="job pagi">
                                 <div class="job-content">
                                     <div class="job-logo">
@@ -275,31 +249,24 @@
 
                                     <div class="job-desc">
                                         <div class="job-title">
-                                            <a href="#">{{$row->title}}</a>
+                                            <a href="{{route('job.detail', ['id' => $row->id])}}">{{$row->title}}</a>
                                         </div>
                                         <div class="job-company">
                                             <a href="#">{{$row->user->name}}</a> | <a href="#" class="job-address"><i class="fa fa-map-marker" aria-hidden="true"></i>
-                                                {{$row->address_id}}</a>
+                                                {{getAddress($row->address_id)}}</a>
                                         </div>
 
                                         <div class="job-inf">
                                             <div class="job-main-skill">
                                                 <i class="fa fa-code" aria-hidden="true"></i>
-                                                @foreach($row->tags as $tag)
-                                                    @if($loop->last)
-                                                        <a>{{$tag->name}}</a>
-                                                    @else 
-                                                        <a>{{$tag->name}}, </a>
-                                                    @endif
-                                                @endforeach
+                                                <a>{{$row->listTag()}}</a>
                                             </div>
                                             <div class="job-salary">
                                                 <i class="fa fa-money" aria-hidden="true"></i>
-                                                <span class="salary-min">15<em class="salary-unit">triệu</em></span>
-                                                <span class="salary-max">35 <em class="salary-unit">triệu</em></span>
+                                                {{$row->salary}}
                                             </div>
                                             <div class="job-deadline">
-                                                <span><i class="fa fa-clock-o" aria-hidden="true"></i> Hạn nộp: <strong>{{$row->end_date}}</strong></span>
+                                                <span><i class="fa fa-clock-o" aria-hidden="true"></i> Hạn nộp: <strong>{{reFormatDate($row->end_date)}}</strong></span>
                                             </div>
                                         </div>
                                     </div>
@@ -308,43 +275,21 @@
                                     </div>
                                 </div>
                             </div>
-                            @endforeach
+                            @empty
+                            Không tìm thấy công việc phù hợp
+                            @endforelse
                         </div>
+                        <br>
+                    <center>{{ $data->links() }}</center>
                     </div>
+                    
+                    
                 </div>
             </div>
         </div>
     </div>
-
-
     <!-- job support -->
-    <div class="container-fluid job-support-wrapper">
-        <div class="container-fluid job-support-wrap">
-            <div class="container job-support">
-                <div class="row">
-                    <div class="col-md-6 col-sm-12 col-12">
-                        <ul class="spp-list">
-                            <li>
-                                <span><i class="fa fa-question-circle pr-2 icsp"></i>Hỗ trợ nhà tuyển dụng:</span>
-                            </li>
-                            <li>
-                                <span><i class="fa fa-phone pr-2 icsp"></i>0123.456.789</span>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="col-md-6 col-sm-12 col-12">
-                        <div class="newsletter">
-                            <span class="txt6">Đăng ký nhận bản tin việc làm</span>
-                            <div class="input-group frm1">
-                                <input type="text" placeholder="Nhập email của bạn" class="newsletter-email form-control">
-                                <a href="#" class="input-group-addon"><i class="fa fa-lg fa-envelope-o colorb"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    @livewire('component.support')
 </div>
 <script>
     $("document").ready(() => {

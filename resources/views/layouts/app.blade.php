@@ -10,6 +10,8 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i,900,900i&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700,700i&display=swap" rel="stylesheet">
 
+
+
     <!-- bootstrap css -->
     <link rel="stylesheet" type="text/css" href="{{asset('/css/bootstrap.min.css')}}">
 
@@ -25,9 +27,11 @@
     <link rel="stylesheet" href="{{asset('/css/owlcarousel/owl.carousel.min.css')}}">
     <link rel="stylesheet" href="{{asset('/css/owlcarousel/owl.theme.default.min.css')}}">
     <!-- main css -->
+    
     <link rel="stylesheet" type="text/css" href="{{asset('/css/style.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('/css/customer.css')}}">
-    
+    <link rel="stylesheet" href="{{ asset('plugins/toastr/toastr.min.css') }}">
+
 </head>
 
 <body>
@@ -44,31 +48,36 @@
                     <i class="fa fa-bars icn-res" aria-hidden="true"></i>
 
                 </button>
-
+                @if(auth()->user())
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto tnav-left tn-nav">
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Việc Làm IT</a>
+                        @if(auth()->user()->type == 2)
+                        <li class="nav-item ">
+                            <a class="nav-link" href="{{route('job.index')}}">Việc Làm IT</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Tin Tức</a>
+                            <a class="nav-link" href="{{route('job.index', ['type'=>1])}}">Công việc đang ứng tuyển</a>
                         </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Dropdown
-                            </a>
-                            <div class="dropdown-menu tdropdown" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="#">Action</a>
-                                <a class="dropdown-item" href="#">Another action</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Something else here</a>
-                            </div>
+                        @else
+                        <li class="nav-item ">
+                            <a class="nav-link" href="{{route('job.index')}}">Việc Làm IT</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{route('job.pushlished')}}">Công việc đang đăng</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{route('job.create')}}">Đăng tuyển </a>
+                        </li>
+                        @endif
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{route('chat')}}">Tin nhắn</a>
                         </li>
                     </ul>
                     @if(Auth::check())
-                        @livewire('component.notification')
+                    @livewire('component.notification')
                     @endif
                 </div>
+                @endif
             </nav>
         </div>
     </div>
@@ -76,33 +85,34 @@
     <div class="clearfix"></div>
     @yield('content')
     <!-- Scripts -->
+    @livewireStyles
     @livewireScripts
     <div class="container-fluid footer-wrap  clear-left clear-right">
         <div class="container footer">
             <div class="row">
                 <div class="col-md-4 col-sm-8 col-12">
                     <h2 class="footer-heading">
-                        <span>About</span>
+                        <span>Giới thiệu</span>
                     </h2>
                     <p class="footer-content">
-                        Discover the best way to find houses, condominiums, apartments and HDBs for sale and rent in Singapore with JobsOnline, Singapore's Fastest Growing Jobs Portal.
+                        Nơi tốt nhất để các freelance và nhà tuyển dụng kết nối với nhau 
                     </p>
                     <ul class="footer-contact">
                         <li>
                             <a href="#">
-                                <i class="fa fa-phone fticn"></i> +123 456 7890
+                                <i class="fa fa-phone fticn"></i> +0914 249 080
                             </a>
                         </li>
                         <li>
                             <a href="#">
                                 <i class="fa fa-envelope fticn"></i>
-                                hello@123.com
+                                techjob.sp@gmail.com
                             </a>
                         </li>
                         <li>
                             <a href="#">
                                 <i class="fa fa-map-marker fticn"></i>
-                                33 Xô Viết Nghệ Tĩnh, Đà Nẵng
+                                Số 1 Đại Cồ Việt, Hà Nội
                             </a>
                         </li>
                     </ul>
@@ -148,7 +158,7 @@
                         <li><a href="#">Hồ Chính Minh</a></li>
                         <li><a href="#">Hà Nội</a></li>
                         <li><a href="#">Đà Nẵng</a></li>
-                        <li><a href="#">Buôn Ma Thuột</a></li>
+                        <li><a href="#">Hải Phòng</a></li>
                     </ul>
                 </div>
             </div>
@@ -157,7 +167,7 @@
     <footer class="container-fluid copyright-wrap">
         <div class="container copyright">
             <p class="copyright-content">
-                Copyright © 2020 <a href="#"> Tech<b>Job</b></a>. All Right Reserved.
+                Copyright © 2022 <a href="#"> Tech<b>Job</b></a>. All Right Reserved.
             </p>
         </div>
     </footer>
@@ -184,5 +194,34 @@
     <!-- Owl Stylesheets Javascript -->
     <script src="{{asset('/js/owlcarousel/owl.carousel.js')}}"></script>
     <!-- Read More Plugin -->
+    <script src="{{ asset('plugins/toastr/toastr.min.js') }}"></script>
+    <script>
+        toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "progressBar": true,
+            "positionClass": "toast-top-right",
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "3000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+    </script>
+
+    <script>
+        window.addEventListener('show-toast', event => {
+            if (event.detail.type == "success") {
+                toastr.success(event.detail.message);
+            } else if (event.detail.type == "error") {
+                toastr.error(event.detail.message);
+            }
+        });
+    </script>
 </body>
+
 </html>

@@ -537,3 +537,59 @@ function sendMail($data){
     SendMail::dispatch($data);
 }
 
+function getAddress($addressId){
+    switch($addressId) {
+        case 1:
+            return "Hồ Chí Minh";
+            break;
+        case 2:
+            return "Hà Nội";
+            break;
+        case 3:
+            return "Đà Nẵng";
+            break;
+    }
+}
+
+function getLevel($addressId){
+    switch($addressId) {
+        case 1:
+            return "Intern";
+            break;
+        case 2:
+            return "Fresher";
+            break;
+        case 3:
+            return "Junior";
+            break;
+        case 4:
+            return "Senior";
+            break;
+        case 5:
+            return "Team Lead";
+            break;
+        case 6:
+            return "Manager";
+            break;
+    }
+}
+
+function getJobType($jobTypeId){
+    switch($jobTypeId) {
+        case 1:
+            return "Web Developer";
+            break;
+        case 2:
+            return "Mobile Developer";
+            break;
+        case 3:
+            return "Business Analyst";
+            break;
+        case 4:
+            return "Automation Test";
+            break;
+        case 5:
+            return "Data Scientist";
+            break;
+    }
+}

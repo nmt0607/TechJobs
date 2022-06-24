@@ -13,12 +13,16 @@ class JobPushlished extends BaseLive {
     public $jobId;
     public $searchTag;
     public $searchCompany;
+    public $searchProvince;
+    public $user;
 
     public function mount(){
         $this->tags = Tag::all();
-    }
+        $this->user = auth()->user();
+}
 
     public function render(){
+        $user = $this->user;
         $query = Job::where('user_id', auth()->id());
         if($this->searchTag){
             $query->whereHas('tags', function (Builder $query) {
@@ -28,10 +32,13 @@ class JobPushlished extends BaseLive {
         if($this->searchCompany){
             $query->where('user_id', $this->searchCompany);
         }
-        $data = $query->get();
+        if($this->searchProvince){
+            $query->where('address_id', $this->searchProvince);
+        }
+        $data = $query->paginate(6);
         $tags = $this->tags;
         $listCompany = Job::listCompany();
-        return view('livewire.job.job-pushlished', compact('data', 'tags', 'listCompany'));
+        return view('livewire.job.job-pushlished', compact('data', 'tags', 'listCompany', 'user'));
     }  
     
     public function detail($id){

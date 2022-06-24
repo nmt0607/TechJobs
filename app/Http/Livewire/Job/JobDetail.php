@@ -16,17 +16,30 @@ class JobDetail extends BaseLive {
     public $userCreateJob;
     public $offer;
     public $statusApply;
+    public $similarJobs;
+
+    protected $listeners = [
+        'updateRealtime' => 'render',
+        'resetData'
+    ];
 
     public function mount(){
         $this->job = Job::findOrFail($this->jobId);
         $this->userCreateJob = User::find($this->job->user_id);
+        $this->similarJobs = Job::where('type', $this->job->type)->where('id', '!=',$this->job->id)->get();
     } 
 
     public function render(){
         $job = $this->job;
-        if(auth()->user()->jobs()->where('applications.job_id', $job->id)->first())
+        $userCreateJob = $this->userCreateJob;
+        $similarJobs = $this->similarJobs;
+        if(auth()->user()->jobs()->where('applications.job_id', $job->id)->first()) {
             $this->statusApply = auth()->user()->jobs()->where('applications.job_id', $job->id)->first()->pivot->status;
-        return view('livewire.job.job-detail', compact('job'));
+        }
+            
+        else
+            $this->statusApply = null;
+        return view('livewire.job.job-detail', compact('job', 'userCreateJob', 'similarJobs'));
     }  
 
     public function apply(){
@@ -37,14 +50,17 @@ class JobDetail extends BaseLive {
 
         ],[]);
         auth()->user()->jobs()->attach($this->jobId, ['status' => 1, 'offer' => $this->offer]);
-        $data = [$this->jobId, 2];
+        $data = [$this->jobId, 1];
         $this->emit('close-modal-apply');
+        $this->dispatchBrowserEvent('show-toast', ["type" => "success", "message" => 'Nộp đơn ứng tuyển thành công']);
         $this->userCreateJob->notify(new ApplyNotification($data));
         event(new NotificationEvent($this->userCreateJob->id));   
     }
 
     public function cancelApply(){
         auth()->user()->jobs()->detach($this->jobId);
+        $this->dispatchBrowserEvent('show-toast', ["type" => "success", "message" => 'Đã hủy ứng tuyển']);
+        event(new NotificationEvent($this->userCreateJob->id));
     }
 
     public function resetData(){

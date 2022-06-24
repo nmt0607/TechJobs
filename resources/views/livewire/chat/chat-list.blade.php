@@ -12,10 +12,14 @@
                 <div class="friend-drawer friend-drawer--onhover" wire:click="selectFriend({{$friend->id}})">
                     <img class="profile-image" src="{{asset($friend->image)}}" alt="">
                     <div class="text">
-                        <h6>{{$friend->name}}</h6>
-                        <p class="text-muted">Hey, you're arrested!</p>
+                        <h6>{{$friend->name}} <span style="color:red">
+                                @if($friend->countUnseenMsg)
+                                ({{$friend->countUnseenMsg}})
+                                @endif
+                            </span></h6>
+                        <p class="text-muted">{{auth()->user()->lastMessage($friend->id)}}</p>
                     </div>
-                    <span class="time text-muted small">13:21</span>
+                    <span class="time text-muted small">{{auth()->user()->lastMessageTime($friend->id)}}</span>
                 </div>
                 <hr>
                 @endforeach
@@ -24,7 +28,7 @@
         <div class="col-md-8">
             <div class="settings-tray">
                 <div class="friend-drawer no-gutters friend-drawer--grey">
-                <img class="profile-image" src="{{asset($selectedUserImage)}}" alt="">
+                    <img class="profile-image" src="{{asset($selectedUserImage)}}" alt="">
                     <div class="text">
                         <h6>{{$selectedUserName}}</h6>
                         <p class="text-muted">Layin' down the law since like before Christ...</p>

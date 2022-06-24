@@ -4,11 +4,11 @@ namespace App\Http\Livewire\Base;
 
 use Livewire\Component;
 use Livewire\WithPagination;
-use App\Http\Livewire\TrimAndNullEmptyStrings;
+// use App\Http\Livewire\TrimAndNullEmptyStrings;
 abstract class BaseLive extends Component
 {
 	use WithPagination;
-    use TrimAndNullEmptyStrings;
+    // use TrimAndNullEmptyStrings;
 
 	public $deleteId;
     public $reset = false;

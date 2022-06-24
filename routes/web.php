@@ -24,6 +24,8 @@ Route::get('/', function () {
     return view('home.index');
 });
 Route::get('/login', function () {
+    if(Auth::check())
+        return redirect()->route('job.index'); 
     return view('auth.login');
 })->name('login');
 Route::group(['middleware' => ['auth', 'route-permission']], function () {

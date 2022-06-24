@@ -59,6 +59,7 @@ class MessageNotification extends Notification
     {
         return [
             'messageId' =>$this->data,
+            'fromId' =>auth()->id(),
         ];
     }
 }

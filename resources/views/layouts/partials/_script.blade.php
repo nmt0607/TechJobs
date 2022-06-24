@@ -69,20 +69,7 @@
 
 <!-- <script src="{{ asset('plugins/sweetalert2/sweetalert2.min.js') }}"></script> -->
 <!-- Toastr -->
-<script src="{{ asset('plugins/toastr/toastr.min.js') }}"></script>
 
-<script>
-  window.addEventListener('show-toast', event => {
-        if (event.detail.type == "success") {
-            toastr.success(event.detail.message);
-        } else if (event.detail.type == "error") {
-            toastr.error(event.detail.message);
-        }
-    });
-
-
-    
-</script>
 
 {{-- select2 --}}
 <script src="{{asset('plugins/select2/js/select2.min.js')}}"></script>

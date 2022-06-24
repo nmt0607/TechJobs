@@ -39,6 +39,7 @@ class SendMailCommand extends Command
      */
     public function handle()
     {
+        
         $users = User::all();
         $data = [];
         foreach($users as $key => $user){

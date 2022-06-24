@@ -1,36 +1,17 @@
 <div>
-<nav class="navbar navbar-expand-lg navbar-light nav-recuitment">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNava" aria-controls="navbarNava" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse container" id="navbarNava">
-            <ul class="navbar-nav nav-recuitment-li">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Quản lý đăng tuyển</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Quản lý ứng viên</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Quản lý đăng tin</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Quản lý hồ sơ</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Tài khoản</a>
-                </li>
-            </ul>
-            <ul class="rec-nav-right">
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Tìm hồ sơ</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Đăng tuyển</a>
-                </li>
-            </ul>
+    <div class="container-fluid">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="home-ads">
+                        <a href="#">
+                            <img src="{{asset('img/hna2.jpg')}}">
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
-    </nav>
+    </div>
     <div class="container-fluid search-fluid">
         <div class="container">
             <div class="search-wrapper">
@@ -46,13 +27,13 @@
                             <div class="row">
                                 <div class="col-md-12 col-sm-12">
                                     <div class="row">
-                                        <div class="col-md-3">
+                                        <div class="col-md-4">
                                             <div class="input-group s-input-group">
                                                 <input type="text" class="form-control sinput" placeholder="Nhập tên công việc">
                                                 <span><i class="fa fa-search"></i></span>
                                             </div>
                                         </div>
-                                        <div class="col-md-3" wire:ignore>
+                                        <div class="col-md-4" wire:ignore>
                                             <select id="computer-languages">
                                                 <option value="" selected hidden>Tất cả kĩ năng</option>
                                                 @foreach($tags as $tag)
@@ -61,26 +42,14 @@
                                             </select>
                                             <i class="fa fa-code sfa" aria-hidden="true"></i>
                                         </div>
-                                        <div class="col-md-3" wire:ignore>
+                                        <div class="col-md-4" wire:ignore>
                                             <select id="s-provinces">
-                                                <option value="" selected hidden>Tất cả địa điểm</option>
-                                                <option>Đà Nẵng</option>
-                                                <option>Hà Nội</option>
-                                                <option>Hồ Chí Minh</option>
-                                                <option>Buôn Ma Thuột</option>
-                                                <option>Quy Nhơn</option>
-                                                <option>Nha Trang</option>
+                                                <option selected hidden>Tất cả địa điểm</option>
+                                                <option value="3">Đà Nẵng</option>
+                                                <option value="2">Hà Nội</option>
+                                                <option value="1">Hồ Chí Minh</option>
                                             </select>
                                             <i class="fa fa-map-marker sfa" aria-hidden="true"></i>
-                                        </div>
-                                        <div class="col-md-3" wire:ignore>
-                                            <select id="s-company">
-                                                <option value="" selected hidden>Tất cả doanh nghiệp</option>
-                                                @foreach($listCompany as $company)
-                                                    <option value="{{$company->id}}">{{$company->name}}</option>
-                                                @endforeach
-                                            </select>
-                                            <i class="fa fa-building sfa" aria-hidden="true"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -121,57 +90,75 @@
                                         </div>
                                         <div class="job-company">
                                             <a href="#">{{$row->user->name}}</a> | <a href="#" class="job-address"><i class="fa fa-map-marker" aria-hidden="true"></i>
-                                                {{$row->address_id}}</a>
+                                                {{getAddress($row->address_id)}}</a>
                                         </div>
 
                                         <div class="job-inf">
                                             <div class="job-main-skill">
                                                 <i class="fa fa-code" aria-hidden="true"></i>
                                                 @foreach($row->tags as $tag)
-                                                    @if($loop->last)
-                                                        <a>{{$tag->name}}</a>
-                                                    @else 
-                                                        <a>{{$tag->name}}, </a>
-                                                    @endif
+                                                @if($loop->last)
+                                                <a>{{$tag->name}}</a>
+                                                @else
+                                                <a>{{$tag->name}}, </a>
+                                                @endif
                                                 @endforeach
                                             </div>
                                             <div class="job-salary">
                                                 <i class="fa fa-money" aria-hidden="true"></i>
-                                                <span class="salary-min">15<em class="salary-unit">triệu</em></span>
-                                                <span class="salary-max">35 <em class="salary-unit">triệu</em></span>
+                                                {{$row->salary}}
                                             </div>
                                             <br>
                                             <div class="job-deadline">
-                                                <span><i class="fa fa-clock-o" aria-hidden="true"></i> Hạn nộp: <strong>{{$row->end_date}}</strong></span>
+                                                <span><i class="fa fa-clock-o" aria-hidden="true"></i> Hạn nộp: <strong>{{reFormatDate($row->end_date)}}</strong></span>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="wrap-btn-appl">
                                         <button style="border: 1px solid grey; border-radius: 4px; margin-right: 1px" wire:click="detail({{$row->id}})"><i class="fa fa-eye"></i></button>
                                         <button style="border: 1px solid grey; border-radius: 4px; margin-right: 1px" wire:click="applyList({{$row->id}})"><i class="fa fa-users"></i></button>
-                                        <button style="border: 1px solid grey; border-radius: 4px; margin-right: 1px" wire:click="edit({{$row->id}})" ><i class="fa fa-pencil"></i></button>      
-                                        <button data-toggle="modal" data-target="#modalDelete" style="border: 1px solid grey; border-radius: 4px; margin-right: 1px" wire:click="setJob({{$row->id}})" ><i class="fa fa-trash"></i></button>
-                                        <p class="jd-view mt-4">Ứng viên đang chờ: <span>3</span></p>
+                                        <button style="border: 1px solid grey; border-radius: 4px; margin-right: 1px" wire:click="edit({{$row->id}})"><i class="fa fa-pencil"></i></button>
+                                        <button data-toggle="modal" data-target="#modalDelete" style="border: 1px solid grey; border-radius: 4px; margin-right: 1px" wire:click="setJob({{$row->id}})"><i class="fa fa-trash"></i></button>
+                                        <p class="jd-view mt-4">Ứng viên đang chờ: <span>{{$row->applyingUser()->count()}}</span></p>
                                     </div>
 
                                 </div>
                             </div>
                             @endforeach
                         </div>
+                        <br>
+                        <center>{{ $data->links() }}</center>
+                        <br><br>
                     </div>
                 </div>
                 <div class="col-md-4 col-sm-12 col-12">
                     <h4 class="search-find"><br></h4>
                     <div class="recuiter-info">
                         <div class="recuiter-info-avt">
-                            <img src="{{asset('img/icon_avatar.jpg')}}">
+                            <img src="{{asset($user->image)}}">
                         </div>
                         <div class="clearfix list-rec">
-                            <h4>NESTLE Inc.</h4>
-                            <ul>
-                                <li><a href="#">Việc làm đang đăng <strong>(0)</strong></a></li>
-                                <li><a href="#">Follower <strong>(450)</strong></a></li>
+                            <h4>{{$user->name}}</h4>
+                            <ul class="job-add">
+                                <li>
+                                    <i class="fa fa-map-marker ja-icn"></i>
+                                    <span>Trụ sở: {{$user->address}}</span>
+                                </li>
+                                <li>
+                                    <i class="fa fa-bar-chart ja-icn"></i>
+                                    <span>Quy mô công ty: {{$user->size}} người</span>
+                                </li>
                             </ul>
+                            <hr>
+                            <ul>
+                                <li><a href="#">Công việc đang đăng <strong>({{$user->jobsCreate->count()}})</strong></a></li>
+                                <li><a href="#">Ứng viên đang ứng tuyển <strong>({{$user->countApplyingUser()}})</strong></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="job-sidebar">
+                        <div class="sb-banner">
+                            <img src="{{asset('img/ads1.jpg')}}" class="advertisement">
                         </div>
                     </div>
                 </div>
@@ -181,33 +168,7 @@
 
 
     <!-- job support -->
-    <div class="container-fluid job-support-wrapper">
-        <div class="container-fluid job-support-wrap">
-            <div class="container job-support">
-                <div class="row">
-                    <div class="col-md-6 col-sm-12 col-12">
-                        <ul class="spp-list">
-                            <li>
-                                <span><i class="fa fa-question-circle pr-2 icsp"></i>Hỗ trợ nhà tuyển dụng:</span>
-                            </li>
-                            <li>
-                                <span><i class="fa fa-phone pr-2 icsp"></i>0123.456.789</span>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="col-md-6 col-sm-12 col-12">
-                        <div class="newsletter">
-                            <span class="txt6">Đăng ký nhận bản tin việc làm</span>
-                            <div class="input-group frm1">
-                                <input type="text" placeholder="Nhập email của bạn" class="newsletter-email form-control">
-                                <a href="#" class="input-group-addon"><i class="fa fa-lg fa-envelope-o colorb"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    @livewire('component.support')
     <div wire:ignore.self class="modal fade" id="modalDelete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" style="top: 20vh">
             <div class="modal-content">
