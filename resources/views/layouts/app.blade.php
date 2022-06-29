@@ -40,7 +40,7 @@
         <div class="container cnt-tnar">
             <nav class="navbar navbar-expand-lg navbar-light bg-light tjnav-bar">
                 <!-- <a class="navbar-brand" href="#">Navbar</a> -->
-                <a href="#" class="nav-logo">
+                <a href="{{route('index')}}" class="nav-logo">
                     <img src="{{asset('/img/techjobs_bgw.png')}}">
                 </a>
                 <button class="navbar-toggler tnavbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

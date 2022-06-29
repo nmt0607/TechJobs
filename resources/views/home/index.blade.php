@@ -38,7 +38,7 @@
         <div class="container cnt-tnar">
             <nav class="navbar navbar-expand-lg navbar-light bg-light tjnav-bar" style='z-index:1'>
                 <!-- <a class="navbar-brand" href="#">Navbar</a> -->
-                <a href="#" class="nav-logo">
+                <a href="{{route('index')}}" class="nav-logo">
                     <img src="img/techjobs_bgb.png">
                 </a>
                 <button class="navbar-toggler tnavbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -61,7 +61,7 @@
                         @if(Auth::user()->type == 1) 
                         <a class="nav-link btn-employers" href="{{route('job.index')}}" tabindex="-1" aria-disabled="true">Nhà Tuyển Dụng</a>
                         @else
-                        <a class="nav-link btn-employers" href="{{route('job.index')}}" tabindex="-1" aria-disabled="true">Freelancer</a>Freelancer
+                        <a class="nav-link btn-employers" href="{{route('job.index')}}" tabindex="-1" aria-disabled="true">Freelancer</a>
                         @endif
                     </li>
                     @else
@@ -74,14 +74,6 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{route('login')}}">Đăng Nhập</a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                VI
-                            </a>
-                            <div class="dropdown-menu tdropdown" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="#">English</a>
-                            </div>
                         </li>
                     </ul>
                     @endif

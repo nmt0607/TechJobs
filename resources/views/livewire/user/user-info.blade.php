@@ -237,7 +237,7 @@
                                         <div class="form-group row">
                                             <label class="col-sm-2 col-form-label text-right label">Giới thiệu<span style="color: red" class="pl-2">*</span></label>
                                             <div class="col-sm-10">
-                                                <textarea wire:model.defer="description" rows="20" type="text" class="form-control" placeholder="Giới thiệu công ty (<5000 ký tự)" rows="5"></textarea>
+                                                <textarea wire:model.defer="description" rows="14" type="text" class="form-control" placeholder="Giới thiệu công ty (<5000 ký tự)" rows="5"></textarea>
                                                 @error("description")
                                                 @include("layouts.partials.text._error")
                                                 @enderror
@@ -374,7 +374,7 @@
     <!-- job support -->
     @livewire('component.support')
     <div wire:ignore.self class="modal fade" id="modalChangePassword" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" style="top: 20vh">
+        <div class="modal-dialog" style="top: 20vh; max-width: 600px">
             <div class="modal-content">
                 <div class="modal-header">
                     <h2 class="modal-title" id="exampleModalLabel">Đổi mật khẩu</h2>

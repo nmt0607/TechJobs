@@ -31,7 +31,7 @@ class MailNotify extends Mailable
     public function build()
     {
         return $this->from('techjob.sp@gmail.com')
-           ->view('mails.mail-notify', ['data' => $this->data ])
-           ->subject('Notification email');
+           ->view('mails.mail-notify', ['data' => $this->data])
+           ->subject('Việc làm tuyển dụng mới đăng');
     }
 }

@@ -6,7 +6,7 @@
                 <div class="row">
                     <div class="col-md-2 col-sm-12 col-12">
                         <div class="job-detail-header-logo">
-                        <a href="#">
+                            <a href="#">
                                 <img src="{{asset($userCreateJob->image)}}" class="job-logo-ima" alt="job-logo">
                             </a>
                         </div>
@@ -41,17 +41,17 @@
                         <div class="jd-header-wrap-right">
                             <div class="jd-center">
                                 @if(Auth::user()->type == 2)
-                                    @if($statusApply == 1)
-                                    <a data-toggle="modal" data-target="#modalCancelApply" class="btn btn-warning btn-waiting" style="color: white">Chờ chấp nhận</a>
-                                    @elseif($statusApply == 2)
-                                    <a class="btn btn-success btn-waiting" style="color: white">Đang thực hiện</a>
-                                    @elseif($statusApply == 3)
-                                    <a class="btn btn-secondary btn-waiting" style="color: white">Đã bị từ chối</a>
-                                    @elseif($statusApply == 4)
-                                    <a class="btn btn-primary btn-waiting" style="color: white">Đã hoàn thành</a>
-                                    @else
-                                    <a data-toggle="modal" data-target="#modalApplyJob" class="btn btn-primary btn-waiting" style="color: white">Nộp đơn</a>
-                                    @endif
+                                @if($statusApply == 1)
+                                <a data-toggle="modal" data-target="#modalCancelApply" class="btn btn-warning btn-waiting" style="color: white">Chờ chấp nhận</a>
+                                @elseif($statusApply == 2)
+                                <a class="btn btn-success btn-waiting" style="color: white">Đang thực hiện</a>
+                                @elseif($statusApply == 3)
+                                <a class="btn btn-secondary btn-waiting" style="color: white">Đã bị từ chối</a>
+                                @elseif($statusApply == 4)
+                                <a class="btn btn-primary btn-waiting" style="color: white">Đã hoàn thành</a>
+                                @else
+                                <a data-toggle="modal" data-target="#modalApplyJob" class="btn btn-primary btn-waiting" style="color: white">Nộp đơn</a>
+                                @endif
                                 @endif
                                 <p class="jd-view">Số người đang ứng tuyển: <span>{{$job->applyingUser()->count()}}</span></p>
                             </div>
@@ -88,7 +88,7 @@
                                     </ul>
                                 </div>
                             </div>
-                    </div>
+                        </div>
                         <h2 class="widget-title">
                             <span>Mô tả công việc</span>
                         </h2>
@@ -209,7 +209,7 @@
                         </ul>
 
                         <div class="wrap-comp-info mb-2">
-                            <a href="#" class="btn btn-primary btn-company">Xem thêm</a>
+                            <a data-toggle="modal" data-target="#modalCompanyInfo" class="btn btn-primary btn-company text-white">Xem thêm</a>
                         </div>
                     </div>
 
@@ -260,18 +260,17 @@
                     <div class="form-group row">
                         <label class="col-sm-3 col-form-label text-right label">Báo giá(<span style="color:red">*</span>)</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" wire:model.defer="offer" placeholder="Nhập báo giá (nghìn đồng)">
+                            <input type="text" class="form-control" wire:model.defer="offer" placeholder="Nhập báo giá (triệu VNĐ)">
                             @error("offer")
                             @include("layouts.partials.text._error")
                             @enderror
                         </div>
                     </div>
                     <div class="form-group row">
-                        
                         <div class="col-sm-12">
                             @livewire('component.files',[
                             'model_name' => \App\Models\Job::class,
-                            'model_id'=>$job->id,
+                            'model_id'=>$jobId,
                             'folder' => 'jobs',
                             'admin_id'=>auth()->id(),
                             'canUpload'=>true,
@@ -301,6 +300,43 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
                     <button type="button" class="btn btn-danger" data-dismiss="modal" wire:click="cancelApply()">Hủy ứng tuyển</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div wire:ignore.self class="modal fade" id="modalCompanyInfo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" style="top: 5vh; max-width:650px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title" id="exampleModalLabel">Thông tin nhà tuyển dụng</h2>
+                </div>
+                <div class="modal-body">
+                    <center>
+                    <div class="job-detail-header-logo">
+                        <a href="#">
+                            <img src="{{asset($userCreateJob->image)}}" class="job-logo-ima" alt="job-logo">
+                        </a>
+                    </div>
+                    </center>
+                    <h2 class="company-intro-name">{{$userCreateJob->name}}</h2>
+                    <ul class="job-add">
+                        <li>
+                            <i class="fa fa-map-marker ja-icn"></i>
+                            <span>Trụ sở: {{$userCreateJob->address}}</span>
+                        </li>
+                        <li>
+                            <i class="fa fa-bar-chart ja-icn"></i>
+                            <span>Quy mô công ty: {{$userCreateJob->size}} người</span>
+                        </li>
+                        <li>
+                            <i class="fa fa-info ja-icn"></i>
+                            <span>Giới thiệu: <br>{!! nl2br($userCreateJob->description) !!}</span>
+                        </li>
+                    </ul>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
                 </div>
             </div>
         </div>

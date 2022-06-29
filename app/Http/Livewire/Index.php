@@ -35,7 +35,7 @@ class Index extends BaseLive {
             $this->typeJob = $_GET['type_job'];
         }
         $this->tags = Tag::all();
-        $this->users = User::all();
+        $this->users = User::where('type', 1)->get();
         $this->countJobAll = Job::all()->count();
         $this->countJobType1 = Job::where('type', 1)->get()->count();
         $this->countJobType2 = Job::where('type', 2)->get()->count();

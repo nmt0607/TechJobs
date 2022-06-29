@@ -8,7 +8,7 @@
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right notification scroll">
             <span style="position: sticky;
-top: 0; background-color: white" class="dropdown-item dropdown-header">{{$unseenMessageCount}} Message</span>
+top: 0; background-color: white" class="dropdown-item dropdown-header">{{$unseenMessageCount?($unseenMessageCount." tin nhắn chưa đọc"):"Không có tin nhắn mới"}} </span>
             <div class="dropdown-divider"></div>
             @forelse($friendChat as $friend)
             <a href="{{route('chat', ['userId' => $friend->id])}}" class="dropdown-item">
@@ -17,14 +17,14 @@ top: 0; background-color: white" class="dropdown-item dropdown-header">{{$unseen
                     <img src="{{asset($friend->image)}}" alt="User Avatar" class="img-size-50 mr-3 img-circle">
                     <div class="media-body">
                         <h3 class="dropdown-item-title">
-                            {{$friend->name}} <span style="color:red">
+                            <b style="font-weight: 420">{{$friend->name}}</b> <span style="color:red">
                                 @if($friend->countUnseenMsg)
                                 ({{$friend->countUnseenMsg}})
                             </span>
                             <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
                             @endif
                         </h3>
-                        <p class="text-sm">{{auth()->user()->lastMessage($friend->id)}}</p>
+                        <p class="text-sm">{{strLimit(auth()->user()->lastMessage($friend->id))}}</p>
                         <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i>{{auth()->user()->lastMessageTimeDiff($friend->id)}}</p>
                     </div>
                 </div>
@@ -33,8 +33,7 @@ top: 0; background-color: white" class="dropdown-item dropdown-header">{{$unseen
             <div class="dropdown-divider"></div>
             @empty
             @endforelse
-
-            <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
+            <center><a style="cursor: pointer" wire:click='markAllAsReadMsg' class="dropdown-item dropdown-footer">Đánh dấu tất cả là đã đọc</a></center>
         </div>
     </li>
     <!-- Notifications Dropdown Menu -->
@@ -45,7 +44,7 @@ top: 0; background-color: white" class="dropdown-item dropdown-header">{{$unseen
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right notification scroll" style="min-width: 400px">
             <span style="position: sticky;
-top: 0; background-color: white; z-index:1;" class="dropdown-item dropdown-header">{{$unseenNotifyCount}} Notifications</span>
+top: 0; background-color: white; z-index:1;" class="dropdown-item dropdown-header">{{$unseenNotifyCount?($unseenNotifyCount." thông báo chưa đọc"):"Không có thông báo mới"}}</span>
             @foreach($notify as $notify)
             <div class="dropdown-divider"></div>
             <a href="#" wire:click="readNotify({{$notify}})" class="dropdown-item" style="padding-top:10px; padding-bottom:10px;">
@@ -67,7 +66,7 @@ top: 0; background-color: white; z-index:1;" class="dropdown-item dropdown-heade
                         @endswitch
                     </div>
                     <div class="col-md-11">
-                        {{$notify->data['job']}}
+                        <b style="font-weight: 420">{{$notify->data['job']}}</b>
                         @if(!$notify->read_at)
                         <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
                         @endif
@@ -80,7 +79,7 @@ top: 0; background-color: white; z-index:1;" class="dropdown-item dropdown-heade
             </a>
             @endforeach
             <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
+            <center><a style="cursor: pointer" wire:click='markAllAsRead' class="dropdown-item dropdown-footer">Đánh dấu tất cả là đã đọc</a></center>
         </div>
     </li>
     &nbsp;&nbsp;&nbsp;

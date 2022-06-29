@@ -72,7 +72,7 @@
                             @livewire('component.files',[
                             'model_name' => \App\Models\Job::class,
                             'model_id'=>$job->id,
-                            'admin_id'=>$user->id??'',
+                            'admin_id'=>7,
                             'folder' => 'jobs',
                             'canUpload'=>false,
                             'displayUploadfile' => false,
@@ -138,7 +138,7 @@
                             <div class="job-group">
                                 @forelse($acceptedCandidate as $row)
                                 <div class="job pagi">
-                                    <div class="job-content " id="profile-user" wire:click="selectUser({{$row->id}})" tabindex="0" style="padding: 0px;">
+                                    <div class="job-content" wire:click="selectUser({{$row->id}})" tabindex="0" style="padding: 0px;">
                                         <div class="job-logo">
                                             <a href="#">
                                                 <img class="img-circle" style="height: 70px;" src="{{asset($row->image)}}" class="job-logo-ima" alt="job-logo">

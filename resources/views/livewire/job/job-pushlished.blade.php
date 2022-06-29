@@ -44,7 +44,7 @@
                                         </div>
                                         <div class="col-md-4" wire:ignore>
                                             <select id="s-provinces">
-                                                <option selected hidden>Tất cả địa điểm</option>
+                                                <option value="" selected hidden>Tất cả địa điểm</option>
                                                 <option value="3">Đà Nẵng</option>
                                                 <option value="2">Hà Nội</option>
                                                 <option value="1">Hồ Chí Minh</option>
@@ -72,7 +72,7 @@
         <div class="container search-wrapper">
             <div class="row">
                 <div class="col-md-8 col-sm-12 col-12">
-                    <h4 class="search-find">Tìm thấy {{$data->count()}} việc làm đang tuyển dụng</h4>
+                    <h4 class="search-find">Có {{$data->count()}} việc làm đang tuyển dụng</h4>
                     <div class="job-board-wrap">
                         <div class="job-group">
                             @foreach($data as $row)
@@ -80,7 +80,7 @@
                                 <div class="job-content">
                                     <div class="job-logo">
                                         <a href="#">
-                                            <img src="{{asset('img/fpt-logo.png')}}" class="job-logo-ima" alt="job-logo">
+                                            <img src="{{asset($row->user->image)}}" class="job-logo-ima" alt="job-logo">
                                         </a>
                                     </div>
 

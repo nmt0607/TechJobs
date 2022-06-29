@@ -28,17 +28,15 @@ class JobApplyList extends BaseLive {
 
     public function render(){
         $job = $this->job;
-        $query = $job->users()->where('applications.status', 1);
-        $data = $query->get();
+        $data = $job->users()->where('applications.status', 1)->get();
         foreach($data as $user){
-            $user->offer = $query->where('applications.user_id', $user->id)->first()->pivot->offer;
-            $user->applyDate = reFormatDate($query->where('applications.user_id', $user->id)->first()->pivot->created_at);
+            $user->offer = $job->users()->where('applications.status', 1)->where('applications.user_id', $user->id)->first()->pivot->offer;
+            $user->applyDate = reFormatDate($job->users()->where('applications.status', 1)->where('applications.user_id', $user->id)->first()->pivot->created_at);
         }
-        $acceptedCandidateQuery = $job->users()->where('applications.status', 2);
-        $acceptedCandidate = $acceptedCandidateQuery->get();
+        $acceptedCandidate = $job->users()->where('applications.status', 2)->get();
         foreach($acceptedCandidate as $user){
-            $user->offer = $acceptedCandidateQuery->where('applications.user_id', $user->id)->first()->pivot->offer;
-            $user->applyDate = reFormatDate($acceptedCandidateQuery->where('applications.user_id', $user->id)->first()->pivot->created_at);
+            $user->offer = $job->users()->where('applications.status', 2)->where('applications.user_id', $user->id)->first()->pivot->offer;
+            $user->applyDate = reFormatDate($job->users()->where('applications.status', 2)->where('applications.user_id', $user->id)->first()->pivot->created_at);
         }
 
         $appliedJobs = auth()->user()->jobs()->where('applications.status', 1)->get();

@@ -33,10 +33,11 @@ class JobDetail extends BaseLive {
         $job = $this->job;
         $userCreateJob = $this->userCreateJob;
         $similarJobs = $this->similarJobs;
+        
+
         if(auth()->user()->jobs()->where('applications.job_id', $job->id)->first()) {
             $this->statusApply = auth()->user()->jobs()->where('applications.job_id', $job->id)->first()->pivot->status;
         }
-            
         else
             $this->statusApply = null;
         return view('livewire.job.job-detail', compact('job', 'userCreateJob', 'similarJobs'));

@@ -15,4 +15,9 @@ class Message extends Model
         'to_id',
         'status',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'from_id');
+    }
 }

@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 Route::get('/', function () {
     return view('home.index');
-});
+})->name("index");
 Route::get('/login', function () {
     if(Auth::check())
         return redirect()->route('job.index'); 

@@ -5,6 +5,7 @@ namespace app\Http\Livewire\Job;
 use App\Http\Livewire\Base\BaseLive;
 use App\Models\Job;
 use App\Models\Tag;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 
 class JobList extends BaseLive {
@@ -65,7 +66,7 @@ class JobList extends BaseLive {
         }
         $data = $query->paginate(5);
         $tags = $this->tags;
-        $listCompany = Job::listCompany();
+        $listCompany = User::where('type', 1)->get();
         return view('livewire.job.job-list', compact('data', 'tags', 'listCompany'));
     }  
     

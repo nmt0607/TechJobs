@@ -36,16 +36,18 @@ class Notification extends Component
         return view('livewire.component.notification', compact('notify', 'friendChat'));
     }
 
-    // public function markAllAsRead(){
-    //     Auth::user()->unreadNotifications()->where('type', 'App\Notifications\TicketNotification')->update(['read_at' => now()]);
-    //     $this->assignTicketNotifyCount = 0;
-    // }
+    public function markAllAsRead(){
+        Auth::user()->unreadNotifications()->where('type', 'App\Notifications\ApplyNotification')->update(['read_at' => now()]);
+        $this->unseenNotifyCount = 0;
+        $this->dispatchBrowserEvent('show-toast', ["type" => "success", "message" => 'Đánh dấu tất cả thông báo là đã đọc']);
+    }
 
-    // public function markAllAsReadComment(){
-    //     Auth::user()->unreadNotifications()->where('type', 'App\Notifications\CommentTicketNotification')->update(['read_at' => now()]);
-    //     $this->assignTicketNotifyCount = 0;
-    //     $this->commentTicketNottifyCount = 0;
-    // }
+    public function markAllAsReadMsg(){
+        Auth::user()->unreadNotifications()->where('type', 'App\Notifications\MessageNotification')->update(['read_at' => now()]);
+        $this->unseenMessageCount = 0;
+        $this->dispatchBrowserEvent('show-toast', ["type" => "success", "message" => 'Đánh dấu tất cả tin nhắn là đã đọc']);
+
+    }
 
     public function readNotify($notify){
         auth()->user()->unreadNotifications->where('id', $notify['id'])->markAsRead();

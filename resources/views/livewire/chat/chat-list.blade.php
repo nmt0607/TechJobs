@@ -1,4 +1,5 @@
 <div class="container ">
+<div wire:loading class="loader"></div>
     <div class="row no-gutters">
         <div class="col-md-4 border-right">
             <div class="settings-tray">
@@ -9,7 +10,11 @@
             </div>
             <div class="list-friend-chat scroll">
                 @foreach($listFriend as $friend)
+                @if($friend->id == $selectedUser)
+                <div class="friend-drawer friend-drawer--onhover" style="background-color: white;" wire:click="selectFriend({{$friend->id}})">
+                @else
                 <div class="friend-drawer friend-drawer--onhover" wire:click="selectFriend({{$friend->id}})">
+                @endif
                     <img class="profile-image" src="{{asset($friend->image)}}" alt="">
                     <div class="text">
                         <h6>{{$friend->name}} <span style="color:red">
@@ -17,7 +22,7 @@
                                 ({{$friend->countUnseenMsg}})
                                 @endif
                             </span></h6>
-                        <p class="text-muted">{{auth()->user()->lastMessage($friend->id)}}</p>
+                        <p class="text-muted">{{strLimit(auth()->user()->lastMessage($friend->id))}}</p>
                     </div>
                     <span class="time text-muted small">{{auth()->user()->lastMessageTime($friend->id)}}</span>
                 </div>
@@ -31,37 +36,34 @@
                     <img class="profile-image" src="{{asset($selectedUserImage)}}" alt="">
                     <div class="text">
                         <h6>{{$selectedUserName}}</h6>
-                        <p class="text-muted">Layin' down the law since like before Christ...</p>
+                        <p class="text-muted">{{$selectedUserTime}}</p>
                     </div>
                     <span class="settings-tray--right">
                     </span>
                 </div>
             </div>
             <div class="chat-panel">
-                <div class="list-msg scroll">
+
+                <ol class="chat scroll">
                     @foreach($listMsg as $msg)
-                    <div class="row no-gutters">
                         @if($msg->from_id == auth()->id())
-                        <div class="col-md-3 offset-md-9">
-                            <div class="chat-bubble chat-bubble--right">
-                                {{$msg->content}}
-                            </div>
-                        </div>
+                        <li class="self">
                         @else
-                        <div class="col-md-3">
-                            <div class="chat-bubble chat-bubble--left">
-                                {{$msg->content}}
-                            </div>
-                        </div>
+                        <li class="other">
                         @endif
-                    </div>
+                            <div class="avatar"><img src="{{asset($msg->user->image)}}" draggable="false" /></div>
+                            <div class="msg mr-1 ml-1">
+                                <p>{{$msg->content}}</p>
+                                <time>{{$msg->created_at->format('H:i')}}</time>
+                            </div>
+                        </li>
                     @endforeach
-                </div>
+                </ol>
 
                 <div class="row">
                     <div class="col-12">
                         <div class="chat-box-tray">
-                            <i class="fa fa-smile"></i>
+                            <i class="fas fa-laugh"></i>
                             <input id='inputMsg' wire:model="message" type="text" placeholder=" Type your message here...">
                             <i class="fa fa-microphone"></i>
                             <i wire:click='sendMessage' class="fa fa-paper-plane send-message"></i>
@@ -75,15 +77,15 @@
 <br>
 <script>
     $("document").ready(() => {
-        $(".list-msg").animate({
+        $(".chat").animate({
             scrollTop: 2000
         }, 1000);
         window.livewire.on('scroll-bottom', () => {
-            $(".list-msg").animate({
+            $(".chat").animate({
                 scrollTop: 2000
             }, 1000);
         });
-        $('#inputMsg').keypress(function(e) {
+        $('.chat-panel').keypress(function(e) {
             var key = e.which;
             if (key == 13) // the enter key code
             {

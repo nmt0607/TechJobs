@@ -39,6 +39,7 @@ class ChatList extends BaseLive
         }
         $this->selectedUserName = User::find($this->selectedUser)->name??'';
         $this->selectedUserImage = User::find($this->selectedUser)->image??'';
+        $this->selectedUserTime = auth()->user()->lastMessageTime($this->selectedUser);
         return view('livewire.chat.chat-list', compact('listMsg', 'listFriend'));
     }
 

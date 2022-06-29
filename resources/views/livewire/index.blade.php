@@ -307,9 +307,9 @@
                     <div class="job-inner-over-item">
                         <a href="#wrap">
                             <div class="thumbnail">
-                            <img src="img/fitech-logo.jpg" alt="company logo image">
+                            <img src="{{asset($job->user->image)}}" alt="company logo image">
                             </div>
-                            <div class="content">
+                            <div class="content" style="max-width: 310px;">
                                 <div class="job-name">
                                     {{$job->title}}
                                 </div>
@@ -318,8 +318,8 @@
                                 </a>
                             </div>
                             <div class="extra-info">
-                                <p class="salary mt-2"><i class="fa fa-money pr-2"></i>10 - 20 triệu</p>
-                                <p class="place"><i class="fa fa-clock-o" aria-hidden="true"></i> Hạn nộp: <strong>{{reFormatDate($job->end_date)}}</strong></p>
+                                <p class="salary mt-2"><i class="fa fa-money pr-2"></i>{{$job->salary}}</p>
+                                <p class="place"><i class="fa fa-clock-o pr-2" aria-hidden="true"></i><strong>{{reFormatDate($job->end_date)}}</strong></p>
                             </div>
                         </a>
                     </div>

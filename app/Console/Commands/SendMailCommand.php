@@ -3,8 +3,10 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\Models\User;
+use App\Models\Mail;
+use App\Models\Job;
 use StdClass;
+use Carbon\Carbon;
 
 class SendMailCommand extends Command
 {
@@ -39,13 +41,16 @@ class SendMailCommand extends Command
      */
     public function handle()
     {
-        
-        $users = User::all();
+
+        $mail = Mail::all();
         $data = [];
-        foreach($users as $key => $user){
-            $data[$key]['sendTo'] = $user->email;
-            $data[$key]['content'] = "User ".$user->name."";
+        $dayAgo = Carbon::now()->addDay(-1);
+        $countNewJobs = Job::where('created_at', '>=', $dayAgo)->count();
+
+        foreach ($mail as $key => $mail) {
+            $data[$key]['sendTo'] = $mail->mail;
+            $data[$key]['content'] = "Có " . $countNewJobs . " việc làm mới đăng. Truy cập website: http://localhost:8000/job/index để biết thêm thông tin";
         }
-        sendMail($data);  
+        sendMail($data);
     }
 }
