@@ -1,6 +1,6 @@
 <div>
     <div wire:loading class="loader"></div>
-    
+
     <div class="container-fluid job-detail-wrap">
         <div class="container job-detail">
             <div class="job-detail-header">
@@ -58,6 +58,12 @@
                             </a>
                         </div>
                         <h2 class="company-intro-name">{{$user->name??'Tên ứng viên'}}</h2>
+                        @if($user)
+                        <center>
+                            <div style="display: inline-block; top: -2px" id="rateOfUser" rate='{{$user->rate()}}'></div>
+                            <span>({{$user->rateCount()}} đánh giá)</span>
+                        </center><br>
+                        @endif
                         <ul class="job-add">
 
                             <li>
@@ -107,7 +113,9 @@
                                         </div>
                                         <div class="job-desc" style="padding-top: 10px;">
                                             <div class="job-title ">
-                                                <a>{{$row->name}}</a>
+                                                <a>{{$row->name}} | </a>
+                                                <div wire:ignore style="display: inline-block; top: -2px" id="{{'rateYo'.$row->id}}" rate='{{$row->rate()}}'></div>
+                                                <span>({{$row->rateCount()}} đánh giá)</span>
                                             </div>
                                             <div class="job-company">
                                                 <a class="job-address">
@@ -147,7 +155,9 @@
 
                                         <div class="job-desc" style="padding-top: 10px;">
                                             <div class="job-title ">
-                                                <a>{{$row->name}}</a>
+                                                <a>{{$row->name}} | </a>
+                                                <div wire:ignore style="display: inline-block; top: -2px" id="{{'rateYo'.$row->id}}" rate='{{$row->rate()}}'></div>
+                                                <span>({{$row->rateCount()}} đánh giá)</span>
                                             </div>
                                             <div class="job-company">
                                                 <a class="job-address">
@@ -179,7 +189,7 @@
             </div>
         </div>
     </div>
-    
+
     <div wire:ignore.self class="modal fade" id="modalAccept" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" style="top: 20vh">
             <div class="modal-content">
@@ -196,6 +206,7 @@
             </div>
         </div>
     </div>
+
     <div wire:ignore.self class="modal fade" id="modalReject" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" style="top: 20vh">
             <div class="modal-content">
@@ -212,21 +223,62 @@
             </div>
         </div>
     </div>
-    <div wire:ignore.self class="modal fade" id="modalFinish" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="modalFinish" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" style="top: 20vh">
             <div class="modal-content">
                 <div class="modal-header">
                     <h2 class="modal-title" id="exampleModalLabel">Hoàn thành công việc</h2>
                 </div>
                 <div class="modal-body">
-                    Xác nhận người dùng đã hoàn thành công việc
+                    Trước khi xác nhận người dùng đã hoàn thành công việc vui lòng đánh giá người dùng này:
+                    <center>
+                        <div wire:ignore id="rateUser"></div>
+                    </center>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal" wire:click="finish()">Hoàn thành</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" id='finish'>Hoàn thành</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
 <!-- (end) Phần thân -->
+<script>
+    $(function() {
+        var rating = 2.5;
+        $("#rateUser").rateYo({
+            rating: rating,
+            halfStar: true,
+        });
+        var $rateYo = $("#rateUser").rateYo();
+        $("#rateUser").click(function() {
+            rating = $rateYo.rateYo("rating");
+        });
+        $("#finish").click(function() {
+            @this.emit('finish', rating);
+        });
+        var listUserId = {{$listUserId}}
+        $.each(listUserId, function(key, value) {
+            $('#rateYo' + value).rateYo({
+                starWidth: "15px",
+                halfStar: true,
+                rating: $('#rateYo' + value).attr('rate'),
+                readOnly: true
+            });
+        });
+
+        window.livewire.on('select-user', () => {
+            $(function() {
+                var $rateYo = $("#rateOfUser").rateYo();
+                $rateYo.rateYo("destroy");
+                $("#rateOfUser").rateYo({
+                    starWidth: "15px",
+                    rating: $('#rateOfUser').attr('rate'),
+                    halfStar: true,
+                    readOnly: true,
+                });
+            });
+        });
+    });
+</script>

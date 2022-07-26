@@ -268,6 +268,10 @@
                         </div>
                         <div class="clearfix list-rec">
                             <h4>{{$name}}</h4>
+                            <center>
+                                <div wire:ignore style="display: inline-block; top: -2px" class="rateYo" rate='{{$user->rate()}}'></div>
+                                <span>({{$user->rateCount()}} đánh giá)</span>
+                            </center><br>
                             <ul>
                                 @if($type == 2)
                                 <li><a href="#">Công việc đang ứng tuyển <strong>({{$user->jobApplying->count()}})</strong></a></li>
@@ -453,4 +457,12 @@
             @this.set('province_id', data);
         });
     })
+    $(function() {
+        $(".rateYo").rateYo({
+            starWidth: "15px",
+            halfStar: true,
+            rating: $(".rateYo").attr('rate'),
+            readOnly: true
+        });
+    });
 </script>

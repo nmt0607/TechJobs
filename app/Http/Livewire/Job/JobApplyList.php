@@ -5,6 +5,7 @@ namespace app\Http\Livewire\Job;
 use App\Http\Livewire\Base\BaseLive;
 use App\Models\Job;
 use App\Models\User;
+use App\Models\Rate;
 use App\Notifications\ApplyNotification;
 use App\Events\NotificationEvent;
 use Pusher\Pusher;
@@ -16,9 +17,11 @@ class JobApplyList extends BaseLive {
     public $userCreateJob;
     public $job;
     public $statusUser;
+    public $rate;
     protected $listeners = [
         'selectUser' => 'selectUser',
-        'updateRealtime' => 'render'
+        'updateRealtime' => 'render',
+        'finish' => 'finish',
     ];
 
     public function mount(){
@@ -28,6 +31,7 @@ class JobApplyList extends BaseLive {
 
     public function render(){
         $job = $this->job;
+        $listUserId = json_encode($job->users()->where('applications.status', 1)->orWhere('applications.status', 2)->pluck('users.id')->toArray());
         $data = $job->users()->where('applications.status', 1)->get();
         foreach($data as $user){
             $user->offer = $job->users()->where('applications.status', 1)->where('applications.user_id', $user->id)->first()->pivot->offer;
@@ -45,11 +49,12 @@ class JobApplyList extends BaseLive {
         if($user) {
             $user->offer = $job->users()->where('applications.user_id', $user->id)->first()->pivot->offer;
         }
-        return view('livewire.job.job-apply-list', compact('job', 'appliedJobs', 'data', 'user', 'acceptedCandidate', 'userCreateJob'));
+        return view('livewire.job.job-apply-list', compact('job', 'appliedJobs', 'data', 'user', 'acceptedCandidate', 'userCreateJob', 'listUserId'));
     }  
     
     public function selectUser($id)
     {
+        $this->emit('select-user');
         $this->user = User::find($id);
         $this->statusUser = $this->job->users()->where('applications.user_id',$id )->first()->pivot->status;
         $this->emit('updateFile2', ['id'=> $id]);
@@ -78,8 +83,13 @@ class JobApplyList extends BaseLive {
         
     }
 
-    public function finish()
+    public function finish($rating)
     {
+        Rate::create([
+            'rate' => $rating,
+            'from_id' => auth()->id(),
+            'to_id' => $this->user->id,
+        ]);
         $this->job->users()->where('applications.user_id', $this->user->id)->update(['applications.status' => 4]);
         $data = [$this->jobId, 4];
         $this->user->notify(new ApplyNotification($data));

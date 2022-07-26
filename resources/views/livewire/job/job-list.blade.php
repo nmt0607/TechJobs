@@ -63,7 +63,7 @@
                                             <select id="s-company">
                                                 <option value="" selected hidden>Tất cả doanh nghiệp</option>
                                                 @foreach($listCompany as $company)
-                                                    <option value="{{$company->id}}">{{$company->name}}</option>
+                                                <option value="{{$company->id}}">{{$company->name}}</option>
                                                 @endforeach
                                             </select>
                                             <i class="fa fa-building sfa" aria-hidden="true"></i>
@@ -104,27 +104,27 @@
                                                 <div class="filter-panel">
                                                     <div class="panel-content">
                                                         <div class="filter-topic cotain-common-filter">
-                                                            <a href="{{route('job.index')}}" class="filter-action">Tất cả ngành nghề</a>
+                                                            <a style="cursor:pointer" wire:click="setSearchType(0)" class="filter-action">Tất cả ngành nghề</a>
                                                             <span class="filter-count">{{$countJobAll}}</span>
                                                         </div>
                                                         <div class="filter-topic cotain-common-filter">
-                                                            <a href="{{route('job.index', ['type_job'=>1])}}" class="filter-action">Web Developer</a>
+                                                            <a style="cursor:pointer" wire:click="setSearchType(1)" class="filter-action">Web Developer</a>
                                                             <span class="filter-count">{{$countJobType1}}</span>
                                                         </div>
                                                         <div class="filter-topic cotain-common-filter">
-                                                            <a href="{{route('job.index', ['type_job'=>2])}}" class="filter-action">Mobile Developer</a>
+                                                            <a style="cursor:pointer" wire:click="setSearchType(2)" class="filter-action">Mobile Developer</a>
                                                             <span class="filter-count">{{$countJobType2}}</span>
                                                         </div>
                                                         <div class="filter-topic cotain-common-filter">
-                                                            <a href="{{route('job.index', ['type_job'=>3])}}" class="filter-action">Business Analyst</a>
+                                                            <a style="cursor:pointer" wire:click="setSearchType(3)" class="filter-action">Business Analyst</a>
                                                             <span class="filter-count">{{$countJobType3}}</span>
                                                         </div>
                                                         <div class="filter-topic cotain-common-filter">
-                                                            <a href="{{route('job.index', ['type_job'=>4])}}" class="filter-action">Automation Test</a>
+                                                            <a style="cursor:pointer" wire:click="setSearchType(4)" class="filter-action">Automation Test</a>
                                                             <span class="filter-count">{{$countJobType4}}</span>
                                                         </div>
                                                         <div class="filter-topic cotain-common-filter">
-                                                            <a href="{{route('job.index', ['type_job'=>5])}}" class="filter-action">Data Scientist</a>
+                                                            <a style="cursor:pointer" wire:click="setSearchType(5)" class="filter-action">Data Scientist</a>
                                                             <span class="filter-count">{{$countJobType5}}</span>
                                                         </div>
                                                     </div>
@@ -174,7 +174,7 @@
                                                 <div class="filter-panel">
                                                     <div class="panel-content">
                                                         <div class="filter-rating">
-                                                            <a href="#">
+                                                            <a style="cursor:pointer" wire:click="setSearchRate(5)">
                                                                 <span class="rating-wrapper">
                                                                     <i class="fa fa-star" aria-hidden="true"></i>
                                                                     <i class="fa fa-star" aria-hidden="true"></i>
@@ -186,7 +186,7 @@
                                                             </a>
                                                         </div>
                                                         <div class="filter-rating">
-                                                            <a href="#">
+                                                            <a style="cursor:pointer" wire:click="setSearchRate(4)">
                                                                 <span class="rating-wrapper">
                                                                     <i class="fa fa-star" aria-hidden="true"></i>
                                                                     <i class="fa fa-star" aria-hidden="true"></i>
@@ -198,7 +198,7 @@
                                                             </a>
                                                         </div>
                                                         <div class="filter-rating">
-                                                            <a href="#">
+                                                            <a style="cursor:pointer" wire:click="setSearchRate(3)">
                                                                 <span class="rating-wrapper">
                                                                     <i class="fa fa-star" aria-hidden="true"></i>
                                                                     <i class="fa fa-star" aria-hidden="true"></i>
@@ -269,6 +269,8 @@
                                                 <span><i class="fa fa-clock-o" aria-hidden="true"></i> Hạn nộp: <strong>{{reFormatDate($row->end_date)}}</strong></span>
                                             </div>
                                         </div>
+                                        <div style="display: inline-block; top: -2px" class="{{'rateYo'.$row->user->id}}" rate='{{$row->user->rate()}}'></div>
+                                        <span>({{$row->user->rateCount()}} đánh giá)</span>
                                     </div>
                                     <div class="wrap-btn-appl">
                                         <a href="{{route('job.detail', ['id' => $row->id])}}" class="btn btn-appl">Chi tiết</a>
@@ -280,10 +282,8 @@
                             @endforelse
                         </div>
                         <br>
-                    <center>{{ $data->links() }}</center>
+                        <center>{{ $data->links() }}</center>
                     </div>
-                    
-                    
                 </div>
             </div>
         </div>
@@ -305,5 +305,33 @@
             var data = $('#s-company').select2('val');
             @this.set('searchCompany', data);
         })
+        $(function() {
+            var listJobId = {{$listJobId}}
+            $.each(listJobId, function(key, value) {
+                $('.rateYo' + value).rateYo({
+                    starWidth: "15px",
+                    halfStar: true,
+                    rating: $('.rateYo' + value).attr('rate'),
+                    readOnly: true
+                });
+            });
+        });
+        window.livewire.on('load_page', () => {
+            $(function() {
+                var listJobId = {{$listJobId}}
+                $.each(listJobId, function(key, value) {
+                    var $rateYo = $(".rateYo" + value).rateYo();
+                    $rateYo.rateYo("destroy");
+                });
+                $.each(listJobId, function(key, value) {
+                    $('.rateYo' + value).rateYo({
+                        starWidth: "15px",
+                        halfStar: true,
+                        rating: $('.rateYo' + value).attr('rate'),
+                        readOnly: true
+                    });
+                });
+            });
+        });
     })
 </script>

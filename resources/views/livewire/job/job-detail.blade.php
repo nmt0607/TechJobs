@@ -17,7 +17,9 @@
                                 <a href="#">{{$job->title}}</a>
                             </div>
                             <div class="job-detail-header-company">
-                                <a href="#">{{$userCreateJob->name}}</a>
+                                <a style="display: inline-block;" href="#">{{$userCreateJob->name}} | </a>
+                                <div wire:ignore style="display: inline-block; top: -2px" class="rateYo" rate='{{$userCreateJob->rate()}}'></div>
+                                <span>({{$userCreateJob->rateCount()}} đánh giá)</span>
                             </div>
                             <div class="job-detail-header-de">
                                 <ul>
@@ -48,7 +50,7 @@
                                 @elseif($statusApply == 3)
                                 <a class="btn btn-secondary btn-waiting" style="color: white">Đã bị từ chối</a>
                                 @elseif($statusApply == 4)
-                                <a class="btn btn-primary btn-waiting" style="color: white">Đã hoàn thành</a>
+                                <a data-toggle="modal" data-target="#modalFinish" class="btn btn-primary btn-waiting" style="color: white">Đã hoàn thành</a>
                                 @else
                                 <a data-toggle="modal" data-target="#modalApplyJob" class="btn btn-primary btn-waiting" style="color: white">Nộp đơn</a>
                                 @endif
@@ -196,7 +198,11 @@
                                 <img src="{{asset($userCreateJob->image)}}" class="job-logo-ima" alt="job-logo">
                             </a>
                         </div>
-                        <h2 class="company-intro-name">{{$userCreateJob->name}}</h2>
+                        <h2 style="margin-bottom: 0px;" class="company-intro-name">{{$userCreateJob->name}}</h2>
+                        <center>
+                            <div wire:ignore style="display: inline-block; top: -2px" class="rateYo" rate='{{$userCreateJob->rate()}}'></div>
+                            <span>({{$userCreateJob->rateCount()}} đánh giá)</span>
+                        </center><br>
                         <ul class="job-add">
                             <li>
                                 <i class="fa fa-map-marker ja-icn"></i>
@@ -312,13 +318,18 @@
                 </div>
                 <div class="modal-body">
                     <center>
-                    <div class="job-detail-header-logo">
-                        <a href="#">
-                            <img src="{{asset($userCreateJob->image)}}" class="job-logo-ima" alt="job-logo">
-                        </a>
-                    </div>
+                        <div class="job-detail-header-logo">
+                            <a href="#">
+                                <img src="{{asset($userCreateJob->image)}}" class="job-logo-ima" alt="job-logo">
+                            </a>
+                        </div>
                     </center>
-                    <h2 class="company-intro-name">{{$userCreateJob->name}}</h2>
+                    <h2 style="margin-bottom: 0px;" class="company-intro-name">{{$userCreateJob->name}}</h2>
+                    <center>
+                        <div wire:ignore style="display: inline-block; top: -2px" class="rateYo" rate='{{$userCreateJob->rate()}}'></div>
+                        <span>({{$userCreateJob->rateCount()}} đánh giá)</span>
+                    </center><br>
+                                
                     <ul class="job-add">
                         <li>
                             <i class="fa fa-map-marker ja-icn"></i>
@@ -341,6 +352,25 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="modalFinish" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" style="top: 20vh">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title" id="exampleModalLabel">Hoàn thành công việc</h2>
+                </div>
+                <div class="modal-body">
+                    Công việc của bạn đã được xác nhận hoàn thành, vui lòng đánh giá nhà tuyển dụng
+                    <center>
+                        <div wire:ignore id="rateUser"></div>
+                    </center>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" id='finish'>Hoàn thành</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <script>
     $("document").ready(() => {
@@ -351,4 +381,26 @@
             $("#close-modal-apply").click();
         });
     })
+    $(function() {
+        $(".rateYo").rateYo({
+            starWidth: "15px",
+            halfStar: true,
+            rating: $(".rateYo").attr('rate'),
+            readOnly: true
+        });
+    });
+    $(function() {
+        var rating = 2.5;
+        $("#rateUser").rateYo({
+            rating: rating,
+            halfStar: true,
+        });
+        var $rateYo = $("#rateUser").rateYo();
+        $("#rateUser").click(function() {
+            rating = $rateYo.rateYo("rating");
+        });
+        $("#finish").click(function() {
+            @this.emit('finish', rating);
+        });
+    });
 </script>

@@ -25,8 +25,10 @@ class Index extends BaseLive {
     public $countJobType3;
     public $countJobType4;
     public $countJobType5;
+    public $listJobId;
 
     public function mount(){
+        $this->listJobId = json_encode(User::where('type', 1)->pluck('id')->toArray());
         \Carbon\Carbon::setLocale('vi');
         if(isset($_GET['type'])){
             $this->type = $_GET['type'];
@@ -45,6 +47,7 @@ class Index extends BaseLive {
     }
 
     public function render(){
+        $this->emit('load_page');
         $query = Job::query();
         $newJobs = Job::query()->orderBy('created_at', 'desc')->get();
         $urgentJobs = Job::query()->orderBy('end_date')->get();

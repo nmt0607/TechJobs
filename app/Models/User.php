@@ -288,4 +288,13 @@ class User extends Authenticatable
         }
         return $count;
     }
+
+    public function rate(){
+        $rate = Rate::where('to_id', $this->id)->avg('rate')??0;
+        return $rate;
+    }
+
+    public function rateCount(){
+        return Rate::where('to_id', $this->id)->count();
+    }
 }

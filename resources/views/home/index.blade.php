@@ -30,6 +30,7 @@
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <link rel="stylesheet" type="text/css" href="{{asset('/css/customer.css')}}">
     <link rel="stylesheet" href="{{ asset('plugins/toastr/toastr.min.css') }}">
+    <link rel="stylesheet" href="{{asset('rateyo/jquery.rateyo.css')}}"/>
 </head>
 
 <body>
@@ -193,6 +194,7 @@
     <script src="{{asset('/js/owlcarousel/owl.carousel.js')}}"></script>
     <!-- Read More Plugin -->
     <script src="{{ asset('plugins/toastr/toastr.min.js') }}"></script>
+    <script src="{{ asset('rateyo/jquery.rateyo.js') }}"></script>
     <script>
         toastr.options = {
             "closeButton": true,

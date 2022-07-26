@@ -6,6 +6,7 @@ use Livewire\Component;
 use App\Http\Livewire\Base\BaseLive;
 use App\Models\Job;
 use App\Models\User;
+use App\Models\Rate;
 use App\Notifications\ApplyNotification;
 use App\Events\NotificationEvent;
 
@@ -20,7 +21,8 @@ class JobDetail extends BaseLive {
 
     protected $listeners = [
         'updateRealtime' => 'render',
-        'resetData'
+        'resetData',
+        'finish',
     ];
 
     public function mount(){
@@ -67,5 +69,19 @@ class JobDetail extends BaseLive {
     public function resetData(){
         $this->resetValidation();
         $this->offer='';
+    }
+
+    public function finish($rating)
+    {
+        
+        Rate::create([
+            'rate' => $rating,
+            'from_id' => auth()->id(),
+            'to_id' => $this->userCreateJob->id,
+        ]);
+        $this->userCreateJob->jobsCreate()->update([
+            'rate' => $this->userCreateJob->rate(),
+        ]);
+        $this->dispatchBrowserEvent('show-toast', ["type" => "success", "message" => 'Đánh giá nhà tuyển dụng thành công']);
     }
 }

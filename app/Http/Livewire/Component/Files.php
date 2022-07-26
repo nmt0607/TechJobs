@@ -68,7 +68,7 @@ class Files extends BaseLive
         }
 
         if (empty($this->name)) {
-            $this->name = 'Đính kèm file';
+            $this->name = 'Sản phẩm demo';
         }
 
         if($this->deleteUnknownFilesOnMount) {

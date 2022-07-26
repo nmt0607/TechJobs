@@ -23,13 +23,13 @@ class JobList extends BaseLive {
     public $countJobType3;
     public $countJobType4;
     public $countJobType5;
+    public $listJobId;
+    public $searchRate;
 
     public function mount(){
+        $this->listJobId = json_encode(User::where('type', 1)->pluck('id')->toArray());
         if(isset($_GET['type'])){
             $this->type = $_GET['type'];
-        }
-        if(isset($_GET['type_job'])){
-            $this->typeJob = $_GET['type_job'];
         }
         $this->tags = Tag::all();
         $this->countJobAll = Job::all()->count();
@@ -41,7 +41,10 @@ class JobList extends BaseLive {
     }
 
     public function render(){
+        $this->emit('load_page');
         $query = Job::query();
+        
+        
         if($this->type){
             $query = auth()->user()->jobs();
         }
@@ -64,6 +67,9 @@ class JobList extends BaseLive {
         if($this->searchProvince){
             $query->where('address_id', $this->searchProvince);
         }
+        if($this->searchRate){
+            $query->where('rate', '>=', $this->searchRate);
+        }
         $data = $query->paginate(5);
         $tags = $this->tags;
         $listCompany = User::where('type', 1)->get();
@@ -71,5 +77,13 @@ class JobList extends BaseLive {
     }  
     
     public function search(){
+    }
+
+    public function setSearchRate($rate){
+        $this->searchRate = $rate;
+    }
+
+    public function setSearchType($type){
+        $this->typeJob = $type;
     }
 }

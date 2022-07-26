@@ -139,6 +139,10 @@
                         </div>
                         <div class="clearfix list-rec">
                             <h4>{{$user->name}}</h4>
+                            <center>
+                                <div wire:ignore style="display: inline-block; top: -2px" class="rateYo" rate='{{$user->rate()}}'></div>
+                                <span>({{$user->rateCount()}} đánh giá)</span>
+                            </center><br>
                             <ul class="job-add">
                                 <li>
                                     <i class="fa fa-map-marker ja-icn"></i>
@@ -201,4 +205,12 @@
             @this.set('searchCompany', data);
         })
     })
+    $(function() {
+        $(".rateYo").rateYo({
+            starWidth: "15px",
+            halfStar: true,
+            rating: $(".rateYo").attr('rate'),
+            readOnly: true
+        });
+    });
 </script>

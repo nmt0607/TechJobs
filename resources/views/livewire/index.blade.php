@@ -115,6 +115,8 @@
                                                 <span><i class="fa fa-clock-o" aria-hidden="true"></i> Hạn nộp: <strong>{{reFormatDate($row->end_date)}}</strong></span>
                                             </div>
                                         </div>
+                                        <div style="display: inline-block; top: -2px" class="{{'rateYo'.$row->user->id}}" rate='{{$row->user->rate()}}'></div>
+                                        <span>({{$row->user->rateCount()}} đánh giá)</span>
                                     </div>
                                     <div class="wrap-btn-appl">
                                         <a href="{{route('job.detail', ['id' => $row->id])}}" class="btn btn-appl">Chi tiết</a>
@@ -413,7 +415,9 @@
     </div>
     @livewire('component.support')
 </div>
+
 <script>
+    
     $("document").ready(() => {
         $('#computer-languages').on('change', function(e) {
             var data = $('#computer-languages').select2('val');
@@ -423,5 +427,33 @@
             var data = $('#s-company').select2('val');
             @this.set('searchCompany', data);
         })
+        $(function() {
+            var listJobId = {{$listJobId}}
+            $.each(listJobId, function(key, value) {
+                $('.rateYo' + value).rateYo({
+                    starWidth: "15px",
+                    halfStar: true,
+                    rating: $('.rateYo' + value).attr('rate'),
+                    readOnly: true
+                });
+            });
+        });
+        window.livewire.on('load_page', () => {
+            $(function() {
+                var listJobId = {{$listJobId}}
+                $.each(listJobId, function(key, value) {
+                    var $rateYo = $(".rateYo" + value).rateYo();
+                    $rateYo.rateYo("destroy");
+                });
+                $.each(listJobId, function(key, value) {
+                    $('.rateYo' + value).rateYo({
+                        starWidth: "15px",
+                        halfStar: true,
+                        rating: $('.rateYo' + value).attr('rate'),
+                        readOnly: true
+                    });
+                });
+            });
+        });
     })
 </script>
