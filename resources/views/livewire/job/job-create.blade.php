@@ -51,7 +51,7 @@
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label text-right label">Số lượng cần tuyển<span style="color: red" class="pl-2">*</span> </label>
                                             <div class="col-sm-9">
-                                                <input wire:model.defer="number" type="number" class="form-control" placeholder="1">
+                                                <input wire:model.defer="number" min="1" type="number" class="form-control" placeholder="1">
                                                 @error("number")
                                                 @include("layouts.partials.text._error")
                                                 @enderror
@@ -119,10 +119,17 @@
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-sm-3 col-form-label text-right label">Mức lương<span style="color: red" class="pl-2">*</span></label>
-                                            <div class="col-sm-9">
-                                                <input wire:model.defer="salary" type="text" class="form-control" placeholder="Mức lương">
+                                            <label class="col-sm-3 col-form-label text-right label">Mức giá<span style="color: red" class="pl-2">*</span></label>
+                                            <div class="col-sm-3">
+                                                <input wire:model.defer="salary" type="number" min="1" class="form-control" placeholder="Từ (triệu đồng)">
                                                 @error("salary")
+                                                @include("layouts.partials.text._error")
+                                                @enderror
+                                            </div>
+                                            <label class="col-form-label text-right label">-</label>
+                                            <div class="col-sm-3">
+                                                <input wire:model.defer="salary_to" type="number" min="1" class="form-control" placeholder="Đến (triệu đồng)">
+                                                @error("salary_to")
                                                 @include("layouts.partials.text._error")
                                                 @enderror
                                             </div>
@@ -267,7 +274,7 @@
                                 <li>
                                     <a href="#">
                                         Giấy phép kinh doanh
-                                    </a>
+                                    </a>p
                                 </li>
                             </ul>
                             <h3 class="menu-ql-ntv">

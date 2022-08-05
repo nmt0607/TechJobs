@@ -960,9 +960,17 @@ i.sfa {
     height: 32px;
 }
 
+.select2-search--inline {
+    display: contents; /*this will make the container disappear, making the child the one who sets the width of the element*/
+}
+
+.select2-search__field:placeholder-shown {
+    width: 100% !important; /*makes the placeholder to be 100% of the width while there are no options selected*/
+}
+
 .select2.select2-container .select2-selection--multiple .select2-selection__rendered {
     display: block;
-    padding: 0 4px;
+    padding: 7px 35px;
     line-height: 29px;
 }
 

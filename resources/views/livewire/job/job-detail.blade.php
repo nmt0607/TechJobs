@@ -24,7 +24,7 @@
                             <div class="job-detail-header-de">
                                 <ul>
                                     <li><i class="fa fa-map-marker icn-jd"></i><span>{{getAddress($job->address_id)}}</span></li>
-                                    <li><i class="fa fa-usd icn-jd"></i><span>{{$job->salary}}</span></li>
+                                    <li><i class="fa fa-usd icn-jd"></i><span>{{$job->salary_from_to}}</span></li>
                                     <li><i class="fa fa-calendar icn-jd"></i><span>{{reFormatDate($job->end_date)}}</span></li>
                                 </ul>
                             </div>
@@ -50,7 +50,9 @@
                                 @elseif($statusApply == 3)
                                 <a class="btn btn-secondary btn-waiting" style="color: white">Đã bị từ chối</a>
                                 @elseif($statusApply == 4)
-                                <a data-toggle="modal" data-target="#modalFinish" class="btn btn-primary btn-waiting" style="color: white">Đã hoàn thành</a>
+                                <a data-toggle="modal" data-target="#modalFinish" class="btn btn-info btn-waiting" style="color: white">Đánh giá</a>
+                                @elseif($statusApply == 5)
+                                <a class="btn btn-primary btn-waiting" style="color: white">Đã hoàn thành</a>
                                 @else
                                 <a data-toggle="modal" data-target="#modalApplyJob" class="btn btn-primary btn-waiting" style="color: white">Nộp đơn</a>
                                 @endif
@@ -138,10 +140,10 @@
                             <div class="job-info-list">
                                 <div class="row">
                                     <div class="col-sm-4">
-                                        <span class="ji-title">Lương:</span>
+                                        <span class="ji-title">Giá:</span>
                                     </div>
                                     <div class="col-sm-8">
-                                        <span class="ji-main">{{$job->salary}}</span>
+                                        <span class="ji-main">{{$job->salary_from_to}}</span>
                                     </div>
                                 </div>
                             </div>
@@ -366,7 +368,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal" id='finish'>Hoàn thành</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" id='finish'>Gửi đánh giá</button>
                 </div>
             </div>
         </div>

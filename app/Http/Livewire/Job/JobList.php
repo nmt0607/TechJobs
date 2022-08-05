@@ -25,6 +25,8 @@ class JobList extends BaseLive {
     public $countJobType5;
     public $listJobId;
     public $searchRate;
+    public $searchSalaryFrom = 1;
+    public $searchSalaryTo = 100;
 
     public function mount(){
         $this->listJobId = json_encode(User::where('type', 1)->pluck('id')->toArray());
@@ -43,15 +45,17 @@ class JobList extends BaseLive {
     public function render(){
         $this->emit('load_page');
         $query = Job::query();
+        $this->searchSalary($query);
         
-        
+        // preg_match_all('!\d+!', $query->first()->salary, $matches);
+        // dd($matches);
         if($this->type){
             $query = auth()->user()->jobs();
         }
         
         if($this->searchTag){
             $query->whereHas('tags', function (Builder $query) {
-                $query->where('tag_id', 'like', $this->searchTag);
+                $query->whereIn('tag_id', $this->searchTag);
             });
         }
         if($this->searchName){
@@ -72,7 +76,7 @@ class JobList extends BaseLive {
         }
         $data = $query->paginate(5);
         $tags = $this->tags;
-        $listCompany = User::where('type', 1)->get();
+        $listCompany = Job::listCompany();
         return view('livewire.job.job-list', compact('data', 'tags', 'listCompany'));
     }  
     
@@ -85,5 +89,17 @@ class JobList extends BaseLive {
 
     public function setSearchType($type){
         $this->typeJob = $type;
+    }
+
+    public function searchSalary($query){
+        $query->where(function($query){
+            $query->where(function($query){
+                $query->whereBetween('salary', [$this->searchSalaryFrom,$this->searchSalaryTo])
+                    ->orWhereBetween('salary_to', [$this->searchSalaryFrom,$this->searchSalaryTo]);
+                })->orWhere(function($query){
+                $query->where('salary', '<',$this->searchSalaryFrom)
+                    ->where('salary_to', '>',$this->searchSalaryTo);
+                });
+            });
     }
 }

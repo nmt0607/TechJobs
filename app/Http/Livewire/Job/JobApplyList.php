@@ -25,8 +25,10 @@ class JobApplyList extends BaseLive {
     ];
 
     public function mount(){
+        if(auth()->user()->type == 2) abort(403, 'Unauthorized action.');
         $this->userCreateJob = auth()->user();
         $this->job = Job::findOrFail($this->jobId);
+        if($this->job->user_id != auth()->id()) abort(403, 'Unauthorized action.');
     }
 
     public function render(){

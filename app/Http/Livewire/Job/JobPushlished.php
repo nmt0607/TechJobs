@@ -17,6 +17,7 @@ class JobPushlished extends BaseLive {
     public $user;
 
     public function mount(){
+        if(auth()->user()->type == 2) abort(403, 'Unauthorized action.');
         $this->tags = Tag::all();
         $this->user = auth()->user();
 }

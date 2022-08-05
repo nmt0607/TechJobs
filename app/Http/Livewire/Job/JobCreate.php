@@ -18,6 +18,7 @@ class JobCreate extends BaseLive {
     public $level;
     public $exp;
     public $salary;
+    public $salary_to;
     public $benefit;
     public $type;
     public $address_id;
@@ -28,8 +29,10 @@ class JobCreate extends BaseLive {
     public $tagSelect = [];
 
     public function mount(){
+        if(auth()->user()->type == 2) abort(403, 'Unauthorized action.');
         if($this->jobId){
             $job = Job::find($this->jobId);
+            if($job->user_id != auth()->id()) abort(403, 'Unauthorized action.');
             $this->title = $job->title;
             $this->number = $job->number;
             $this->gender = $job->gender;
@@ -38,6 +41,7 @@ class JobCreate extends BaseLive {
             $this->level = $job->level;
             $this->exp = $job->experience;
             $this->salary = $job->salary;
+            $this->salary_to = $job->salary_to;
             $this->benefit = $job->benefit;
             $this->type = $job->type;
             $this->address_id = $job->address_id;
@@ -66,11 +70,14 @@ class JobCreate extends BaseLive {
             'level' => 'required',
             'exp' => 'required',
             'salary' => 'required',
+            'salary_to' => 'required|gt:salary',
             'benefit' => 'required',
             'type' => 'required',
             'address_id' => 'required',
             'end_date' => 'required',
-        ],[],[]);
+        ],[
+            'salary_to.gt' => 'Mức giá tối đa phải lớn hơn mức giá tối thiểu.',
+        ],[]);
         if($this->jobId){
             $job = Job::find($this->jobId);
             $job->title = $this->title;
@@ -81,6 +88,7 @@ class JobCreate extends BaseLive {
             $job->level = $this->level;
             $job->experience = $this->exp;
             $job->salary = $this->salary;
+            $job->salary_to = $this->salary_to;
             $job->benefit = $this->benefit;
             $job->type = $this->type;
             $job->address_id = $this->address_id;
@@ -102,6 +110,7 @@ class JobCreate extends BaseLive {
                 "level" => $this->level,
                 "experience" => $this->exp,
                 "salary" => $this->salary,
+                "salary_to" => $this->salary_to,
                 "benefit" => $this->benefit,
                 "type" => $this->type,
                 "address_id" => $this->address_id,

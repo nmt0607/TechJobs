@@ -106,7 +106,7 @@
                                             </div>
                                             <div class="job-salary">
                                                 <i class="fa fa-money" aria-hidden="true"></i>
-                                                {{$row->salary}}
+                                                {{$row->salary_from_to}}
                                             </div>
                                             <br>
                                             <div class="job-deadline">

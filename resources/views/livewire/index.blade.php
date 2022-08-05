@@ -109,7 +109,7 @@
                                             </div>
                                             <div class="job-salary">
                                                 <i class="fa fa-money" aria-hidden="true"></i>
-                                                {{$row->salary}}
+                                                {{$row->salary_from_to}}
                                             </div>
                                             <div class="job-deadline">
                                                 <span><i class="fa fa-clock-o" aria-hidden="true"></i> Hạn nộp: <strong>{{reFormatDate($row->end_date)}}</strong></span>
@@ -203,13 +203,13 @@
                     <div class="owl-carousel owl-theme job-board2-contain">
                         @foreach($newJobs as $job)
                         <div class="item job-latest-item">
-                            <a href="#" class="job-latest-group">
+                            <a href="{{route('job.detail', ['id' => $job->id])}}" class="job-latest-group">
                                 <div class="job-lt-logo">
                                     <img src="{{asset($job->user->image)}}">
                                 </div>
                                 <div class="job-lt-info">
                                     <h3>{{$job->title}}</h3>
-                                    <a class="company" href="#">{{$job->user->name}}</a>
+                                    <a class="company">{{$job->user->name}}</a>
                                     <p class="address"><i class="fa fa-map-marker pr-1" aria-hidden="true"></i>{{getAddress($job->address_id)}}</p>
                                     <p class="address"><i class="fa fa-clock-o" aria-hidden="true"></i><strong> {{$job->created_at->diffForHumans()??""}}</strong></p>
                                 </div>
@@ -307,7 +307,7 @@
                 @foreach($urgentJobs as $job)
                 <div class="col-md-6 job-over-item">
                     <div class="job-inner-over-item">
-                        <a href="#wrap">
+                        <a href="{{route('job.detail', ['id' => $row->id])}}">
                             <div class="thumbnail">
                             <img src="{{asset($job->user->image)}}" alt="company logo image">
                             </div>

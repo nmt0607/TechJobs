@@ -28,9 +28,9 @@
     <link rel="stylesheet" href="css/owlcarousel/owl.theme.default.min.css">
     <!-- main css -->
     <link rel="stylesheet" type="text/css" href="css/style.css">
-    <link rel="stylesheet" type="text/css" href="{{asset('/css/customer.css')}}">
-    <link rel="stylesheet" href="{{ asset('plugins/toastr/toastr.min.css') }}">
-    <link rel="stylesheet" href="{{asset('rateyo/jquery.rateyo.css')}}"/>
+    <link rel="stylesheet" type="text/css" href="/css/customer.css">
+    <link rel="stylesheet" href="plugins/toastr/toastr.min.css">
+    <link rel="stylesheet" href="rateyo/jquery.rateyo.css"/>
 </head>
 
 <body>
@@ -40,7 +40,7 @@
             <nav class="navbar navbar-expand-lg navbar-light bg-light tjnav-bar" style='z-index:1'>
                 <!-- <a class="navbar-brand" href="#">Navbar</a> -->
                 <a href="{{route('index')}}" class="nav-logo">
-                    <img src="img/techjobs_bgb.png">
+                    <img src="{{asset('img/techjobs_bgb.png')}}">
                 </a>
                 <button class="navbar-toggler tnavbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <!-- <span class="navbar-toggler-icon"></span> -->
@@ -172,7 +172,7 @@
     </footer>
     <!-- (end) footer -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script type="text/javascript" src="{{asset('/js/readmore.js')}}"></script>
+    <script type="text/javascript" src="/js/readmore.js"></script>
     <script type="text/javascript">
         $('.catelog-list').readmore({
             speed: 75,
@@ -185,16 +185,16 @@
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <!-- <script src="{{asset('/js/jquery-3.4.1.slim.min.js')}}"></script> -->
     <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
-    <script src="{{asset('/js/popper.min.js')}}"></script>
-    <script src="{{asset('/js/bootstrap.min.js')}}"></script>
-    <script src="{{asset('/js/select2.min.js')}}"></script>
-    <script src="{{asset('/js/jobdata.js')}}"></script>
-    <script type="text/javascript" src="{{asset('/js/main.js')}}"></script>
+    <script src="/js/popper.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="js/select2.min.js"></script>
+    <script src="/js/jobdata.js"></script>
+    <script type="text/javascript" src="/js/main.js"></script>
     <!-- Owl Stylesheets Javascript -->
-    <script src="{{asset('/js/owlcarousel/owl.carousel.js')}}"></script>
+    <script src="js/owlcarousel/owl.carousel.js"></script>
     <!-- Read More Plugin -->
-    <script src="{{ asset('plugins/toastr/toastr.min.js') }}"></script>
-    <script src="{{ asset('rateyo/jquery.rateyo.js') }}"></script>
+    <script src="plugins/toastr/toastr.min.js"></script>
+    <script src="rateyo/jquery.rateyo.js"></script>
     <script>
         toastr.options = {
             "closeButton": true,

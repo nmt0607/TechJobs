@@ -283,7 +283,7 @@ class User extends Authenticatable
 
     public function countApplyingUser(){
         $count = 0;
-        foreach($this->jobs as $job){
+        foreach($this->jobsCreate as $job){
             $count += $job->applyingUser()->count();
         }
         return $count;

@@ -42,8 +42,7 @@
                                             </div>
                                         </div>
                                         <div class="col-md-3" wire:ignore>
-                                            <select id="computer-languages">
-                                                <option value="" selected hidden>Tất cả kĩ năng</option>
+                                            <select data-placeholder="Tất cả kỹ năng" id="computer-languages" required multiple>
                                                 @foreach($tags as $tag)
                                                 <option value="{{$tag->id}}">{{$tag->name}}</option>
                                                 @endforeach
@@ -133,7 +132,7 @@
                                         </div>
                                         <p>
                                             <a id="clickc2_advance" class="btnf btn-filter" data-toggle="collapse" href="#filter-price" role="button" aria-expanded="false" aria-controls="collapseExample">
-                                                Mức Lương
+                                                Mức giá (triệu đồng)
                                                 <i class="fa fa-angle-up" aria-hidden="true"></i>
                                             </a>
                                         </p>
@@ -144,16 +143,16 @@
                                                         <div class="filter-topic filter-input-price">
                                                             <form class="al-price-filter">
                                                                 <span class="_fpblock">
-                                                                    <input type="number" class="if-price" id="" placeholder="50,000">
+                                                                    <input wire:model.defer="searchSalaryFrom" type="number" min="1" class="if-price" id="" placeholder="0">
                                                                 </span>
                                                                 <span class="_fpblock _line">
                                                                     <p>-</p>
                                                                 </span>
                                                                 <span class="_fpblock">
-                                                                    <input type="number" class="if-price" id="" placeholder="1,000,000">
+                                                                    <input wire:model.defer="searchSalaryTo" type="number" min="1" class="if-price" id="" placeholder="100">
                                                                 </span>
                                                                 <span class="_fpblock">
-                                                                    <button type="submit" class="sb-fprice"><i class="fa fa-angle-right" aria-hidden="true"></i></button>
+                                                                    <button wire:click="render" type="button" class="sb-fprice"><i class="fa fa-angle-right" aria-hidden="true"></i></button>
                                                                 </span>
                                                             </form>
                                                         </div>
@@ -263,7 +262,7 @@
                                             </div>
                                             <div class="job-salary">
                                                 <i class="fa fa-money" aria-hidden="true"></i>
-                                                {{$row->salary}}
+                                                {{$row->salary_from_to}}
                                             </div>
                                             <div class="job-deadline">
                                                 <span><i class="fa fa-clock-o" aria-hidden="true"></i> Hạn nộp: <strong>{{reFormatDate($row->end_date)}}</strong></span>
@@ -293,6 +292,9 @@
 </div>
 <script>
     $("document").ready(() => {
+        $('#computer-languages').select2({
+            minimumResultsForSearch: -1,
+        });
         $('#computer-languages').on('change', function(e) {
             var data = $('#computer-languages').select2('val');
             @this.set('searchTag', data);

@@ -73,7 +73,9 @@ class JobDetail extends BaseLive {
 
     public function finish($rating)
     {
-        
+        auth()->user()->jobs()->where('applications.job_id', $this->jobId)->update([
+            'applications.status' => 5
+        ]);
         Rate::create([
             'rate' => $rating,
             'from_id' => auth()->id(),

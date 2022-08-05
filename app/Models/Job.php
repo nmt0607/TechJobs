@@ -18,6 +18,7 @@ class Job extends Model
         'level',
         'experience',
         'salary',
+        'salary_to',
         'benefit',
         'type',
         'address_id',
@@ -25,6 +26,11 @@ class Job extends Model
         'user_id',
         'status',
     ];
+
+    public function getSalaryFromToAttribute()
+    {
+        return ($this->attributes['salary'].' triệu - '.$this->attributes['salary_to'].' triệu');
+    }
 
     public function users()
     {

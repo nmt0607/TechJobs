@@ -23,7 +23,7 @@
                             <div class="job-detail-header-de">
                                 <ul>
                                     <li><i class="fa fa-map-marker icn-jd"></i><span>{{getAddress($job->address_id)}}</span></li>
-                                    <li><i class="fa fa-usd icn-jd"></i><span>{{$job->salary}}</span></li>
+                                    <li><i class="fa fa-usd icn-jd"></i><span>{{$job->salary_from_to}}</span></li>
                                     <li><i class="fa fa-calendar icn-jd"></i><span>{{reFormatDate($job->end_date)}}</span></li>
                                 </ul>
                             </div>
@@ -230,7 +230,7 @@
                     <h2 class="modal-title" id="exampleModalLabel">Hoàn thành công việc</h2>
                 </div>
                 <div class="modal-body">
-                    Trước khi xác nhận người dùng đã hoàn thành công việc vui lòng đánh giá người dùng này:
+                    Trước khi xác nhận ứng viên đã hoàn thành công việc vui lòng đánh giá ứng viên này:
                     <center>
                         <div wire:ignore id="rateUser"></div>
                     </center>
