@@ -22,9 +22,17 @@
                     <li class="nav-item search-nav-item">
                         <a class="nav-link snav-link active" style="color: black" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Tìm việc làm</a>
                     </li>
-                    @else
+                    @elseif($type==1)
                     <li class="nav-item search-nav-item">
                         <a class="nav-link snav-link active" style="color: black" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Công việc đang ứng tuyển</a>
+                    </li>
+                    @elseif($type==2)
+                    <li class="nav-item search-nav-item">
+                        <a class="nav-link snav-link active" style="color: black" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Công việc đang thực hiện</a>
+                    </li>
+                    @elseif($type==5)
+                    <li class="nav-item search-nav-item">
+                        <a class="nav-link snav-link active" style="color: black" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Công việc đã hoàn thành</a>
                     </li>
                     @endif
                 </ul>
@@ -234,7 +242,18 @@
                     </div> <!-- ./ collapse -->
                 </div>
                 <div class="col-md-9 col-sm-12 col-12">
-                    <h4 class="search-find">Tìm thấy {{$data->count()}} việc làm đang tuyển dụng</h4>
+
+                    @if(!$type)
+                    <h4 class="search-find">Tìm thấy {{$count}} việc làm đang tuyển dụng</h4>
+                    @elseif($type==1)
+                    <h4 class="search-find">Tìm thấy {{$count}} việc làm đang ứng tuyển</h4>
+                    @elseif($type==2)
+                    <h4 class="search-find">Tìm thấy {{$count}} việc làm đang thực hiện</h4>
+                    @elseif($type==5)
+                    <h4 class="search-find">Tìm thấy {{$count}} việc làm đã hoàn thành</h4>
+                    @endif
+
+                    
                     <div class="job-board-wrap">
                         <div class="job-group">
                             @forelse($data as $row)

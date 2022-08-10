@@ -48,8 +48,7 @@
                                             </div>
                                         </div>
                                         <div class="col-md-4" wire:ignore>
-                                            <select id="computer-languages">
-                                                <option value="" selected hidden>Tất cả kĩ năng</option>
+                                            <select data-placeholder="Tất cả kỹ năng" id="computer-languages" required multiple>
                                                 @foreach($tags as $tag)
                                                 <option value="{{$tag->id}}">{{$tag->name}}</option>
                                                 @endforeach
@@ -140,7 +139,15 @@
                         <div class="catelog-list">
                             <ul>
                                 <li>
-                                    <a href="#">
+                                    <a style="cursor:pointer" wire:click="setSearchType(0)">
+                                        <span class="cate-img">
+                                            <em>Tất cả ngành nghề</em>
+                                        </span>
+                                        <span class="cate-count">{{$countJobAll}}</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a style="cursor:pointer" wire:click="setSearchType(1)">
                                         <span class="cate-img">
                                             <em>Web Developer</em>
                                         </span>
@@ -148,7 +155,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#">
+                                    <a style="cursor:pointer" wire:click="setSearchType(2)">
                                         <span class="cate-img">
                                             <em>Mobile Developer</em>
                                         </span>
@@ -156,7 +163,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#">
+                                    <a style="cursor:pointer" wire:click="setSearchType(3)">
                                         <span class="cate-img">
                                             <em>Business Analyst</em>
                                         </span>
@@ -164,7 +171,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#">
+                                    <a style="cursor:pointer" wire:click="setSearchType(4)">
                                         <span class="cate-img">
                                             <em>Automation Test</em>
                                         </span>
@@ -172,7 +179,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#">
+                                    <a style="cursor:pointer" wire:click="setSearchType(5)">
                                         <span class="cate-img">
                                             <em>Data Scientist</em>
                                         </span>
@@ -201,7 +208,7 @@
                 </div>
                 <div class="col-md-12 job-board2-wrap">
                     <div class="owl-carousel owl-theme job-board2-contain">
-                        @foreach($newJobs as $job)
+                        @forelse($newJobs as $job)
                         <div class="item job-latest-item">
                             <a href="{{route('job.detail', ['id' => $job->id])}}" class="job-latest-group">
                                 <div class="job-lt-logo">
@@ -215,7 +222,9 @@
                                 </div>
                             </a>
                         </div>
-                        @endforeach
+                        @empty
+                            Không tìm thấy công việc phù hợp
+                        @endforelse
                     </div>
 
                 </div>
@@ -307,9 +316,9 @@
                 @foreach($urgentJobs as $job)
                 <div class="col-md-6 job-over-item">
                     <div class="job-inner-over-item">
-                        <a href="{{route('job.detail', ['id' => $row->id])}}">
+                        <a href="{{route('job.detail', ['id' => $job->id])}}">
                             <div class="thumbnail">
-                            <img src="{{asset($job->user->image)}}" alt="company logo image">
+                                <img src="{{asset($job->user->image)}}" alt="company logo image">
                             </div>
                             <div class="content" style="max-width: 310px;">
                                 <div class="job-name">
@@ -320,7 +329,7 @@
                                 </a>
                             </div>
                             <div class="extra-info">
-                                <p class="salary mt-2"><i class="fa fa-money pr-2"></i>{{$job->salary}}</p>
+                                <p class="salary mt-2"><i class="fa fa-money pr-2"></i>{{$job->salary_from_to}}</p>
                                 <p class="place"><i class="fa fa-clock-o pr-2" aria-hidden="true"></i><strong>{{reFormatDate($job->end_date)}}</strong></p>
                             </div>
                         </a>
@@ -351,16 +360,16 @@
                     Tư vấn nghề nghiệp từ HR Insider
                 </div>
                 <div class="col-md-4 col-sm-12 col-12 news-item">
-                    <div class="news-item-inner">
-                        <a href="#wrap">
+                    <div class="news-item-inner" style="cursor: pointer" onclick="window.open('https://www.vietnamworks.com/hrinsider/5-thoi-diem-doanh-nghiep-khong-duoc-buoc-nguoi-lao-dong-thoi-viec.html');">
+                        <a>
                             <div class="news-thumb" style="background-image: url(img/news1.jpg);"></div>
                         </a>
                         <div class="news-details">
                             <div class="tags">
-                                <a href="#tag1">Quyền lợi nhân viên</a>
+                                <a>Quyền lợi nhân viên</a>
                             </div>
                             <div class="title">
-                                <a href="#">
+                                <a>
                                     5 thời điểm doanh nghiệp không được buộc người lao động thôi việc
                                 </a>
                             </div>
@@ -371,16 +380,16 @@
                     </div>
                 </div>
                 <div class="col-md-4 col-sm-12 col-12 news-item">
-                    <div class="news-item-inner">
-                        <a href="#wrap">
+                    <div class="news-item-inner" style="cursor: pointer" onclick="window.open('https://www.vietnamworks.com/hrinsider/nhay-viec-va-nhung-con-so-ban-can-phai-luu-tam.html');">
+                        <a>
                             <div class="news-thumb" style="background-image: url(img/news2.jpg);"></div>
                         </a>
                         <div class="news-details">
                             <div class="tags">
-                                <a href="#tag1">Trước khi nhảy việc</a>
+                                <a>Trước khi nhảy việc</a>
                             </div>
                             <div class="title">
-                                <a href="#">
+                                <a>
                                     Nhảy việc và những con số bạn cần phải lưu tâm
                                 </a>
                             </div>
@@ -391,16 +400,16 @@
                     </div>
                 </div>
                 <div class="col-md-4 col-sm-12 col-12 news-item">
-                    <div class="news-item-inner">
-                        <a href="#wrap">
+                    <div class="news-item-inner" style="cursor: pointer" onclick="window.open('https://www.vietnamworks.com/hrinsider/danh-gia-buoc-dem-can-thiet-trong-viec-dao-tao-huan-luyen-nhan-vien.html');">
+                        <a>
                             <div class="news-thumb" style="background-image: url(img/news3.png);"></div>
                         </a>
                         <div class="news-details">
                             <div class="tags">
-                                <a href="#tag1">Huấn luyện nhân sự</a>
+                                <a>Huấn luyện nhân sự</a>
                             </div>
                             <div class="title">
-                                <a href="#">
+                                <a>
                                     Đánh giá: bước đệm cần thiết trong việc đào tạo huấn luyện nhân viên
                                 </a>
                             </div>
@@ -417,8 +426,11 @@
 </div>
 
 <script>
-    
     $("document").ready(() => {
+        $('#computer-languages').select2({
+            minimumResultsForSearch: -1,
+        })
+
         $('#computer-languages').on('change', function(e) {
             var data = $('#computer-languages').select2('val');
             @this.set('searchTag', data);

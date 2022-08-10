@@ -13,25 +13,25 @@
 
 
     <!-- bootstrap css -->
-    <link rel="stylesheet" type="text/css" href="{{asset('/css/bootstrap.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
 
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}">
+    <link rel="stylesheet" href="/plugins/fontawesome-free/css/all.min.css">
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
     <!-- select 2 css -->
-    <link rel="stylesheet" href="{{asset('/css/select2.min.css')}}">
+    <link rel="stylesheet" href="/css/select2.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
     <!-- Owl Stylesheets -->
-    <link rel="stylesheet" href="{{asset('/css/owlcarousel/owl.carousel.min.css')}}">
-    <link rel="stylesheet" href="{{asset('/css/owlcarousel/owl.theme.default.min.css')}}">
+    <link rel="stylesheet" href="/css/owlcarousel/owl.carousel.min.css">
+    <link rel="stylesheet" href="/css/owlcarousel/owl.theme.default.min.css">
     <!-- main css -->
-    
-    <link rel="stylesheet" type="text/css" href="{{asset('/css/style.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{asset('/css/customer.css')}}">
-    <link rel="stylesheet" href="{{ asset('plugins/toastr/toastr.min.css') }}">
-    <link rel="stylesheet" href="{{asset('rateyo/jquery.rateyo.css')}}"/>
+
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/css/customer.css">
+    <link rel="stylesheet" href="/plugins/toastr/toastr.min.css">
+    <link rel="stylesheet" href="/rateyo/jquery.rateyo.css" />
 
 </head>
 
@@ -42,7 +42,7 @@
             <nav class="navbar navbar-expand-lg navbar-light bg-light tjnav-bar">
                 <!-- <a class="navbar-brand" href="#">Navbar</a> -->
                 <a href="{{route('index')}}" class="nav-logo">
-                    <img src="{{asset('/img/techjobs_bgw.png')}}">
+                    <img src="/img/techjobs_bgw.png">
                 </a>
                 <button class="navbar-toggler tnavbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <!-- <span class="navbar-toggler-icon"></span> -->
@@ -53,19 +53,26 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto tnav-left tn-nav">
                         @if(auth()->user()->type == 2)
-                        <li class="nav-item ">
-                            <a class="nav-link" href="{{route('job.index')}}">Việc Làm IT</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{route('job.index', ['type'=>1])}}">Công việc đang ứng tuyển</a>
+                        <li class="dropdown dropdown-user">
+                            <a class="nav-link dropdown-toggle link" data-toggle="dropdown">
+                                <span>Việc Làm IT</span></a>
+                            <ul class="dropdown-menu dropdown-menu-left">
+                                <a href="{{route('job.index')}}" class="dropdown-item" href="" style="font-size:14px; color:#6D7C85 !important; padding-top:10px; padding-bottom:10pokx;">Danh sách công việc</a>
+                                <a href="{{route('job.index', ['type'=>1])}}" class="dropdown-item" href="" style="font-size:14px; color:#6D7C85 !important; padding-top:10px; padding-bottom:10px;">Công việc đang ứng tuyển</a>
+                                <a href="{{route('job.index', ['type'=>2])}}" class="dropdown-item" href="" style="font-size:14px; color:#6D7C85 !important; padding-top:10px; padding-bottom:10px;">Công việc đang thực hiện</a>
+                                <a href="{{route('job.index', ['type'=>5])}}" class="dropdown-item" href="" style="font-size:14px; color:#6D7C85 !important; padding-top:10px; padding-bottom:10px;">Công việc đã hoàn thành</a>
+                            </ul>
                         </li>
                         @else
-                        <li class="nav-item ">
-                            <a class="nav-link" href="{{route('job.index')}}">Việc Làm IT</a>
+                        <li class="dropdown dropdown-user">
+                            <a class="nav-link dropdown-toggle link" data-toggle="dropdown">
+                                <span>Việc Làm IT</span></a>
+                            <ul class="dropdown-menu dropdown-menu-left">
+                                <a href="{{route('job.index')}}" class="dropdown-item" href="" style="font-size:14px; color:#6D7C85 !important; padding-top:10px; padding-bottom:10px;">Danh sách công việc</a>
+                                <a href="{{route('job.pushlished')}}" class="dropdown-item" href="" style="font-size:14px; color:#6D7C85 !important; padding-top:10px; padding-bottom:10px;">Công việc đang đăng</a>
+                            </ul>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{route('job.pushlished')}}">Công việc đang đăng</a>
-                        </li>
+
                         <li class="nav-item">
                             <a class="nav-link" href="{{route('job.create')}}">Đăng tuyển </a>
                         </li>
@@ -96,7 +103,7 @@
                         <span>Giới thiệu</span>
                     </h2>
                     <p class="footer-content">
-                        Nơi tốt nhất để các freelance và nhà tuyển dụng kết nối với nhau 
+                        Nơi tốt nhất để các freelance và nhà tuyển dụng kết nối với nhau
                     </p>
                     <ul class="footer-contact">
                         <li>
@@ -174,7 +181,7 @@
     </footer>
     <!-- (end) footer -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script type="text/javascript" src="{{asset('/js/readmore.js')}}"></script>
+    <script type="text/javascript" src="/js/readmore.js"></script>
     <script type="text/javascript">
         $('.catelog-list').readmore({
             speed: 75,
@@ -187,16 +194,16 @@
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <!-- <script src="{{asset('/js/jquery-3.4.1.slim.min.js')}}"></script> -->
     <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
-    <script src="{{asset('/js/popper.min.js')}}"></script>
-    <script src="{{asset('/js/bootstrap.min.js')}}"></script>
-    <script src="{{asset('/js/select2.min.js')}}"></script>
-    <script src="{{asset('/js/jobdata.js')}}"></script>
-    <script type="text/javascript" src="{{asset('/js/main.js')}}"></script>
+    <script src="/js/popper.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/select2.min.js"></script>
+    <script src="/js/jobdata.js"></script>
+    <script type="text/javascript" src="/js/main.js"></script>
     <!-- Owl Stylesheets Javascript -->
-    <script src="{{asset('/js/owlcarousel/owl.carousel.js')}}"></script>
+    <script src="/js/owlcarousel/owl.carousel.js"></script>
     <!-- Read More Plugin -->
-    <script src="{{ asset('plugins/toastr/toastr.min.js') }}"></script>
-    <script src="{{ asset('rateyo/jquery.rateyo.js') }}"></script>
+    <script src="/plugins/toastr/toastr.min.js"></script>
+    <script src="/rateyo/jquery.rateyo.js"></script>
     <script>
         toastr.options = {
             "closeButton": true,

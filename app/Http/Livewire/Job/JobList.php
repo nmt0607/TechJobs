@@ -27,6 +27,7 @@ class JobList extends BaseLive {
     public $searchRate;
     public $searchSalaryFrom = 1;
     public $searchSalaryTo = 100;
+    public $count;
 
     public function mount(){
         $this->listJobId = json_encode(User::where('type', 1)->pluck('id')->toArray());
@@ -50,7 +51,7 @@ class JobList extends BaseLive {
         // preg_match_all('!\d+!', $query->first()->salary, $matches);
         // dd($matches);
         if($this->type){
-            $query = auth()->user()->jobs();
+            $query = auth()->user()->jobs()->where('applications.status', $this->type);
         }
         
         if($this->searchTag){
@@ -74,6 +75,7 @@ class JobList extends BaseLive {
         if($this->searchRate){
             $query->where('rate', '>=', $this->searchRate);
         }
+        $this->count = $query->count();
         $data = $query->paginate(5);
         $tags = $this->tags;
         $listCompany = Job::listCompany();

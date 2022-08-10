@@ -78,7 +78,6 @@ class Files extends BaseLive
 
     public function render()
     {
-        //dd('a');
         $this->files = File::query()
             ->where('model_name', $this->model_name)
             ->where('type', $this->type)

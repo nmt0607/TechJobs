@@ -72,7 +72,7 @@
         <div class="container search-wrapper">
             <div class="row">
                 <div class="col-md-8 col-sm-12 col-12">
-                    <h4 class="search-find">Có {{$data->count()}} việc làm đang tuyển dụng</h4>
+                    <h4 class="search-find">Có {{$count}} việc làm đang tuyển dụng</h4>
                     <div class="job-board-wrap">
                         <div class="job-group">
                             @foreach($data as $row)
@@ -115,10 +115,10 @@
                                         </div>
                                     </div>
                                     <div class="wrap-btn-appl">
-                                        <button style="border: 1px solid grey; border-radius: 4px; margin-right: 1px" wire:click="detail({{$row->id}})"><i class="fa fa-eye"></i></button>
-                                        <button style="border: 1px solid grey; border-radius: 4px; margin-right: 1px" wire:click="applyList({{$row->id}})"><i class="fa fa-users"></i></button>
-                                        <button style="border: 1px solid grey; border-radius: 4px; margin-right: 1px" wire:click="edit({{$row->id}})"><i class="fa fa-pencil"></i></button>
-                                        <button data-toggle="modal" data-target="#modalDelete" style="border: 1px solid grey; border-radius: 4px; margin-right: 1px" wire:click="setJob({{$row->id}})"><i class="fa fa-trash"></i></button>
+                                        <button style="border: 1px solid grey; border-radius: 4px; margin-right: 1px" wire:click="detail({{$row->id}})" data-toggle="tooltip" data-placement="bottom" title="Chi tiết"><i class="fa fa-eye"></i></button>
+                                        <button style="border: 1px solid grey; border-radius: 4px; margin-right: 1px" wire:click="applyList({{$row->id}})" data-toggle="tooltip" data-placement="bottom" title="Danh sách ứng tuyển"><i class="fa fa-users"></i></button>
+                                        <button style="border: 1px solid grey; border-radius: 4px; margin-right: 1px" wire:click="edit({{$row->id}})" data-toggle="tooltip" data-placement="bottom" title="Chỉnh sửa"><i class="fa fa-pencil"></i></button>
+                                        <button data-toggle="modal" data-target="#modalDelete" style="border: 1px solid grey; border-radius: 4px; margin-right: 1px" wire:click="setJob({{$row->id}})" data-toggle="tooltip" data-placement="bottom" title="Xóa"><i class="fa fa-trash"></i></button>
                                         <p class="jd-view mt-4">Ứng viên đang chờ: <span>{{$row->applyingUser()->count()}}</span></p>
                                     </div>
 

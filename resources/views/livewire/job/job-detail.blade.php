@@ -56,6 +56,8 @@
                                 @else
                                 <a data-toggle="modal" data-target="#modalApplyJob" class="btn btn-primary btn-waiting" style="color: white">Nộp đơn</a>
                                 @endif
+                                @else
+                                <a href="{{route('job.apply-list', ['id'=>$job->id])}}" class="btn btn-info btn-waiting btn-sm" style="color: white">Danh sách ứng tuyển</a>
                                 @endif
                                 <p class="jd-view">Số người đang ứng tuyển: <span>{{$job->applyingUser()->count()}}</span></p>
                             </div>

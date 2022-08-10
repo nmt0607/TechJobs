@@ -15,6 +15,7 @@ class JobPushlished extends BaseLive {
     public $searchCompany;
     public $searchProvince;
     public $user;
+    public $count;
 
     public function mount(){
         if(auth()->user()->type == 2) abort(403, 'Unauthorized action.');
@@ -36,6 +37,7 @@ class JobPushlished extends BaseLive {
         if($this->searchProvince){
             $query->where('address_id', $this->searchProvince);
         }
+        $this->count = $query->count();
         $data = $query->paginate(6);
         $tags = $this->tags;
         $listCompany = Job::listCompany();

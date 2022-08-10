@@ -14,7 +14,7 @@ class ChatList extends BaseLive
     public $selectedUser;
     public $selectedUserName;
     public $selectedUserImage;
-    public $message;
+    public $message = " ";
     public $image;
     protected $listeners = ['sendMessage', 'updateRealtime'];
 
@@ -45,6 +45,7 @@ class ChatList extends BaseLive
 
     public function sendMessage()
     {
+        $this->message = trim($this->message);
         if ($this->message) {
             $message = Message::create([
                 'content' => $this->message,
@@ -54,7 +55,7 @@ class ChatList extends BaseLive
             
             User::find($this->selectedUser)->notify(new MessageNotification($message->id));
             event(new NotificationEvent($this->selectedUser));
-            $this->message = null;
+            $this->message = " ";
             $msgNotify = auth()->user()->unreadNotifications()->where('type', 'App\Notifications\MessageNotification')->where('data', 'like', '%"fromId":' . $this->selectedUser . '%')->get();
             foreach ($msgNotify as $notify) {
                 $notify->markAsRead();

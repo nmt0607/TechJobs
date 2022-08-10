@@ -33,9 +33,6 @@ class Index extends BaseLive {
         if(isset($_GET['type'])){
             $this->type = $_GET['type'];
         }
-        if(isset($_GET['type_job'])){
-            $this->typeJob = $_GET['type_job'];
-        }
         $this->tags = Tag::all();
         $this->users = User::where('type', 1)->get();
         $this->countJobAll = Job::all()->count();
@@ -57,7 +54,7 @@ class Index extends BaseLive {
         
         if($this->searchTag){
             $query->whereHas('tags', function (Builder $query) {
-                $query->where('tag_id', 'like', $this->searchTag);
+                $query->whereIn('tag_id', $this->searchTag);
             });
         }
 
@@ -81,4 +78,7 @@ class Index extends BaseLive {
         return view('livewire.index', compact('data', 'tags', 'listCompany', 'users', 'newJobs', 'urgentJobs'));
     }  
     
+    public function setSearchType($type){
+        $this->typeJob = $type;
+    }
 }
