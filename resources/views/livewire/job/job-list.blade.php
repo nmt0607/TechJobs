@@ -34,6 +34,10 @@
                     <li class="nav-item search-nav-item">
                         <a class="nav-link snav-link active" style="color: black" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Công việc đã hoàn thành</a>
                     </li>
+                    @elseif($type==6)
+                    <li class="nav-item search-nav-item">
+                        <a class="nav-link snav-link active" style="color: black" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Công việc phù hợp</a>
+                    </li>
                     @endif
                 </ul>
                 <div class="tab-content search-tab-content" id="myTabContent">
@@ -251,6 +255,8 @@
                     <h4 class="search-find">Tìm thấy {{$count}} việc làm đang thực hiện</h4>
                     @elseif($type==5)
                     <h4 class="search-find">Tìm thấy {{$count}} việc làm đã hoàn thành</h4>
+                    @elseif($type==6)
+                    <h4 class="search-find">Tìm thấy {{$count}} việc làm phù hợp với bạn</h4>
                     @endif
 
                     

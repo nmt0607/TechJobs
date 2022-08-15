@@ -43,20 +43,20 @@
                         <div class="jd-header-wrap-right">
                             <div class="jd-center">
                                 @if(Auth::user()->type == 2)
-                                @if($statusApply == 1)
-                                <a data-toggle="modal" data-target="#modalCancelApply" class="btn btn-warning btn-waiting" style="color: white">Chờ chấp nhận</a>
-                                @elseif($statusApply == 2)
-                                <a class="btn btn-success btn-waiting" style="color: white">Đang thực hiện</a>
-                                @elseif($statusApply == 3)
-                                <a class="btn btn-secondary btn-waiting" style="color: white">Đã bị từ chối</a>
-                                @elseif($statusApply == 4)
-                                <a data-toggle="modal" data-target="#modalFinish" class="btn btn-info btn-waiting" style="color: white">Đánh giá</a>
-                                @elseif($statusApply == 5)
-                                <a class="btn btn-primary btn-waiting" style="color: white">Đã hoàn thành</a>
-                                @else
-                                <a data-toggle="modal" data-target="#modalApplyJob" class="btn btn-primary btn-waiting" style="color: white">Nộp đơn</a>
-                                @endif
-                                @else
+                                    @if($statusApply == 1)
+                                    <a data-toggle="modal" data-target="#modalCancelApply" class="btn btn-warning btn-waiting" style="color: white">Chờ chấp nhận</a>
+                                    @elseif($statusApply == 2)
+                                    <a class="btn btn-success btn-waiting" style="color: white">Đang thực hiện</a>
+                                    @elseif($statusApply == 3)
+                                    <a class="btn btn-secondary btn-waiting" style="color: white">Đã bị từ chối</a>
+                                    @elseif($statusApply == 4)
+                                    <a data-toggle="modal" data-target="#modalFinish" class="btn btn-info btn-waiting" style="color: white">Đánh giá</a>
+                                    @elseif($statusApply == 5)
+                                    <a class="btn btn-primary btn-waiting" style="color: white">Đã hoàn thành</a>
+                                    @else
+                                    <a data-toggle="modal" data-target="#modalApplyJob" class="btn btn-primary btn-waiting" style="color: white">Nộp đơn</a>
+                                    @endif
+                                @elseif(Auth::id()==$job->user_id)
                                 <a href="{{route('job.apply-list', ['id'=>$job->id])}}" class="btn btn-info btn-waiting btn-sm" style="color: white">Danh sách ứng tuyển</a>
                                 @endif
                                 <p class="jd-view">Số người đang ứng tuyển: <span>{{$job->applyingUser()->count()}}</span></p>

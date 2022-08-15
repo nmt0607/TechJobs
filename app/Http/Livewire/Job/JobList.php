@@ -7,6 +7,7 @@ use App\Models\Job;
 use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
+use Maatwebsite\Excel\Concerns\ToArray;
 
 class JobList extends BaseLive {
 
@@ -50,8 +51,17 @@ class JobList extends BaseLive {
         
         // preg_match_all('!\d+!', $query->first()->salary, $matches);
         // dd($matches);
-        if($this->type){
-            $query = auth()->user()->jobs()->where('applications.status', $this->type);
+
+        
+        if($this->type) {
+            if($this->type == 6){
+                $query->whereHas('tags', function (Builder $query) {
+                    $query->whereIn('tag_id', auth()->user()->tags->pluck('id')->toArray());
+                });
+            }
+            else{
+                $query = auth()->user()->jobs()->where('applications.status', $this->type);
+            }
         }
         
         if($this->searchTag){

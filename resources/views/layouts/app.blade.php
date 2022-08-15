@@ -58,6 +58,7 @@
                                 <span>Việc Làm IT</span></a>
                             <ul class="dropdown-menu dropdown-menu-left">
                                 <a href="{{route('job.index')}}" class="dropdown-item" href="" style="font-size:14px; color:#6D7C85 !important; padding-top:10px; padding-bottom:10pokx;">Danh sách công việc</a>
+                                <a href="{{route('job.index', ['type'=>6])}}" class="dropdown-item" href="" style="font-size:14px; color:#6D7C85 !important; padding-top:10px; padding-bottom:10px;">Công việc phù hợp</a>
                                 <a href="{{route('job.index', ['type'=>1])}}" class="dropdown-item" href="" style="font-size:14px; color:#6D7C85 !important; padding-top:10px; padding-bottom:10px;">Công việc đang ứng tuyển</a>
                                 <a href="{{route('job.index', ['type'=>2])}}" class="dropdown-item" href="" style="font-size:14px; color:#6D7C85 !important; padding-top:10px; padding-bottom:10px;">Công việc đang thực hiện</a>
                                 <a href="{{route('job.index', ['type'=>5])}}" class="dropdown-item" href="" style="font-size:14px; color:#6D7C85 !important; padding-top:10px; padding-bottom:10px;">Công việc đã hoàn thành</a>

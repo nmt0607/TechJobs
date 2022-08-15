@@ -53,9 +53,6 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{route('job.index')}}">Việc Làm IT</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Tin Tức</a>
-                        </li>
                     </ul>
                     @if(Auth::check())
                     <li class="nav-item">

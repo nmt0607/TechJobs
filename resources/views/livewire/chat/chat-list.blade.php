@@ -64,7 +64,7 @@
                     <div class="col-12">
                         <div class="chat-box-tray">
                             <i class="fas fa-laugh"></i>
-                            <input id='inputMsg' wire:model="message" type="text" placeholder=" Type your message here...">
+                            <input id='inputMsg' wire:model.lazy="message" type="text" placeholder=" Type your message here...">
                             <i class="fa fa-microphone"></i>
                             <i wire:click='sendMessage' class="fa fa-paper-plane send-message"></i>
                         </div>
