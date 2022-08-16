@@ -122,4 +122,8 @@ class JobCreate extends BaseLive {
             $this->dispatchBrowserEvent('show-toast', ["type" => "success", "message" => 'Tạo mới công việc thành công']);
         }
     }  
+
+    public function back(){
+        return redirect()->to('/job/pushlished');
+    }
 }

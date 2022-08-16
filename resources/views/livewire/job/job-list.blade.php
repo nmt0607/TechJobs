@@ -49,7 +49,7 @@
                                     <div class="row">
                                         <div class="col-md-3">
                                             <div class="input-group s-input-group">
-                                                <input wire:model='searchName' type="text" class="form-control sinput" placeholder="Nhập tên công việc">
+                                                <input wire:model.debounce.500ms='searchName' type="text" class="form-control sinput" placeholder="Nhập tên công việc">
                                                 <span><i class="fa fa-search"></i></span>
                                             </div>
                                         </div>

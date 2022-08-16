@@ -2713,6 +2713,22 @@ h4.search-find {
     background: #d43f3a;
 }
 
+.btn-back {
+    font-family: arial;
+    cursor: pointer;
+    padding: 0 23px;
+    border-radius: 2px;
+    height: 40px;
+    border: none;
+    font-size: 14px;
+    display: inline-block;
+    font-weight: 700;
+    line-height: 40px;
+    border-color: #6c757d;
+    color: #fff;
+    background: #6c757d;
+}
+
 /*sidebar*/
 .block-sidebar {
     margin-top: 0;

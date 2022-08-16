@@ -274,11 +274,11 @@
                             </center><br>
                             <ul>
                                 @if($type == 2)
-                                <li><a href="#">Công việc đang ứng tuyển <strong>({{$user->jobApplying->count()}})</strong></a></li>
-                                <li><a href="#">Công việc đã hoàn thành <strong>({{$user->jobFinish->count()}})</strong></a></li>
+                                <li><a href="{{route('job.index', ['type'=>1])}}">Công việc đang ứng tuyển <strong>({{$user->jobApplying->count()}})</strong></a></li>
+                                <li><a href="{{route('job.index', ['type'=>5])}}">Công việc đã hoàn thành <strong>({{$user->jobFinish->count()}})</strong></a></li>
                                 @else
-                                <li><a href="#">Công việc đang đăng <strong>({{$user->jobsCreate->count()}})</strong></a></li>
-                                <li><a href="#">Ứng viên đang ứng tuyển <strong>({{$user->countApplyingUser()}})</strong></a></li>
+                                <li><a href="{{route('job.pushlished')}}">Công việc đang đăng <strong>({{$user->jobsCreate->count()}})</strong></a></li>
+                                <li><a href="{{route('job.pushlished')}}">Ứng viên đang ứng tuyển <strong>({{$user->countApplyingUser()}})</strong></a></li>
                                 @endif
                             </ul>
                         </div>

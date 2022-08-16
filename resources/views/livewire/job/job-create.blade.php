@@ -222,7 +222,11 @@
                                 <button wire:click="create" class="btn-submit-recuitment">
                                     <i class="fa fa-floppy-o pr-2"></i>Lưu Tin
                                 </button>
-                            </div>
+                                &nbsp;
+                                <button wire:click="back" class="btn-back">
+                                    <i class="fa fa-rotate-left pr-2"></i>Quay lại
+                                </button>   
+                            </div>     
                         </center>
 
                     </div>

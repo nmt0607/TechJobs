@@ -2,7 +2,7 @@
     <!-- Navbar Search -->
 
     <li class="nav-item dropdown">
-        <a class="nav-link" data-toggle="dropdown">
+        <a class="nav-link" data-toggle="dropdown" style="cursor: pointer">
             <i class="far fa-comments" style="font-size: 17px;"></i>
             <span class="badge badge-danger navbar-badge">{{$unseenMessageCount?$unseenMessageCount:''}}</span>
         </a>
@@ -47,7 +47,7 @@ top: 0; background-color: white" class="dropdown-item dropdown-header">{{$unseen
 top: 0; background-color: white; z-index:1;" class="dropdown-item dropdown-header">{{$unseenNotifyCount?($unseenNotifyCount." thông báo chưa đọc"):"Không có thông báo mới"}}</span>
             @foreach($notify as $notify)
             <div class="dropdown-divider"></div>
-            <a href="#" wire:click="readNotify({{$notify}})" class="dropdown-item" style="padding-top:10px; padding-bottom:10px;">
+            <a style="cursor: pointer"  wire:click="readNotify({{$notify}})" class="dropdown-item" style="padding-top:10px; padding-bottom:10px;">
                 <div class="row">
                     <div class="col-md-1">
                         @switch($notify->data['result'])
@@ -100,7 +100,7 @@ top: 0; background-color: white; z-index:1;" class="dropdown-item dropdown-heade
         </ul>
     </li>
 </ul>
-<script src="{{asset('/js/pusher.min.js')}}"></script>
+<script src="/js/pusher.min.js"></script>
 <script>
     //Thay giá trị PUSHER_APP_KEY vào chỗ xxx này nhé
     Pusher.logToConsole = true;
