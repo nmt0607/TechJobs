@@ -71,7 +71,7 @@
     <div class="container-fluid">
         <div class="container search-wrapper">
             <div class="row">
-                <div class="col-md-8 col-sm-12 col-12">
+                <div class="col-md-12 col-sm-12 col-12">
                     <h4 class="search-find">Có {{$count}} việc làm đang tuyển dụng</h4>
                     <div class="job-board-wrap">
                         <div class="job-group">
@@ -131,7 +131,7 @@
                         <br><br>
                     </div>
                 </div>
-                <div class="col-md-4 col-sm-12 col-12">
+                <!-- <div class="col-md-4 col-sm-12 col-12">
                     <h4 class="search-find"><br></h4>
                     <div class="recuiter-info">
                         <div class="recuiter-info-avt">
@@ -165,7 +165,7 @@
                             <img src="{{asset('img/ads1.jpg')}}" class="advertisement">
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>

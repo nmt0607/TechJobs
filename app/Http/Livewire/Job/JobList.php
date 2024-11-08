@@ -29,6 +29,8 @@ class JobList extends BaseLive {
     public $searchSalaryFrom = 1;
     public $searchSalaryTo = 100;
     public $count;
+    public $listeners = ['resetData'];
+
 
     public function mount(){
         $this->listJobId = json_encode(User::where('type', 1)->pluck('id')->toArray());
@@ -86,7 +88,7 @@ class JobList extends BaseLive {
             $query->where('rate', '>=', $this->searchRate);
         }
         $this->count = $query->count();
-        $data = $query->paginate(5);
+        $data = $query->paginate(4);
         $tags = $this->tags;
         $listCompany = Job::listCompany();
         return view('livewire.job.job-list', compact('data', 'tags', 'listCompany'));
@@ -113,5 +115,11 @@ class JobList extends BaseLive {
                     ->where('salary_to', '>',$this->searchSalaryTo);
                 });
             });
+    }
+
+    public function resetData(){
+        $this->searchRate = '';
+        $this->searchSalaryFrom = 1;
+        $this->searchSalaryTo = 100;
     }
 }

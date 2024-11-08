@@ -49,7 +49,7 @@ class SendMailCommand extends Command
 
         foreach ($mail as $key => $mail) {
             $data[$key]['sendTo'] = $mail->mail;
-            $data[$key]['content'] = "Có " . $countNewJobs . " việc làm mới đăng. Truy cập website: http://localhost:8000/job/index để biết thêm thông tin";
+            $data[$key]['content'] = "Có " . $countNewJobs . " việc làm mới đăng. Truy cập website: https://2029-113-185-50-51.ap.ngrok.io/job/index để biết thêm thông tin";
         }
         sendMail($data);
     }

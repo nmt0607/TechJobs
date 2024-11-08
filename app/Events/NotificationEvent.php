@@ -33,7 +33,7 @@ class NotificationEvent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return ['send-notify'.$this->receiveId];
+        return ['channel-'.$this->receiveId];
     }
   
     public function broadcastAs()

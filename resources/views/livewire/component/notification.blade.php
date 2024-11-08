@@ -38,7 +38,7 @@ top: 0; background-color: white" class="dropdown-item dropdown-header">{{$unseen
     </li>
     <!-- Notifications Dropdown Menu -->
     <li class="nav-item dropdown">
-        <a class="nav-link" data-toggle="dropdown">
+        <a class="nav-link" data-toggle="dropdown" style="cursor: pointer">
             <i class="far fa-bell" style="font-size: 17px;"></i>
             <span class="badge badge-warning navbar-badge">{{$unseenNotifyCount?$unseenNotifyCount:''}}</span>
         </a>
@@ -87,7 +87,7 @@ top: 0; background-color: white; z-index:1;" class="dropdown-item dropdown-heade
         <img id='userImage' src="{{asset($imagePath)}}" class="img-circle" style="opacity: 1.0;width:35px; margin-top: 6px;" />
     </li>
     <li class="dropdown dropdown-user">
-        <a class="nav-link dropdown-toggle link" data-toggle="dropdown">
+        <a class="nav-link dropdown-toggle link" data-toggle="dropdown" style="cursor: pointer">
             <span id='userName'>{{Auth()->user()->name??''}}</span></a>
         <ul class="dropdown-menu dropdown-menu-right">
             <a href="{{route('user.info', ['id' => auth()->id()])}}" class="dropdown-item" href="" style="font-size:14px; color:#6D7C85; padding-top:10px; padding-bottom:10px;"><i class="fa fa-user mr-2"></i>Trang cá nhân</a>
@@ -109,7 +109,7 @@ top: 0; background-color: white; z-index:1;" class="dropdown-item dropdown-heade
     });
 
     // Subscribe to the channel we specified in our Laravel Event
-    var channel = pusher.subscribe('send-notify{{ auth()->id() }}');
+    var channel = pusher.subscribe('channel-{{ auth()->id() }}');
 
     // Bind a function to a Event (the full Laravel class)
     channel.bind('notify-event', function() {

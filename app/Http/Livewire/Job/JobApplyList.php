@@ -34,7 +34,7 @@ class JobApplyList extends BaseLive {
     public function render(){
         $job = $this->job;
         $listUserId = json_encode($job->users()->where('applications.status', 1)->orWhere('applications.status', 2)->pluck('users.id')->toArray());
-        $data = $job->users()->where('applications.status', 1)->get();
+        $data = $job->users()->where('applications.status', 1)->orderBy('created_at')->get();
         foreach($data as $user){
             $user->offer = $job->users()->where('applications.status', 1)->where('applications.user_id', $user->id)->first()->pivot->offer;
             $user->applyDate = reFormatDate($job->users()->where('applications.status', 1)->where('applications.user_id', $user->id)->first()->pivot->created_at);

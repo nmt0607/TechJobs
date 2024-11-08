@@ -1,6 +1,5 @@
 .loader{
     content: '';
-    /*box-sizing: border-box;*/
     position: fixed;
     opacity: 0.6;
     top: 35%;
@@ -9,9 +8,6 @@
     height: 50px;
     margin-top: -10px;
     margin-left: -10px;
-    /*border-radius: 50%;*/
-    /*  border: 2px solid #ccc;
-      border-top-color: #333;*/
     animation: spinner  linear infinite;
     background: url('/images/loading2.gif')
     50% 50% no-repeat rgb(249,249,249);

@@ -225,7 +225,10 @@
                                             </div>
                                         </div>
                                     </div>
-
+                                    <center>
+                                    <button wire:click="resetData" class="btn btn-secondary">Làm mới</button>
+                                    </center>
+                                    
                                 </div>
                             </div> <!-- filter bar -->
                             <script type="text/javascript">
